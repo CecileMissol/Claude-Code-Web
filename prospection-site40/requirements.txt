@@ -1,0 +1,12 @@
+# === Scraping & Automatisation ===
+playwright
+requests
+beautifulsoup4
+
+# === LLM (installer selon votre provider) ===
+openai                  # GPT-4o
+google-generativeai     # Gemini
+anthropic               # Claude
+
+# === Utilitaires ===
+Pillow                  # Traitement d'images
