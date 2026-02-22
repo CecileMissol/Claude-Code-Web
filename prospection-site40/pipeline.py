@@ -36,7 +36,8 @@ def main():
 
     # Contrôle des étapes
     parser.add_argument("--skip-notion", action="store_true", help="Ne pas exporter vers Notion (M4)")
-    parser.add_argument("--skip-prototype", action="store_true", help="Stopper après M4 (pas de brief)")
+    parser.add_argument("--with-brief", action="store_true",
+                        help="Enchaîner M5→M7 après le scoring (sinon utilisez brief_trigger.py)")
     parser.add_argument("--only-brief", action="store_true", help="Lancer uniquement M5→M7 depuis scored_prospects.json")
 
     # Options
@@ -112,9 +113,13 @@ def main():
     else:
         print("\n⏭️  Export Notion ignoré")
 
-    # ── ÉTAPES 5→7 : Workflow prototype ──
-    if not args.skip_prototype:
+    # ── ÉTAPES 5→7 : Workflow prototype (optionnel) ──
+    if args.with_brief:
         _run_prototype_workflow(scored, output_dir, shortlist_only=not args.all_rangs)
+    else:
+        shortlist = [b for b in scored if b.get("scoring", {}).get("rang") in ("A", "B")]
+        print(f"\n💡 {len(shortlist)} prospect(s) en shortlist A/B.")
+        print(f"   → Dans Notion, passez-les en '⚡ À briefer' puis lancez : python brief_trigger.py")
 
     print("\n" + "=" * 55)
     print("✅ Pipeline terminé !")

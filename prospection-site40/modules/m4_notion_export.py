@@ -58,7 +58,9 @@ PROSPECT_SCHEMA = {
         "select": {
             "options": [
                 {"name": "🆕 Nouveau", "color": "default"},
+                {"name": "⚡ À briefer", "color": "orange"},
                 {"name": "🔨 Prototype en cours", "color": "yellow"},
+                {"name": "🎨 Brief prêt", "color": "pink"},
                 {"name": "📧 Contacté", "color": "blue"},
                 {"name": "🔄 Relancé", "color": "purple"},
                 {"name": "📞 RDV planifié", "color": "green"},
@@ -112,6 +114,8 @@ PROSPECT_SCHEMA = {
     "URL Maps": {"url": {}},
     "Recherche": {"rich_text": {}},
     "Prototype URL": {"url": {}},
+    "Brief Prototype": {"rich_text": {}},
+    "Palette Couleurs": {"rich_text": {}},
     "Notes": {"rich_text": {}},
     "Date contact": {"date": {}},
     "Date relance": {"date": {}},
