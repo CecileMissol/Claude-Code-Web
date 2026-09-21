@@ -1,9 +1,117 @@
 {
+  "seo": {
+    "title": "Animated wedding invitations that open like a real letter",
+    "description": "Skip Canva. Give your guests an envelope that opens, a save-the-date that slides out and a story that unfolds as they scroll — with a real RSVP dashboard, in a link you can share anywhere.",
+    "ogDescription": "An invitation that opens like a real letter. Personalised in ten minutes, no Canva account, shared with a single link — with a real RSVP dashboard."
+  },
+  "nav": {
+    "demos": "Demos"
+  },
   "hero": {
     "title": "An invitation that opens like a real letter",
-    "subtitle": "Personalised in ten minutes, without Canva, shared with a single link.",
+    "subtitle": "Personalised in ten minutes, without Canva, shared with a single link — with a real RSVP dashboard your guests' answers land in.",
     "ctaDemo": "See the demo",
-    "ctaActivate": "Activate a purchase"
+    "ctaActivate": "Activate a purchase",
+    "phoneCaption": "Live demo — tap the envelope"
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Four steps, no design software.",
+    "steps": [
+      {
+        "title": "Buy on Etsy",
+        "body": "Choose your theme in our Etsy shop. Your instant download contains your activation link and a quick-start guide."
+      },
+      {
+        "title": "Activate",
+        "body": "Enter your order number and email on our activation page. You'll get a secure sign-in link — no password to remember."
+      },
+      {
+        "title": "Personalise",
+        "body": "Names, date, photos, your story, the programme, the venue — fill in a guided, step-by-step editor with a live preview next to every field."
+      },
+      {
+        "title": "Share",
+        "body": "Publish, pick your link, and send it by text, email, WhatsApp or QR code. Come back anytime to edit — changes go live instantly."
+      }
+    ]
+  },
+  "themesGallery": {
+    "title": "Three moods, one editor",
+    "subtitle": "Every theme runs on the same guided editor and the same RSVP dashboard — only the visuals, colours and animations change.",
+    "cta": "See the demo",
+    "items": {
+      "mariage-noir-ivoire": {
+        "mood": "Deep black and ivory, a wax seal and black-and-white polaroids — the elegance of a classic invitation."
+      },
+      "mariage-terracotta-bloom": {
+        "mood": "Warm terracotta and sage, dried flowers and beeswax — a boho wedding with a Provence spirit."
+      },
+      "mariage-riviera-postcard": {
+        "mood": "Cobalt blue, lemon and awning stripes — a postcard from the Côte d'Azur."
+      }
+    }
+  },
+  "vsCanva": {
+    "title": "Not another Canva template",
+    "subtitle": "We build the same kind of product Etsy's best-selling wedding sites offer — without their limits.",
+    "points": [
+      {
+        "title": "A guided editor, not a blank canvas",
+        "body": "Nothing to drag, nothing to misalign. Every layout is guided and tested on real phones, so it can't break when you resize a photo or move a text box."
+      },
+      {
+        "title": "Colours that are really yours",
+        "body": "The palette applies to the illustrations too — the envelope, the wax seal, the stamps — not just the text. Wherever it's possible, they're colourable SVGs, not fixed images."
+      },
+      {
+        "title": "A real RSVP dashboard",
+        "body": "Guest names, headcounts, dietary notes, CSV export and an email alert on every reply — not a basic form with no way to see the answers."
+      },
+      {
+        "title": "No third-party account, ever",
+        "body": "No Canva login, no other platform to juggle. Just your own account and your own link."
+      },
+      {
+        "title": "Richer animation",
+        "body": "An envelope that flips and opens, a scrolling story told scene by scene — built for it, instead of a static page with a few effects bolted on."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "How long is my invitation hosted?",
+        "a": "18 months from the day you publish it — more than enough for the engagement, the wedding day and sharing photos afterwards. Hosting extensions are available separately whenever you need more time."
+      },
+      {
+        "q": "What languages does it support?",
+        "a": "The editor and every invitation are fully bilingual, English and French. Choose your guests' language when you publish; changing it later takes one click."
+      },
+      {
+        "q": "Is there really an RSVP form?",
+        "a": "Yes — a built-in RSVP with a live dashboard: who's coming, headcounts, dietary notes, CSV export, and an email notification each time a guest replies."
+      },
+      {
+        "q": "Can I edit after publishing?",
+        "a": "Anytime. Every change goes live immediately on your existing link — nothing to republish, nothing to re-send to your guests."
+      },
+      {
+        "q": "What happens to my guests' data?",
+        "a": "Only what's needed for the RSVP: name, email, headcount, dietary notes if you ask for them. It's hosted in the EU, never sold or used for advertising, and deleted automatically a few months after your event — sooner on request."
+      },
+      {
+        "q": "Will it work on my guests' phones?",
+        "a": "Yes — the whole experience is built mobile-first and tested on iOS and Android, which is how nearly all of your guests will open it."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Ready when you are",
+    "body": "Pick a theme on our Etsy shop, or activate a purchase you already made.",
+    "ctaShop": "Visit the Etsy shop",
+    "ctaActivate": "I already bought it — activate"
   },
   "demo": {
     "title": "Theme demo",

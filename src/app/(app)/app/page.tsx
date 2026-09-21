@@ -8,6 +8,7 @@ import { listInvitationsWithThemeByOwner } from '@/db/queries';
 import { createDraftInvitationAction } from '@/editor/actions';
 import { CreateInvitationButton } from '@/editor/CreateInvitationButton';
 import { requireUser } from '@/lib/auth';
+import { allowFreeDrafts } from '@/lib/env';
 import { getLocale } from 'next-intl/server';
 import { isLocale, DEFAULT_LOCALE } from '@/i18n/config';
 import { loadAllManifests } from '@/themes/registry';
@@ -21,9 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
  * `/app` — the couple's dashboard.
  *
  * Lists the invitations of the signed-in user (names, theme, status, last
- * edit) and links to the editor, the sharing page and the replies. Until the
- * Etsy activation is live, it also offers a button that creates a draft on the
- * default theme.
+ * edit) and links to the editor, the sharing page and the replies.
+ *
+ * The "create an invitation" button is not a way in: a buyer gets their draft
+ * from the Etsy activation. It is only shown to an administrator, or when
+ * `ALLOW_FREE_DRAFTS` is on (development). `createDraftInvitationAction`
+ * enforces the same rule server-side.
  */
 export default async function DashboardPage() {
   const user = await requireUser();
@@ -32,6 +36,9 @@ export default async function DashboardPage() {
   const format = await getFormatter();
   const rawLocale = await getLocale();
   const locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+
+  const common = await getTranslations('common');
+  const canCreateDraft = user.isAdmin || allowFreeDrafts();
 
   const rows = await listInvitationsWithThemeByOwner(getDb(), user.id);
   const manifests = await loadAllManifests();
@@ -52,10 +59,21 @@ export default async function DashboardPage() {
       {rows.length === 0 ? (
         <div className="space-y-3 rounded-lg border border-dashed border-stone-300 p-6 dark:border-stone-700">
           <p>{t('empty')}</p>
-          <p className="text-sm text-stone-500">{t('createHint')}</p>
-          <form action={createDraftInvitationAction}>
-            <CreateInvitationButton />
-          </form>
+          {canCreateDraft ? (
+            <>
+              <p className="text-sm text-stone-500">{t('createHint')}</p>
+              <form action={createDraftInvitationAction}>
+                <CreateInvitationButton />
+              </form>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-stone-500">{t('emptyCta')}</p>
+              <Link href="/activate" className="text-sm underline">
+                {common('nav.activate')}
+              </Link>
+            </>
+          )}
         </div>
       ) : (
         <>
@@ -95,12 +113,14 @@ export default async function DashboardPage() {
             })}
           </ul>
 
-          <div className="space-y-2 rounded-lg border border-dashed border-stone-300 p-4 dark:border-stone-700">
-            <p className="text-sm text-stone-500">{t('createHint')}</p>
-            <form action={createDraftInvitationAction}>
-              <CreateInvitationButton />
-            </form>
-          </div>
+          {canCreateDraft ? (
+            <div className="space-y-2 rounded-lg border border-dashed border-stone-300 p-4 dark:border-stone-700">
+              <p className="text-sm text-stone-500">{t('createHint')}</p>
+              <form action={createDraftInvitationAction}>
+                <CreateInvitationButton />
+              </form>
+            </div>
+          ) : null}
         </>
       )}
     </section>

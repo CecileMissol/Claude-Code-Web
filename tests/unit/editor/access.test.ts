@@ -119,6 +119,36 @@ describe('an invitation is only visible to its owner', () => {
     expect(saved?.content).toBe(tampered);
   });
 
+  it('resynchronises the locale column with the content', async () => {
+    const invitation = await seedInvitation(ALICE);
+    expect(invitation.locale).toBe('fr');
+
+    const switched = JSON.stringify({ ...defaultContent('fr'), locale: 'en' });
+    const saved = await updateInvitationContentForOwner(
+      db,
+      invitation.id,
+      ALICE,
+      switched,
+      CONTENT_VERSION,
+      'en',
+    );
+
+    expect(saved?.locale).toBe('en');
+  });
+
+  it('leaves the locale column alone when the caller does not pass one', async () => {
+    const invitation = await seedInvitation(ALICE);
+    const saved = await updateInvitationContentForOwner(
+      db,
+      invitation.id,
+      ALICE,
+      invitation.content,
+      CONTENT_VERSION,
+    );
+
+    expect(saved?.locale).toBe('fr');
+  });
+
   it('answers the same way for an unknown id as for someone else’s', async () => {
     await seedInvitation(ALICE);
     await expect(getInvitationWithThemeForOwner(db, 'does-not-exist', BOB)).resolves.toBeNull();

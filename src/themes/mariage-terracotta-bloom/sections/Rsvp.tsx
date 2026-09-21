@@ -9,12 +9,12 @@ import type { Messages } from '../messages';
 import { buildSubmission, errorMessage, isHoneypotFilled, shouldCallApi } from './rsvp-logic';
 
 /**
- * The RSVP card.
+ * The RSVP card: a sheet of sand paper with an arched head.
  *
  * Only the published invitation talks to the API: in `preview` (editor) and
  * `demo` (Etsy showcase) the submission is faked, so nobody fills the couple's
- * dashboard with test replies. The wax seal lands on the card exactly as in the
- * mock-up once the reply is in.
+ * dashboard with test replies. The sage wax seal drops onto the card once the
+ * reply is in.
  */
 export function Rsvp({
   t,
@@ -73,10 +73,10 @@ export function Rsvp({
   }
 
   return (
-    <section className="plain" id="rsvp" aria-label={t.rsvp.title}>
+    <section className="tb-plain" id="rsvp" aria-label={t.rsvp.title}>
       <h2>{t.rsvp.title}</h2>
 
-      <div className={`rsvp${sent ? ' sent' : ''}`}>
+      <div className={`tb-rsvp${sent ? ' tb-sent' : ''}`}>
         {open ? (
           <form onSubmit={handleSubmit} noValidate={false}>
             <label>
@@ -93,7 +93,7 @@ export function Rsvp({
 
             <fieldset>
               <legend>{t.rsvp.attendingLegend}</legend>
-              <div className="choice">
+              <div className="tb-choice">
                 <label>
                   <input type="radio" name="attending" value="yes" required />
                   <span>{t.rsvp.yes}</span>
@@ -133,7 +133,7 @@ export function Rsvp({
             )}
 
             {/* Honeypot. Never shown, never announced, never focusable. */}
-            <div className="trap" aria-hidden="true">
+            <div className="tb-trap" aria-hidden="true">
               <label htmlFor={`${ids}-website`}>{t.rsvp.honeypot}</label>
               <input
                 id={`${ids}-website`}
@@ -146,28 +146,28 @@ export function Rsvp({
             </div>
 
             {error && (
-              <p className="error" role="alert">
+              <p className="tb-error" role="alert">
                 {error}
               </p>
             )}
 
-            <button className="btn" type="submit" disabled={pending}>
+            <button className="tb-btn" type="submit" disabled={pending}>
               {pending ? t.rsvp.sending : t.rsvp.submit}
             </button>
           </form>
         ) : (
-          <p className="closed">{t.rsvp.closed}</p>
+          <p className="tb-closed">{t.rsvp.closed}</p>
         )}
 
-        <div className="done-seal" aria-hidden="true">
+        <div className="tb-done-seal" aria-hidden="true">
           {initials}
         </div>
-        <p className="thanks" role="status">
+        <p className="tb-thanks" role="status">
           {sent ? t.rsvp.thanks : ''}
         </p>
       </div>
 
-      <p className="notice">{t.rsvp.dataNotice}</p>
+      <p className="tb-notice">{t.rsvp.dataNotice}</p>
     </section>
   );
 }

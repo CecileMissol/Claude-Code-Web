@@ -1,11 +1,16 @@
 'use client';
 
-import { Calla, Hydrangea, Postmark, Stamp } from '../assets/illustrations';
+import { Eucalyptus, Pampas, Postmark, Stamp } from '../assets/illustrations';
 import type { Messages } from '../messages';
-import { Polaroid, type ResolvedPhotos } from './pieces';
+import { Frame, type ResolvedPhotos } from './pieces';
 
 /**
  * The envelope.
+ *
+ * Same mechanics as every theme of the catalogue — the envelope turns over, the
+ * seal pops, the flap swings, the pieces rise — but the pieces themselves are
+ * this theme's: a terracotta envelope with a patterned liner, a sage wax seal,
+ * illustrated stamps, and an *arch card* instead of a ticket.
  *
  * Markup order matters: the flap sits above the pocket until the timeline drops
  * its `z-index`, and the seal sits above the flap. `data-env-*` attributes are
@@ -39,14 +44,14 @@ export function Intro({
 }) {
   return (
     <section
-      className={`intro${opened ? ' opened' : ''}${ready ? ' ready' : ''}`}
+      className={`tb-intro${opened ? ' tb-opened' : ''}${ready ? ' tb-ready' : ''}`}
       id="intro"
       aria-label={kicker}
     >
-      <p className="kicker">{kicker}</p>
+      <p className="tb-kicker">{kicker}</p>
 
       {showSkip && (
-        <button type="button" className="skip" onClick={onOpen}>
+        <button type="button" className="tb-skip" onClick={onOpen}>
           {t.intro.openButton}
         </button>
       )}
@@ -55,11 +60,11 @@ export function Intro({
         A div with `role="button"`, not a real <button>: the envelope is a
         size container with absolutely positioned children, and form controls
         have engine-specific internal layout that fights `container-type` and
-        `overflow`. The mock-up does the same. Keyboard support is restored by
-        hand, so Enter and Space both open the envelope.
+        `overflow`. Keyboard support is restored by hand, so Enter and Space
+        both open the envelope.
       */}
       <div
-        className="env-wrap"
+        className="tb-env-wrap"
         role="button"
         tabIndex={0}
         aria-label={t.intro.openLabel}
@@ -72,60 +77,58 @@ export function Intro({
         }}
       >
         {/* ---- Address side ---- */}
-        <span className="face front" data-env-front>
-          <span className="stamps">
-            <Stamp variant="calla" value="1,39" />
-            <Stamp variant="bloom" value="2,10" />
+        <span className="tb-face tb-front" data-env-front>
+          <span className="tb-stamps">
+            <Stamp variant="pampas" value="0,68" />
+            <Stamp variant="sun" value="1,20" />
           </span>
-          <Postmark className="postmark" date={postmark} />
-          <span className="addr">
-            <span className="script">{names}</span>
-            <span className="caps">{shortDate}</span>
+          <Postmark className="tb-postmark" date={postmark} />
+          <span className="tb-addr">
+            <span className="tb-script">{names}</span>
+            <span className="tb-caps">{shortDate}</span>
           </span>
-          <Calla className="lay" />
+          <Pampas className="tb-lay" />
         </span>
 
         {/* ---- Inside ---- */}
-        <span className="face back" data-env-back>
-          <span className="liner" />
+        <span className="tb-face tb-back" data-env-back>
+          <span className="tb-liner" />
 
-          <span className="pol p1 tape" data-env-polaroid="1">
-            <Polaroid photo={photos['envelope-1']} slotId="envelope-1" eager />
+          <span className="tb-snap tb-p1 tb-tape" data-env-polaroid="1">
+            <Frame photo={photos['envelope-1']} slotId="envelope-1" eager />
           </span>
-          <span className="pol p2" data-env-polaroid="2">
-            <Polaroid photo={photos['envelope-2']} slotId="envelope-2" eager />
+          <span className="tb-snap tb-p2" data-env-polaroid="2">
+            <Frame photo={photos['envelope-2']} slotId="envelope-2" eager />
           </span>
 
-          <span className="ticket" data-env-ticket>
-            <span className="stub">
-              <span>{names}</span>
-            </span>
-            <span className="tmain">
-              <span className="t1">{t.intro.saveTheDate}</span>
-              <span className="t2">{shortDate}</span>
-              <span className="t3">{t.intro.weAreGettingMarried}</span>
+          {/* The arch card: this theme's answer to the ticket with a stub. */}
+          <span className="tb-card" data-env-ticket>
+            <span className="tb-card-in">
+              <span className="tb-c1">{t.intro.saveTheDate}</span>
+              <span className="tb-c2">{shortDate}</span>
+              <span className="tb-c3">{t.intro.weAreGettingMarried}</span>
             </span>
           </span>
 
-          <span className="pocket" />
+          <span className="tb-pocket" />
 
-          <span className="tuck tuck1" data-env-tuck="1">
-            <Hydrangea />
+          <span className="tb-tuck tb-tuck1" data-env-tuck="1">
+            <Pampas />
           </span>
-          <span className="tuck tuck2" data-env-tuck="2">
-            <Calla rotate={-28} />
+          <span className="tb-tuck tb-tuck2" data-env-tuck="2">
+            <Eucalyptus rotate={-24} />
           </span>
 
-          <span className="flap" data-env-flap />
-          <span className="seal" data-env-seal>
+          <span className="tb-flap" data-env-flap />
+          <span className="tb-seal" data-env-seal>
             {initials}
           </span>
         </span>
       </div>
 
-      <p className="hint">{t.intro.hint}</p>
+      <p className="tb-hint">{t.intro.hint}</p>
 
-      <div className="cue" aria-hidden={!ready}>
+      <div className="tb-cue" aria-hidden={!ready}>
         {t.intro.scrollCue}
         <span />
       </div>

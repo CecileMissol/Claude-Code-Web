@@ -1,9 +1,117 @@
 {
+  "seo": {
+    "title": "Invitations de mariage animées, qui s'ouvrent comme une vraie lettre",
+    "description": "Oubliez Canva. Offrez à vos invités une enveloppe qui s'ouvre, un ticket save-the-date qui glisse dehors et une histoire qui se déroule au fil du scroll — avec un vrai tableau de bord RSVP, dans un lien à partager partout.",
+    "ogDescription": "Une invitation qui s'ouvre comme une vraie lettre. Personnalisée en dix minutes, sans compte Canva, partagée en un seul lien — avec un vrai tableau de bord RSVP."
+  },
+  "nav": {
+    "demos": "Démos"
+  },
   "hero": {
     "title": "Une invitation qui s'ouvre comme une vraie lettre",
-    "subtitle": "Personnalisée en dix minutes, sans Canva, partagée en un lien.",
+    "subtitle": "Personnalisée en dix minutes, sans Canva, partagée en un lien — avec un vrai tableau de bord où atterrissent les réponses de vos invités.",
     "ctaDemo": "Voir la démo",
-    "ctaActivate": "Activer un achat"
+    "ctaActivate": "Activer un achat",
+    "phoneCaption": "Démo en direct — touchez l'enveloppe"
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "subtitle": "Quatre étapes, aucun logiciel de design.",
+    "steps": [
+      {
+        "title": "Achetez sur Etsy",
+        "body": "Choisissez votre thème dans notre boutique Etsy. Votre téléchargement contient votre lien d'activation et un petit guide de démarrage."
+      },
+      {
+        "title": "Activez",
+        "body": "Saisissez votre numéro de commande et votre e-mail sur notre page d'activation. Vous recevez un lien de connexion sécurisé, sans mot de passe à retenir."
+      },
+      {
+        "title": "Personnalisez",
+        "body": "Prénoms, date, photos, votre histoire, le programme, le lieu — un éditeur guidé, par étapes, avec un aperçu en direct à chaque champ."
+      },
+      {
+        "title": "Partagez",
+        "body": "Publiez, choisissez votre lien, et envoyez-le par SMS, e-mail, WhatsApp ou QR code. Revenez modifier quand vous voulez : les changements sont visibles immédiatement."
+      }
+    ]
+  },
+  "themesGallery": {
+    "title": "Trois ambiances, un seul éditeur",
+    "subtitle": "Chaque thème utilise le même éditeur guidé et le même tableau de bord RSVP — seuls les visuels, les couleurs et les animations changent.",
+    "cta": "Voir la démo",
+    "items": {
+      "mariage-noir-ivoire": {
+        "mood": "Noir profond et ivoire, cachet de cire et polaroïds noir et blanc — l'élégance d'un faire-part classique."
+      },
+      "mariage-terracotta-bloom": {
+        "mood": "Terracotta chaleureux et sauge, fleurs séchées et cire d'abeille — un mariage bohème esprit Provence."
+      },
+      "mariage-riviera-postcard": {
+        "mood": "Bleu cobalt, citron et rayures de store — une carte postale de la Côte d'Azur."
+      }
+    }
+  },
+  "vsCanva": {
+    "title": "Ce n'est pas un template Canva de plus",
+    "subtitle": "Le même type de produit que les sites de mariage les plus vendus sur Etsy — sans leurs limites.",
+    "points": [
+      {
+        "title": "Un éditeur guidé, pas une page blanche",
+        "body": "Rien à glisser, rien à désaligner. Chaque mise en page est guidée et testée sur de vrais téléphones : impossible de la casser en déplaçant une photo ou un bloc de texte."
+      },
+      {
+        "title": "De vraies couleurs personnalisables",
+        "body": "La palette s'applique aussi aux illustrations — l'enveloppe, le cachet de cire, les timbres — pas seulement au texte. Dès que c'est possible, ce sont des SVG colorisables, pas des images figées."
+      },
+      {
+        "title": "Un vrai tableau de bord RSVP",
+        "body": "Noms des invités, nombre de personnes, régimes alimentaires, export CSV et une alerte e-mail à chaque réponse — pas un simple formulaire sans moyen de voir les réponses."
+      },
+      {
+        "title": "Aucune dépendance à un compte tiers",
+        "body": "Ni compte Canva, ni autre plateforme à jongler. Juste votre compte et votre lien."
+      },
+      {
+        "title": "Des animations plus riches",
+        "body": "Une enveloppe qui se retourne et s'ouvre, une histoire qui se raconte scène par scène au fil du scroll — pensées pour ça, plutôt qu'une page fixe avec quelques effets ajoutés."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": [
+      {
+        "q": "Combien de temps mon invitation reste-t-elle en ligne ?",
+        "a": "18 mois à partir de la publication — largement de quoi couvrir les fiançailles, le jour J et le partage des photos ensuite. Des prolongations d'hébergement sont disponibles séparément si besoin."
+      },
+      {
+        "q": "Quelles langues sont proposées ?",
+        "a": "L'éditeur et chaque invitation sont entièrement bilingues, français et anglais. Choisissez la langue de vos invités à la publication ; la changer ensuite prend un clic."
+      },
+      {
+        "q": "Y a-t-il vraiment un formulaire RSVP ?",
+        "a": "Oui — un RSVP intégré avec un tableau de bord en direct : qui vient, combien de personnes, régimes alimentaires, export CSV, et une notification e-mail à chaque réponse."
+      },
+      {
+        "q": "Puis-je modifier après la publication ?",
+        "a": "Quand vous voulez. Chaque modification est visible immédiatement sur votre lien existant — rien à republier, rien à renvoyer à vos invités."
+      },
+      {
+        "q": "Que deviennent les données de mes invités ?",
+        "a": "Uniquement ce qui est nécessaire au RSVP : nom, e-mail, nombre de personnes, régime si vous le demandez. Hébergées en UE, jamais vendues ni utilisées à des fins publicitaires, et supprimées automatiquement quelques mois après votre événement — plus tôt sur demande."
+      },
+      {
+        "q": "Est-ce que ça fonctionne sur le téléphone de mes invités ?",
+        "a": "Oui — toute l'expérience est pensée mobile d'abord et testée sur iOS et Android, la façon dont la quasi-totalité de vos invités l'ouvriront."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Prêts quand vous l'êtes",
+    "body": "Choisissez un thème dans notre boutique Etsy, ou activez un achat déjà effectué.",
+    "ctaShop": "Voir la boutique Etsy",
+    "ctaActivate": "J'ai déjà acheté → Activer"
   },
   "demo": {
     "title": "Démo du thème",

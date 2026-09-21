@@ -12,7 +12,7 @@ import {
   markRsvpNotified,
   rsvpStatsForOwner,
 } from '@/db/queries';
-import { getEnv } from '@/lib/env';
+import { rsvpIpSalt } from '@/lib/env';
 import { sendMail } from '@/lib/mail';
 import { appOrigin, isDeadlinePassed, isPubliclyVisible } from '@/lib/publish';
 import { checkRateLimit, hashIp } from '@/lib/rate-limit';
@@ -56,14 +56,6 @@ function clientIp(request: Request): string {
     request.headers.get('x-real-ip') ??
     'unknown'
   );
-}
-
-/**
- * Salt used to hash guest IPs. A dedicated `RSVP_IP_SALT` when it is set,
- * otherwise the application secret — never a constant baked into the bundle.
- */
-function ipSalt(): string {
-  return process.env.RSVP_IP_SALT?.trim() || getEnv().BETTER_AUTH_SECRET;
 }
 
 /** Runs a background task after the response when the platform allows it. */
@@ -120,7 +112,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   if (!settings.enabled) return fail('closed');
   if (isDeadlinePassed(settings.deadline, content.event.timezone)) return fail('closed');
 
-  const ipHash = await hashIp(clientIp(request), ipSalt());
+  const ipHash = await hashIp(clientIp(request), rsvpIpSalt());
 
   const limiter = await checkRateLimit(`rsvp:${found.invitation.id}:${ipHash}`, {
     limit: RATE_LIMIT_REPLIES,

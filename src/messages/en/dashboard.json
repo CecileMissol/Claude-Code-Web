@@ -22,7 +22,7 @@
     "create": "Create an invitation",
     "creating": "Creating…"
   },
-  "createHint": "While the Etsy activation is being finished, this button creates a draft on the “Black & ivory” theme.",
+  "createHint": "Reserved for administrators and for development (ALLOW_FREE_DRAFTS): this button creates a draft on the “Black & ivory” theme. Buyers get theirs from the Etsy activation.",
   "unreadable": "This invitation could not be read.",
   "responses": {
     "title": "Responses",

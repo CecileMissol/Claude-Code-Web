@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getFormatter, getTranslations } from 'next-intl/server';
 import { getDb } from '@/db';
-import { ensureThemesSeeded } from '@/db/seed-themes';
+import { ensureThemesSeeded } from '@/db/seed';
 import { listAuditLog, listInvitationsForAdmin, listPendingActivations } from '@/db/queries';
 import { requireAdmin } from '@/lib/auth';
 import {

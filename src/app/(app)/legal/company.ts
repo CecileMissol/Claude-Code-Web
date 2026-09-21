@@ -1,11 +1,12 @@
 /**
- * Company identity used by the legal pages, read from `LEGAL_*` environment
- * variables. Not part of `src/lib/env.ts` (out of this phase's file scope,
- * and these values are never required for the app to run): a missing
- * variable simply keeps its bracketed placeholder, e.g. `[[COMPANY_NAME]]`,
- * visibly unfilled on the page rather than crashing anything. Documented,
- * with these exact default placeholders, in `.env.example`.
+ * Company identity shown on the legal pages, read from the `LEGAL_*`
+ * environment variables through `src/lib/env.ts` (the single place where
+ * `process.env` is read). None of them is required: a missing variable keeps
+ * its bracketed placeholder, e.g. `[[COMPANY_NAME]]`, visibly unfilled on the
+ * page rather than crashing anything. Documented in `.env.example`.
  */
+
+import { getEnv } from '@/lib/env';
 
 export interface LegalCompanyInfo {
   name: string;
@@ -18,21 +19,17 @@ export interface LegalCompanyInfo {
   dpoEmail: string;
 }
 
-function fromEnv(key: string, placeholder: string): string {
-  const value = process.env[key];
-  return value && value.trim().length > 0 ? value.trim() : placeholder;
-}
-
 export function getLegalCompanyInfo(): LegalCompanyInfo {
+  const env = getEnv();
   return {
-    name: fromEnv('LEGAL_COMPANY_NAME', '[[COMPANY_NAME]]'),
-    legalForm: fromEnv('LEGAL_COMPANY_FORM', '[[LEGAL_FORM]]'),
-    address: fromEnv('LEGAL_COMPANY_ADDRESS', '[[COMPANY_ADDRESS]]'),
-    siren: fromEnv('LEGAL_SIREN', '[[SIREN]]'),
-    vatNumber: fromEnv('LEGAL_VAT_NUMBER', '[[VAT_NUMBER]]'),
-    publicationDirector: fromEnv('LEGAL_PUBLICATION_DIRECTOR', '[[PUBLICATION_DIRECTOR]]'),
-    contactEmail: fromEnv('LEGAL_CONTACT_EMAIL', '[[CONTACT_EMAIL]]'),
-    dpoEmail: fromEnv('LEGAL_DPO_EMAIL', '[[DPO_EMAIL]]'),
+    name: env.LEGAL_COMPANY_NAME,
+    legalForm: env.LEGAL_COMPANY_FORM,
+    address: env.LEGAL_COMPANY_ADDRESS,
+    siren: env.LEGAL_SIREN,
+    vatNumber: env.LEGAL_VAT_NUMBER,
+    publicationDirector: env.LEGAL_PUBLICATION_DIRECTOR,
+    contactEmail: env.LEGAL_CONTACT_EMAIL,
+    dpoEmail: env.LEGAL_DPO_EMAIL,
   };
 }
 

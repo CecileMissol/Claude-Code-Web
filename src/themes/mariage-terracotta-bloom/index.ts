@@ -4,7 +4,7 @@ import { Extras } from './schema';
 import Invitation from './Invitation';
 import { REPLAY_EVENT } from './animations/useInvitationMotion';
 
-/** Public entry point of the "Noir & ivoire" theme, loaded by the registry. */
+/** Public entry point of the "Terracotta Bloom" theme, loaded by the registry. */
 const theme: ThemeModule = { manifest, Extras, Invitation };
 
 /**

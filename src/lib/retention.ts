@@ -55,14 +55,12 @@ export async function purgeExpiredRsvps(
 }
 
 /**
- * Shared secret protecting `/api/cron/retention`.
- * Falls back to nothing: the route then refuses every call, which is the safe
- * default for a job that deletes rows.
+ * Shared secret protecting the retention job (the Worker's `scheduled()`
+ * handler runs unauthenticated; `POST /api/cron/retention` needs this).
+ * Read from `src/lib/env.ts`, and `null` when unset or too short: the route
+ * then refuses every call, the safe default for a job that deletes rows.
  */
-export function cronSecret(): string | null {
-  const value = process.env.CRON_SECRET?.trim();
-  return value && value.length >= 16 ? value : null;
-}
+export { cronSecret } from './env';
 
 /** Constant-time-ish comparison of two short secrets. */
 export function secretMatches(provided: string | null | undefined, expected: string): boolean {

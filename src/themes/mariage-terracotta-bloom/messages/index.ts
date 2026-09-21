@@ -3,7 +3,7 @@ import en from './en.json';
 import fr from './fr.json';
 
 /**
- * Interface copy of the "Noir & ivoire" theme.
+ * Interface copy of the "Terracotta Bloom" theme.
  *
  * The invitation never reads the `locale` cookie: its language is the one the
  * couple chose (`content.locale`), because a wedding invitation is written in

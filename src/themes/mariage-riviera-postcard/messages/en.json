@@ -1,21 +1,31 @@
 {
   "intro": {
-    "kicker": "A letter for you",
+    "kicker": "A postcard for you",
     "openLabel": "Open the envelope",
     "openButton": "Open",
     "hint": "Tap the envelope to open it",
     "scrollCue": "Scroll",
     "saveTheDate": "Save the date",
-    "weAreGettingMarried": "we're getting married!"
+    "weAreGettingMarried": "we're getting married!",
+    "airmail": "Par avion · by air mail",
+    "stampCountry": "Riviera"
   },
   "chapters": {
     "story": "Our story",
     "date": "The date",
-    "program": "The programme",
-    "place": "The venue"
+    "program": "The day",
+    "place": "The place"
   },
   "story": {
     "mementoDate": "Date"
+  },
+  "date": {
+    "day": "day",
+    "month": "month",
+    "year": "year"
+  },
+  "program": {
+    "menuKicker": "Menu of the day"
   },
   "countdown": {
     "label": "Countdown to the wedding",
@@ -31,7 +41,7 @@
     "title": "Good to know"
   },
   "rsvp": {
-    "title": "Will you join us?",
+    "title": "Will you come?",
     "name": "Full name",
     "email": "Email",
     "attendingLegend": "Will you be there?",
@@ -55,7 +65,7 @@
   },
   "signature": {
     "label": "Signature",
-    "farewell": "See you very soon"
+    "farewell": "See you on the coast"
   },
   "demoBanner": "Demo"
 }

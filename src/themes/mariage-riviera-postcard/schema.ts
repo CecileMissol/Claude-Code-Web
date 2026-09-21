@@ -1,35 +1,37 @@
 import { z } from 'zod';
 
 /**
- * Theme-specific `content.extras` for "Noir & ivoire".
+ * Theme-specific `content.extras` for "Riviera Postcard".
  *
- * These are the decorative blocks of the mock-up that other themes may not be
- * able to draw: the torn train ticket of the story chapter, the handwritten
- * note on kraft paper, and the envelope kicker line.
+ * The shape is deliberately the one every wedding theme shares, so switching
+ * theme never loses a couple's words (BRIEF §7.2). Only the drawing changes:
+ * the keepsake `memento` that theme 1 prints as a torn train ticket is printed
+ * here as a **luggage tag** hanging from its string, and the `note` is a line
+ * scribbled on a café napkin.
  */
 
 const Text = (max: number) => z.string().trim().max(max);
 
 export const Memento = z.object({
   kind: z.literal('ticket'),
-  /** e.g. "Marseille → Paris" */
+  /** e.g. "Capri → Positano" */
   route: Text(30),
-  /** Free-form, printed as-is: "14.02.19" */
+  /** Free-form, printed as-is: "06.19.21" */
   date: Text(12),
-  /** e.g. "Voiture 12" */
+  /** e.g. "Ferry 12" */
   lineA: Text(20),
-  /** e.g. "Places 45 · 46" */
+  /** e.g. "Seats 7 · 8" */
   lineB: Text(20),
 });
 export type Memento = z.infer<typeof Memento>;
 
 export const Extras = z.object({
   memento: Memento.optional(),
-  /** Short handwritten note on kraft paper: "elle a dit oui". */
+  /** Short handwritten note on a napkin: "we missed the last ferry". */
   note: Text(30).optional(),
   envelope: z
     .object({
-      /** Line shown above the envelope: "Une lettre pour vous". */
+      /** Line shown above the envelope: "A postcard for you". */
       kicker: Text(40).optional(),
     })
     .optional(),

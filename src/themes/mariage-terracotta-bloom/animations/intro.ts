@@ -85,7 +85,7 @@ export function buildIntroTimeline(gsap: Gsap, els: IntroElements, onReady: () =
     timeline.set(els.flap, { zIndex: 1 }, INTRO.under);
   }
 
-  // The ticket and the polaroids come out of the pocket.
+  // The arch card and the two snaps come out of the pocket.
   if (els.ticket) {
     timeline.to(
       els.ticket,
@@ -108,7 +108,7 @@ export function buildIntroTimeline(gsap: Gsap, els: IntroElements, onReady: () =
     );
   }
 
-  // Flowers slide into the composition.
+  // The botanicals slide into the composition.
   if (els.tuck1) {
     timeline.to(
       els.tuck1,

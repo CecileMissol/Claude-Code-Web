@@ -1,5 +1,5 @@
 /**
- * Pure scroll-animation maths for "Noir & ivoire".
+ * Pure scroll-animation maths for "Terracotta Bloom".
  *
  * Everything the chapters need to decide *what shows when* lives here, with no
  * DOM and no GSAP, so it can be unit-tested and reasoned about. The values come
@@ -41,7 +41,7 @@ export const PIECE_AT = {
     photo1: 0.05,
     memento: 0.23,
     photo2: 0.41,
-    calla: 0.58,
+    sprig: 0.58,
     note: 0.62,
     bloom: 0.8,
   },
@@ -49,8 +49,8 @@ export const PIECE_AT = {
     day: 0.06,
     month: 0.2,
     year: 0.34,
-    callaLeft: 0.44,
-    callaRight: 0.47,
+    sprigLeft: 0.44,
+    sprigRight: 0.47,
     highlight: 0.52,
     countdown: 0.7,
   },
@@ -62,7 +62,7 @@ export const PIECE_AT = {
     stamp: 0.3,
     postmark: 0.38,
     bloom: 0.62,
-    amaranth: 0.74,
+    eucalyptus: 0.74,
   },
 } as const;
 

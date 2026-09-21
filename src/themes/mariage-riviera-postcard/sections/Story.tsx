@@ -1,18 +1,20 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { Calla, Hydrangea } from '../assets/illustrations';
+import { Bougainvillea, Parasol } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
 import type { Extras } from '../schema';
-import { ChapterLines, Piece, pieceStyle, Polaroid, type ResolvedPhotos } from './pieces';
+import { ChapterLines, Piece, pieceStyle, Snapshot, type ResolvedPhotos } from './pieces';
 
 /**
  * Chapter 1 — "Our story".
  *
- * A sticky scene, 420 vh of scroll: taped polaroids, the torn train ticket, an
- * arum, the kraft note, a hydrangea; the sentences replace one another.
- * Positions and flight paths are the mock-up's, verbatim.
+ * A sticky scene, 400 vh of scroll. The composition is built around a striped
+ * beach parasol planted in the bottom-left corner: the first snapshot leans in
+ * from the left, the keepsake luggage tag drops in from above on its string,
+ * the second snapshot lands bottom-right, the note is a scribbled café napkin
+ * and a bougainvillea spray closes the top-left corner.
  */
 export function Story({
   t,
@@ -40,13 +42,13 @@ export function Story({
         <div className="board">
           <Piece
             at={at.photo1}
-            className="pol tape"
+            className="snap tape"
             style={pieceStyle(
-              { left: '4%', top: '4%', width: '42%' },
-              { from: 'translate(-70vw, 10%) rotate(-40deg)', to: 'rotate(-6deg)' },
+              { left: '3%', top: '5%', width: '50%' },
+              { from: 'translate(-70vw, 8%) rotate(-32deg)', to: 'rotate(-5deg)' },
             )}
           >
-            <Polaroid photo={photos[slot1]} slotId={slot1} />
+            <Snapshot photo={photos[slot1]} slotId={slot1} />
           </Piece>
 
           {extras.memento && (
@@ -54,11 +56,13 @@ export function Story({
               at={at.memento}
               className="shadow"
               style={pieceStyle(
-                { left: '30%', top: '47%', width: '62%' },
-                { from: 'translate(80vw, 5%) rotate(25deg)', to: 'rotate(4deg)' },
+                { right: '1%', top: '24%', width: '48%' },
+                { from: 'translate(30vw, -70vh) rotate(24deg)', to: 'rotate(4deg)' },
               )}
             >
-              <div className="ticket-train torn">
+              <div className="luggage">
+                <span className="string" aria-hidden="true" />
+                <span className="eyelet" aria-hidden="true" />
                 <p className="route">{extras.memento.route}</p>
                 <div>
                   <small>{t.story.mementoDate}</small>
@@ -74,23 +78,23 @@ export function Story({
 
           <Piece
             at={at.photo2}
-            className="pol"
+            className="snap"
             style={pieceStyle(
-              { right: '3%', top: '2%', width: '40%' },
-              { from: 'translate(50vw, -60vh) rotate(30deg)', to: 'rotate(7deg)' },
+              { right: '3%', bottom: '3%', width: '44%' },
+              { from: 'translate(60vw, 30vh) rotate(28deg)', to: 'rotate(6deg)' },
             )}
           >
-            <Polaroid photo={photos[slot2]} slotId={slot2} />
+            <Snapshot photo={photos[slot2]} slotId={slot2} />
           </Piece>
 
           <Piece
-            at={at.calla}
+            at={at.parasol}
             style={pieceStyle(
-              { left: 0, top: '34%', width: '13%', height: '50%' },
-              { from: 'translate(-40vw, 30vh) rotate(-80deg)', to: 'rotate(-18deg)' },
+              { left: '-8%', bottom: '-2%', width: '38%', transformOrigin: '50% 100%' },
+              { from: 'translateY(60vh) rotate(-38deg)', to: 'rotate(-8deg)' },
             )}
           >
-            <Calla />
+            <Parasol />
           </Piece>
 
           {extras.note && (
@@ -98,8 +102,8 @@ export function Story({
               at={at.note}
               className="shadow"
               style={pieceStyle(
-                { left: '8%', top: '76%', width: '44%' },
-                { from: 'translateY(40vh) rotate(-10deg)', to: 'rotate(-3deg)' },
+                { left: '8%', top: '48%', width: '46%' },
+                { from: 'translateY(40vh) rotate(-12deg)', to: 'rotate(-3deg)' },
               )}
             >
               <p className="note torn">{extras.note}</p>
@@ -107,13 +111,13 @@ export function Story({
           )}
 
           <Piece
-            at={at.bloom}
+            at={at.bougainvillea}
             style={pieceStyle(
-              { right: '-4%', bottom: '-2%', width: '38%', transformOrigin: '80% 90%' },
-              { from: 'scale(0) rotate(-40deg)', to: 'none' },
+              { left: '-10%', top: '-8%', width: '42%', transformOrigin: '20% 15%' },
+              { from: 'scale(0) rotate(-45deg)', to: 'none' },
             )}
           >
-            <Hydrangea />
+            <Bougainvillea />
           </Piece>
         </div>
 

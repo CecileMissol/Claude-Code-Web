@@ -22,7 +22,7 @@
     "create": "Créer une invitation",
     "creating": "Création…"
   },
-  "createHint": "En attendant l’activation Etsy, ce bouton crée un brouillon sur le thème « Noir & ivoire ».",
+  "createHint": "Réservé à l’administration et au développement (ALLOW_FREE_DRAFTS) : ce bouton crée un brouillon sur le thème « Noir & ivoire ». Les acheteurs reçoivent le leur via l’activation Etsy.",
   "unreadable": "Cette invitation n’a pas pu être lue.",
   "responses": {
     "title": "Réponses",

@@ -2,8 +2,9 @@ import type { CSSProperties, ReactNode } from 'react';
 import { PhotoPlaceholder, PostcardPlaceholder, placeholderVariant } from '../assets/illustrations';
 
 /**
- * Small building blocks shared by the chapters: the polaroid, the postcard
- * image, and the generic "piece of the collage" wrapper.
+ * Small building blocks shared by the chapters: the two photo frames (the
+ * rounded "snap" on sand paper and the arch), the postcard image, and the
+ * generic "piece of the collage" wrapper.
  */
 
 /** A photo of `content.photos`, with its public R2 URL already resolved. */
@@ -51,42 +52,51 @@ export function Piece({
   children: ReactNode;
 }) {
   return (
-    <div className={`it${className ? ` ${className}` : ''}`} data-at={at} style={style}>
+    <div className={`tb-it${className ? ` ${className}` : ''}`} data-at={at} style={style}>
       {children}
     </div>
   );
 }
 
+/** The two photo shapes of the theme. */
+export type FrameShape = 'snap' | 'arch';
+
 /**
- * Polaroid. Renders the uploaded photo when the slot is filled, and an engraved
- * SVG scene when it is not — never a broken image.
+ * A framed photo: either a rounded-corner "snap" mounted on sand paper, or an
+ * arch — the shape that carries the whole theme, from the envelope card to the
+ * desert doorway of the venue chapter.
+ *
+ * Renders the uploaded photo when the slot is filled, and a warm SVG scene when
+ * it is not — never a broken image.
  *
  * Photos are resized and converted to WebP in the browser before upload and
  * stored at a single size (phase 2, §5.4: one key per slot,
  * `invitations/{id}/photos/{uuid}.webp`), so there is no `srcset` to build:
  * `width`/`height` come from the content and reserve the space.
  */
-export function Polaroid({
+export function Frame({
   photo,
   slotId,
+  shape = 'snap',
   caption,
   eager = false,
 }: {
   photo?: ResolvedPhoto;
   slotId: string;
+  shape?: FrameShape;
   caption?: string;
   eager?: boolean;
 }) {
   const label = photo?.caption ?? caption;
   return (
     <>
-      <span className="photo-wrap">
+      <span className={`tb-photo-wrap tb-photo-${shape}`}>
         {photo ? (
           // Served straight from R2 at its stored size; the next/image
           // optimizer does not exist on Workers (`images.unoptimized`).
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            className="photo"
+            className="tb-photo"
             src={photo.url}
             alt={photo.alt}
             width={photo.width}
@@ -95,18 +105,18 @@ export function Polaroid({
             decoding="async"
           />
         ) : (
-          <PhotoPlaceholder className="photo" variant={placeholderVariant(slotId)} />
+          <PhotoPlaceholder className="tb-photo" variant={placeholderVariant(slotId)} />
         )}
       </span>
-      {label ? <span className="cap">{label}</span> : null}
+      {label ? <span className="tb-cap">{label}</span> : null}
     </>
   );
 }
 
-/** The venue photo inside the postcard frame. */
+/** The venue photo inside the vintage card frame. */
 export function PostcardImage({ photo, caption }: { photo?: ResolvedPhoto; caption: string }) {
   return (
-    <div className="img">
+    <div className="tb-img">
       {photo ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -137,11 +147,11 @@ export function ChapterLines({
   thresholds: readonly number[];
 }) {
   return (
-    <div className="lines">
+    <div className="tb-lines">
       {lines.map((line, index) => (
         <p
           key={`${index}-${line.slice(0, 16)}`}
-          className="line"
+          className="tb-line"
           data-line={thresholds[index] ?? 1}
         >
           {line}

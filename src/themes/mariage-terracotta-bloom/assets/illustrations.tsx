@@ -1,135 +1,178 @@
 /**
- * Inline SVG placeholders of the "Noir & ivoire" theme.
+ * Inline SVG placeholders of the "Terracotta Bloom" theme.
  *
  * Every illustration is drawn with `var(--stem)`, `var(--accent)`,
- * `var(--seal)`, `var(--env)` or `currentColor` so the couple's palette repaints
- * it without a second file — that is the selling point of the product versus a
- * Canva template (BRIEF §7.4).
+ * `var(--seal)` or `currentColor` so the couple's palette repaints it without a
+ * second file — that is the selling point of the product versus a Canva
+ * template (BRIEF §7.4).
  *
  * These are *placeholders*: proportions, viewBoxes and colourable parts match
- * exactly what the illustrator must deliver (see `assets/README.md`). Swapping a
- * placeholder for the real asset means replacing one component below.
+ * exactly what the illustrator must deliver (see `assets/README.md`). Swapping
+ * a placeholder for the real asset means replacing one component below.
  *
- * The flower symbols are declared once in `<IllustrationDefs />` and referenced
- * with `<use>`, so a chapter that shows the same arum four times ships its path
- * data once.
+ * The botanicals are declared once in `<IllustrationDefs />` and referenced
+ * with `<use>`, so a chapter that shows the same pampas plume four times ships
+ * its path data once. Every generated shape comes from a seeded generator, so
+ * the server and the browser draw byte-identical markup (no hydration
+ * mismatch) and a bouquet never reshuffles between renders.
  */
 
-export const CALLA_ID = 'ni-calla';
-export const BLOOM_ID = 'ni-bloom';
-export const AMARANTH_ID = 'ni-amaranth';
-export const POSTMARK_ID = 'ni-postmark';
+export const PAMPAS_ID = 'tb-pampas';
+export const BLOOM_ID = 'tb-bloom';
+export const EUCALYPTUS_ID = 'tb-eucalyptus';
+export const SUNARCH_ID = 'tb-sunarch';
+
+/** Deterministic Lehmer generator — same sequence on the server and the client. */
+function seeded(seed: number): () => number {
+  let state = seed;
+  return () => (state = (state * 16807) % 2147483647) / 2147483647;
+}
+
+const round = (value: number, digits = 1) => Number(value.toFixed(digits));
 
 /* -------------------------------------------------------------------------- */
-/* Hydrangea — deterministic cluster of small blossoms                        */
+/* Pampas grass — a feathery plume on a long dry stem                         */
 /* -------------------------------------------------------------------------- */
 
-interface Blossom {
+interface Barb {
+  d: string;
+  width: number;
+  opacity: number;
+  tone: string;
+}
+
+const PLUME_TONES = ['#EFDCC2', '#E4CBAB', '#F6EADA', '#DDBE9B', '#EADAC0'] as const;
+
+/**
+ * The plume is a bundle of short curved barbs sprouting from a spine, fat in
+ * the middle and tapering at both ends — which is what tells a pampas plume
+ * from a feather duster.
+ */
+function buildPlume(count = 54): Barb[] {
+  const random = seeded(11);
+  const barbs: Barb[] = [];
+
+  for (let i = 0; i < count; i += 1) {
+    const t = i / (count - 1);
+    // Along the spine, from the tip (y = 6) down to the stem (y = 104).
+    const y = 6 + t * 98;
+    const x = 35 + Math.sin(t * 2.2) * 2;
+    // Fat in the middle third.
+    const spread = Math.sin(Math.PI * Math.min(1, t * 1.06)) ** 0.75;
+    const side = i % 2 === 0 ? -1 : 1;
+    const length = (11 + random() * 13) * spread + 2;
+    const droop = 8 + random() * 12;
+
+    barbs.push({
+      d: `M${round(x)} ${round(y)} q${round(side * length * 0.55)} ${round(droop * 0.35)} ${round(
+        side * length,
+      )} ${round(droop)}`,
+      width: round(0.9 + random() * 0.9, 2),
+      opacity: round(0.55 + random() * 0.45, 2),
+      tone: PLUME_TONES[Math.floor(random() * PLUME_TONES.length)] ?? '#EFDCC2',
+    });
+  }
+  return barbs;
+}
+
+const PLUME = buildPlume();
+
+/* -------------------------------------------------------------------------- */
+/* Eucalyptus — round leaves alternating along a curved branch                */
+/* -------------------------------------------------------------------------- */
+
+interface Leaf {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  rotate: number;
+  opacity: number;
+}
+
+function buildEucalyptus(count = 22): Leaf[] {
+  const random = seeded(23);
+  const leaves: Leaf[] = [];
+
+  for (let i = 0; i < count; i += 1) {
+    const t = i / (count - 1);
+    // Follows the branch: a gentle S from (45, 6) to (30, 200).
+    const x = 45 - Math.sin(t * Math.PI * 0.9) * 16;
+    const y = 6 + t * 194;
+    const side = i % 2 === 0 ? -1 : 1;
+    const size = 7 + random() * 4 + (1 - Math.abs(t - 0.45)) * 3;
+
+    leaves.push({
+      cx: round(x + side * (size * 0.95 + 3)),
+      cy: round(y),
+      rx: round(size),
+      ry: round(size * 0.78),
+      rotate: Math.round(side * (22 + random() * 26)),
+      opacity: round(0.62 + random() * 0.38, 2),
+    });
+  }
+  return leaves;
+}
+
+const EUCALYPTUS_LEAVES = buildEucalyptus();
+
+/* -------------------------------------------------------------------------- */
+/* Dried blooms — a small ranunculus cluster                                  */
+/* -------------------------------------------------------------------------- */
+
+interface Bloom {
   cx: number;
   cy: number;
   r: number;
   rotate: number;
-  fill: string;
+  petals: number;
+  tone: string;
 }
 
-const BLOSSOM_FILLS = ['#FFFFFF', '#FBFBF4', '#F2F4E3', '#E7EBCF', '#FFFFFF'] as const;
+const BLOOM_TONES = ['#F0D9C6', '#E6C0AB', '#F7EBDC', '#DDAF97', '#EDCDB6'] as const;
 
-/**
- * Builds the hydrangea cluster with a seeded Lehmer generator, so the server
- * and the browser draw byte-identical markup (no hydration mismatch) and the
- * bouquet never reshuffles between renders.
- */
-function buildBlossoms(seed = 7, count = 62): Blossom[] {
-  let state = seed;
-  const random = () => (state = (state * 16807) % 2147483647) / 2147483647;
+function buildBlooms(count = 9): Bloom[] {
+  const random = seeded(31);
+  const blooms: Bloom[] = [];
 
-  const blossoms: Blossom[] = [];
   for (let i = 0; i < count; i += 1) {
     const angle = random() * Math.PI * 2;
-    const distance = Math.sqrt(random()) * 30;
-    blossoms.push({
-      cx: Number((50 + Math.cos(angle) * distance).toFixed(1)),
-      cy: Number((38 + Math.sin(angle) * distance * 0.85).toFixed(1)),
-      r: Number((3.4 + random() * 3.2).toFixed(2)),
-      rotate: Math.floor(random() * 90),
-      fill: BLOSSOM_FILLS[Math.floor(random() * BLOSSOM_FILLS.length)] ?? '#FFFFFF',
+    const distance = Math.sqrt(random()) * 27;
+    blooms.push({
+      cx: round(52 + Math.cos(angle) * distance),
+      cy: round(40 + Math.sin(angle) * distance * 0.82),
+      r: round(7 + random() * 7, 2),
+      rotate: Math.floor(random() * 60),
+      petals: 6 + Math.floor(random() * 3),
+      tone: BLOOM_TONES[Math.floor(random() * BLOOM_TONES.length)] ?? '#F0D9C6',
     });
   }
-  return blossoms;
+  // Painter's order: the big blooms sit in front.
+  return blooms.sort((a, b) => a.r - b.r);
 }
 
-const BLOSSOMS = buildBlossoms();
+const BLOOMS = buildBlooms();
 
-const PETAL_OFFSETS = [
-  [0, -1],
-  [1, 0],
-  [0, 1],
-  [-1, 0],
-] as const;
-
-/* -------------------------------------------------------------------------- */
-/* Amaranth — drooping tassels                                                */
-/* -------------------------------------------------------------------------- */
-
-interface Tassel {
-  spine: string;
-  opacity: number;
-  florets: { cx: number; cy: number; r: number }[];
-}
-
-/**
- * A tassel is a cubic curve plus a bottlebrush of florets sampled along it,
- * fattest in the middle and tapering to a point — which is what tells an
- * amaranth from a bamboo cane. Sampled once, at module load, from fixed
- * control points: the shape is identical on the server and in the browser.
- */
-function buildTassel(
-  p0: [number, number],
-  p1: [number, number],
-  p2: [number, number],
-  p3: [number, number],
-  width: number,
-  steps: number,
-  opacity: number,
-): Tassel {
-  const at = (t: number, i: 0 | 1) => {
-    const u = 1 - t;
-    return u * u * u * p0[i] + 3 * u * u * t * p1[i] + 3 * u * t * t * p2[i] + t * t * t * p3[i];
-  };
-
-  const florets: Tassel['florets'] = [];
-  for (let step = 0; step <= steps; step += 1) {
-    const t = step / steps;
-    // Fat in the middle, pointed at both ends.
-    const taper = Math.sin(Math.PI * Math.min(1, t * 1.15)) ** 0.7;
-    const radius = width * taper;
-    if (radius < 0.35) continue;
-    // Two florets per step, offset either side of the spine.
-    const offset = radius * 0.5;
-    florets.push({
-      cx: Number((at(t, 0) - offset).toFixed(1)),
-      cy: Number(at(t, 1).toFixed(1)),
-      r: Number(radius.toFixed(2)),
-    });
-    florets.push({
-      cx: Number((at(t, 0) + offset).toFixed(1)),
-      cy: Number((at(t, 1) + radius * 0.45).toFixed(1)),
-      r: Number((radius * 0.85).toFixed(2)),
-    });
+/** One ranunculus: concentric rings of rounded petals. */
+function bloomPetals(bloom: Bloom) {
+  const petals = [];
+  for (let ring = 0; ring < 2; ring += 1) {
+    const count = ring === 0 ? bloom.petals : Math.max(4, bloom.petals - 2);
+    const radius = bloom.r * (ring === 0 ? 0.62 : 0.3);
+    const size = bloom.r * (ring === 0 ? 0.44 : 0.3);
+    for (let i = 0; i < count; i += 1) {
+      const angle = (i / count) * Math.PI * 2 + ring * 0.4;
+      petals.push({
+        key: `${ring}-${i}`,
+        cx: round(Math.cos(angle) * radius, 2),
+        cy: round(Math.sin(angle) * radius, 2),
+        r: round(size, 2),
+        opacity: ring === 0 ? 1 : 0.9,
+      });
+    }
   }
-
-  return {
-    spine: `M${p0[0]} ${p0[1]} C${p1[0]} ${p1[1]} ${p2[0]} ${p2[1]} ${p3[0]} ${p3[1]}`,
-    opacity,
-    florets,
-  };
+  return petals;
 }
-
-const AMARANTH_TASSELS: Tassel[] = [
-  buildTassel([35, 92], [31, 120], [27, 150], [22, 190], 4.6, 26, 0.9),
-  buildTassel([38, 96], [44, 126], [47, 158], [45, 208], 5.6, 30, 1),
-  buildTassel([42, 88], [54, 114], [60, 142], [62, 178], 3.9, 22, 0.78),
-];
 
 /* -------------------------------------------------------------------------- */
 /* Shared <defs> block                                                        */
@@ -141,136 +184,153 @@ const AMARANTH_TASSELS: Tassel[] = [
  */
 export function IllustrationDefs() {
   return (
-    <svg width="0" height="0" className="ni-defs" aria-hidden="true" focusable="false">
-      <symbol id={CALLA_ID} viewBox="0 0 60 200">
+    <svg width="0" height="0" className="tb-defs" aria-hidden="true" focusable="false">
+      {/* ---- Pampas plume ---- */}
+      <symbol id={PAMPAS_ID} viewBox="0 0 70 220">
         <path
-          d="M30 60 C27 110 24 150 33 198"
+          d="M35 96 C33 140 32 176 38 216"
           fill="none"
           style={{ stroke: 'var(--stem)' }}
-          strokeWidth="3"
+          strokeWidth="2.6"
           strokeLinecap="round"
         />
         <path
-          d="M31 120 C40 110 48 112 54 104 C46 104 38 108 31 120Z"
+          d="M34 140 C42 132 49 132 55 126 C48 126 40 130 34 140Z"
           style={{ fill: 'var(--stem)' }}
-          opacity=".85"
+          opacity=".7"
         />
+        <g fill="none" strokeLinecap="round">
+          {PLUME.map((barb, index) => (
+            <path
+              key={index}
+              d={barb.d}
+              stroke={barb.tone}
+              strokeWidth={barb.width}
+              opacity={barb.opacity}
+            />
+          ))}
+        </g>
         <path
-          d="M30 63 C12 52 8 25 21 5 C26 18 39 22 52 16 C48 40 41 56 30 63Z"
-          fill="#FDFCF8"
-          stroke="#D9D5C8"
-          strokeWidth="1"
-        />
-        <path d="M21 5 C29 20 33 38 30 62" fill="none" stroke="#E2DED2" strokeWidth="1" />
-        <path
-          d="M30 60 C29 48 31 37 34 29"
-          stroke="#E0C255"
-          strokeWidth="3.2"
-          strokeLinecap="round"
+          d="M35 8 C33 40 33 70 35 104"
           fill="none"
+          stroke="#E2CBAB"
+          strokeWidth="1.6"
+          strokeLinecap="round"
         />
       </symbol>
 
-      <symbol id={BLOOM_ID} viewBox="0 0 100 110">
+      {/* ---- Dried ranunculus cluster ---- */}
+      <symbol id={BLOOM_ID} viewBox="0 0 110 120">
         <path
-          d="M52 62 C58 80 64 92 60 110"
+          d="M54 62 C58 82 62 96 58 120"
           fill="none"
           style={{ stroke: 'var(--stem)' }}
-          strokeWidth="1.6"
+          strokeWidth="1.8"
         />
         <path
-          d="M66 58 C74 74 80 88 78 108"
+          d="M70 58 C78 74 84 90 82 118"
+          fill="none"
+          style={{ stroke: 'var(--stem)' }}
+          strokeWidth="1.5"
+          opacity=".8"
+        />
+        <path
+          d="M40 62 C36 78 38 96 32 116"
           fill="none"
           style={{ stroke: 'var(--stem)' }}
           strokeWidth="1.4"
           opacity=".8"
         />
-        <path
-          d="M40 60 C36 76 38 92 34 104"
-          fill="none"
-          style={{ stroke: 'var(--stem)' }}
-          strokeWidth="1.3"
-          opacity=".8"
-        />
         <ellipse
           cx="22"
-          cy="54"
-          rx="16"
-          ry="6"
-          transform="rotate(-30 22 54)"
+          cy="56"
+          rx="17"
+          ry="6.5"
+          transform="rotate(-28 22 56)"
           style={{ fill: 'var(--stem)' }}
           opacity=".7"
         />
         <ellipse
-          cx="80"
-          cy="50"
-          rx="15"
-          ry="5.5"
-          transform="rotate(25 80 50)"
+          cx="88"
+          cy="52"
+          rx="16"
+          ry="6"
+          transform="rotate(26 88 52)"
           style={{ fill: 'var(--stem)' }}
-          opacity=".6"
+          opacity=".55"
         />
-        {BLOSSOMS.map((blossom, index) => (
-          <g
-            key={index}
-            transform={`translate(${blossom.cx} ${blossom.cy}) rotate(${blossom.rotate})`}
-          >
-            {PETAL_OFFSETS.map(([x, y], petal) => (
+        {BLOOMS.map((bloom, index) => (
+          <g key={index} transform={`translate(${bloom.cx} ${bloom.cy}) rotate(${bloom.rotate})`}>
+            {bloomPetals(bloom).map((petal) => (
               <circle
-                key={petal}
-                cx={(x * blossom.r * 0.55).toFixed(1)}
-                cy={(y * blossom.r * 0.55).toFixed(1)}
-                r={(blossom.r * 0.62).toFixed(1)}
-                fill={blossom.fill}
-                stroke="rgba(120,125,100,.35)"
+                key={petal.key}
+                cx={petal.cx}
+                cy={petal.cy}
+                r={petal.r}
+                fill={bloom.tone}
+                opacity={petal.opacity}
+                stroke="rgba(150,105,80,.28)"
                 strokeWidth=".4"
               />
             ))}
-            <circle r={(blossom.r * 0.2).toFixed(1)} fill="#C8D08A" />
+            <circle r={round(bloom.r * 0.2, 2)} style={{ fill: 'var(--accent)' }} opacity=".75" />
           </g>
         ))}
       </symbol>
 
-      <symbol id={AMARANTH_ID} viewBox="0 0 80 220">
-        {/* Main stem and two leaves. */}
+      {/* ---- Eucalyptus branch ---- */}
+      <symbol id={EUCALYPTUS_ID} viewBox="0 0 90 210">
         <path
-          d="M40 4 C38 40 36 70 34 96"
+          d="M45 4 C33 60 27 130 30 206"
           fill="none"
           style={{ stroke: 'var(--stem)' }}
-          strokeWidth="3.4"
+          strokeWidth="2.4"
           strokeLinecap="round"
         />
-        <path
-          d="M39 24 C28 22 20 28 14 36 C24 38 33 34 39 24Z"
-          style={{ fill: 'var(--stem)' }}
-          opacity=".8"
-        />
-        <path
-          d="M40 52 C52 50 60 56 66 64 C56 66 46 62 40 52Z"
-          style={{ fill: 'var(--stem)' }}
-          opacity=".7"
-        />
-        {/* Three drooping tassels, each a bottlebrush of small florets. */}
-        {AMARANTH_TASSELS.map((tassel, index) => (
-          <g key={index} opacity={tassel.opacity}>
-            <path
-              d={tassel.spine}
-              fill="none"
-              style={{ stroke: 'var(--stem)' }}
-              strokeWidth="1.6"
-              strokeLinecap="round"
+        {EUCALYPTUS_LEAVES.map((leaf, index) => (
+          <g key={index} transform={`translate(${leaf.cx} ${leaf.cy}) rotate(${leaf.rotate})`}>
+            <ellipse
+              rx={leaf.rx}
+              ry={leaf.ry}
+              style={{ fill: 'var(--stem)' }}
+              opacity={leaf.opacity}
             />
-            {tassel.florets.map((floret, i) => (
-              <circle
-                key={i}
-                cx={floret.cx}
-                cy={floret.cy}
-                r={floret.r}
-                style={{ fill: 'var(--stem)' }}
-              />
-            ))}
+            <path
+              d={`M${-leaf.rx * 0.6} 0 H${leaf.rx * 0.6}`}
+              stroke="rgba(255,255,255,.35)"
+              strokeWidth=".7"
+            />
           </g>
         ))}
+      </symbol>
+
+      {/* ---- Sun over an arch ---- */}
+      <symbol id={SUNARCH_ID} viewBox="0 0 120 120">
+        <g style={{ stroke: 'var(--accent)' }} strokeWidth="2.6" strokeLinecap="round" fill="none">
+          {Array.from({ length: 12 }, (_, index) => {
+            const angle = (index / 12) * Math.PI * 2;
+            const inner = 34;
+            const outer = 46;
+            return (
+              <line
+                key={index}
+                x1={round(60 + Math.cos(angle) * inner)}
+                y1={round(56 + Math.sin(angle) * inner)}
+                x2={round(60 + Math.cos(angle) * outer)}
+                y2={round(56 + Math.sin(angle) * outer)}
+                opacity={index % 2 === 0 ? 0.9 : 0.5}
+              />
+            );
+          })}
+        </g>
+        <circle cx="60" cy="56" r="26" style={{ fill: 'var(--accent)' }} opacity=".92" />
+        <path
+          d="M40 104 V72 a20 20 0 0 1 40 0 v32"
+          fill="none"
+          style={{ stroke: 'var(--stem)' }}
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
       </symbol>
     </svg>
   );
@@ -280,53 +340,79 @@ export function IllustrationDefs() {
 /* Individual illustrations                                                   */
 /* -------------------------------------------------------------------------- */
 
-/** Arum lily. Stem and leaf follow `--stem`. */
-export function Calla({ className, rotate }: { className?: string; rotate?: number }) {
+/** Pampas plume. Stem and leaf follow `--stem`, the plume stays warm sand. */
+export function Pampas({ className, rotate }: { className?: string; rotate?: number }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 60 200"
+      viewBox="0 0 70 220"
       aria-hidden="true"
       focusable="false"
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
     >
-      <use href={`#${CALLA_ID}`} />
+      <use href={`#${PAMPAS_ID}`} />
     </svg>
   );
 }
 
-/** Hydrangea cluster. Stems and leaves follow `--stem`. */
-export function Hydrangea({ className }: { className?: string }) {
+/** Cluster of dried ranunculus. Stems follow `--stem`, hearts follow `--accent`. */
+export function DriedBloom({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+    <svg className={className} viewBox="0 0 110 120" aria-hidden="true" focusable="false">
       <use href={`#${BLOOM_ID}`} />
     </svg>
   );
 }
 
-/** Drooping amaranth. Entirely `--stem`. */
-export function Amaranth({ className }: { className?: string }) {
+/** Eucalyptus branch. Entirely `--stem`. */
+export function Eucalyptus({ className, rotate }: { className?: string; rotate?: number }) {
   return (
-    <svg className={className} viewBox="0 0 80 220" aria-hidden="true" focusable="false">
-      <use href={`#${AMARANTH_ID}`} />
+    <svg
+      className={className}
+      viewBox="0 0 90 210"
+      aria-hidden="true"
+      focusable="false"
+      style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
+    >
+      <use href={`#${EUCALYPTUS_ID}`} />
+    </svg>
+  );
+}
+
+/** Sun rising over a desert arch. `--accent` for the sun, `--stem` for the arch. */
+export function SunArch({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+      <use href={`#${SUNARCH_ID}`} />
     </svg>
   );
 }
 
 /**
- * Postmark: concentric rings plus cancellation waves, with the event date in
- * roman-month form at the centre. `currentColor`, so the caller picks the ink.
+ * Postmark: a sun-rayed cancel with the event date at the centre and three
+ * wavy cancellation lines. `currentColor`, so the caller picks the ink.
  */
 export function Postmark({ className, date }: { className?: string; date: string }) {
+  const rays = Array.from({ length: 16 }, (_, index) => {
+    const angle = (index / 16) * Math.PI * 2;
+    return {
+      x1: round(30 + Math.cos(angle) * 20),
+      y1: round(30 + Math.sin(angle) * 20),
+      x2: round(30 + Math.cos(angle) * 25),
+      y2: round(30 + Math.sin(angle) * 25),
+    };
+  });
+
   return (
     <svg className={className} viewBox="0 0 120 60" aria-hidden="true" focusable="false">
-      <g fill="none" stroke="currentColor" strokeWidth="1.3">
-        <circle cx="30" cy="30" r="24" />
-        <circle cx="30" cy="30" r="18" />
-        <path d="M58 16 q8 -5 16 0 t16 0 t16 0 t14 0" />
-        <path d="M58 26 q8 -5 16 0 t16 0 t16 0 t14 0" />
-        <path d="M58 36 q8 -5 16 0 t16 0 t16 0 t14 0" />
-        <path d="M58 46 q8 -5 16 0 t16 0 t16 0 t14 0" />
+      <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+        <circle cx="30" cy="30" r="19" />
+        {rays.map((ray, index) => (
+          <line key={index} x1={ray.x1} y1={ray.y1} x2={ray.x2} y2={ray.y2} />
+        ))}
+        <path d="M58 18 q9 -6 18 0 t18 0 t18 0" />
+        <path d="M58 30 q9 -6 18 0 t18 0 t18 0" />
+        <path d="M58 42 q9 -6 18 0 t18 0 t18 0" />
       </g>
       <text
         x="30"
@@ -335,7 +421,7 @@ export function Postmark({ className, date }: { className?: string; date: string
         fontSize="7"
         fill="currentColor"
         fontFamily="Georgia,serif"
-        letterSpacing="1"
+        letterSpacing="0.8"
       >
         {date}
       </text>
@@ -343,23 +429,27 @@ export function Postmark({ className, date }: { className?: string; date: string
   );
 }
 
+export type StampVariant = 'pampas' | 'eucalyptus' | 'sun';
+
 /**
- * Perforated stamp. The dentelure is a CSS mask (see `styles.css`); the SVG
- * only carries the motif, which is why it is colourable by `--accent`.
+ * Illustrated stamp. The perforation is a CSS mask (see `styles.css`); the SVG
+ * only carries the motif, which is why it is colourable by the palette.
  */
 export function Stamp({
   className,
-  variant = 'calla',
+  variant = 'pampas',
   value,
 }: {
   className?: string;
-  variant?: 'calla' | 'bloom';
+  variant?: StampVariant;
   value: string;
 }) {
   return (
-    <span className={`stamp${variant === 'bloom' ? ' s2' : ''}${className ? ` ${className}` : ''}`}>
-      <span className="in">
-        {variant === 'calla' ? <Calla /> : <Hydrangea />}
+    <span className={`tb-stamp tb-stamp-${variant}${className ? ` ${className}` : ''}`}>
+      <span className="tb-stamp-in">
+        {variant === 'pampas' && <Pampas />}
+        {variant === 'eucalyptus' && <Eucalyptus />}
+        {variant === 'sun' && <SunArch />}
         <i>{value}</i>
       </span>
     </span>
@@ -367,22 +457,22 @@ export function Stamp({
 }
 
 /* -------------------------------------------------------------------------- */
-/* Photo placeholder                                                          */
+/* Photo placeholders                                                         */
 /* -------------------------------------------------------------------------- */
 
-const PLACEHOLDER_VARIANTS = ['sea', 'city', 'hills'] as const;
+const PLACEHOLDER_VARIANTS = ['dunes', 'arch', 'cactus'] as const;
 export type PlaceholderVariant = (typeof PLACEHOLDER_VARIANTS)[number];
 
 /** Picks a stable placeholder scene from the slot id, so it never flickers. */
 export function placeholderVariant(slotId: string): PlaceholderVariant {
   let hash = 0;
   for (let i = 0; i < slotId.length; i += 1) hash = (hash * 31 + slotId.charCodeAt(i)) % 997;
-  return PLACEHOLDER_VARIANTS[hash % PLACEHOLDER_VARIANTS.length] ?? 'sea';
+  return PLACEHOLDER_VARIANTS[hash % PLACEHOLDER_VARIANTS.length] ?? 'dunes';
 }
 
 /**
- * Elegant stand-in for an empty photo slot: a monochrome engraved scene, never
- * a broken image. Drawn in SVG so it scales to any polaroid size.
+ * Stand-in for an empty photo slot: a warm desert scene in the theme's sepia
+ * range, never a broken image. Drawn in SVG so it scales to any frame.
  */
 export function PhotoPlaceholder({
   variant,
@@ -399,66 +489,49 @@ export function PhotoPlaceholder({
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="300" height="315" fill="#d8d6d1" />
-      {variant === 'sea' && (
+      <rect width="300" height="315" fill="#E7D2B8" />
+      {variant === 'dunes' && (
         <>
-          <circle cx="216" cy="82" r="26" fill="#f1f0ec" />
-          <path d="M0 190 H300 V315 H0Z" fill="#8f8e8a" />
+          <circle cx="212" cy="80" r="30" fill="#F4E3CA" />
+          <path d="M0 200 C60 168 120 186 180 200 C230 212 268 196 300 200 V315 H0Z" fill="#D3AE86" />
+          <path d="M0 240 C80 214 160 232 300 226 V315 H0Z" fill="#BE9068" />
+          <path d="M0 282 C90 268 190 274 300 276 V315 H0Z" fill="#A5774F" />
           <path
-            d="M0 205 q30 -10 60 0 t60 0 t60 0 t60 0 t60 0"
+            d="M0 210 q40 -8 80 2 t80 4"
             fill="none"
-            stroke="#b9b8b4"
-            strokeWidth="3"
+            stroke="#E7CBA8"
+            strokeWidth="2"
+            opacity=".7"
           />
-          <path
-            d="M0 232 q30 -10 60 0 t60 0 t60 0 t60 0 t60 0"
-            fill="none"
-            stroke="#a8a7a3"
-            strokeWidth="3"
-          />
-          <path
-            d="M0 262 q30 -10 60 0 t60 0 t60 0 t60 0 t60 0"
-            fill="none"
-            stroke="#9a9995"
-            strokeWidth="3"
-          />
-          <path d="M120 190 L150 150 L180 190Z" fill="#6f6e6a" />
         </>
       )}
-      {variant === 'city' && (
+      {variant === 'arch' && (
         <>
-          <rect y="0" width="300" height="315" fill="#dededa" />
-          <g fill="#7b7a76">
-            <rect x="10" y="150" width="46" height="165" />
-            <rect x="66" y="112" width="58" height="203" />
-            <rect x="134" y="168" width="40" height="147" />
-            <rect x="184" y="96" width="52" height="219" />
-            <rect x="246" y="146" width="44" height="169" />
-          </g>
-          <g fill="#cfcecb" opacity=".8">
-            <rect x="80" y="130" width="10" height="14" />
-            <rect x="100" y="130" width="10" height="14" />
-            <rect x="80" y="160" width="10" height="14" />
-            <rect x="100" y="160" width="10" height="14" />
-            <rect x="198" y="118" width="10" height="14" />
-            <rect x="216" y="118" width="10" height="14" />
-            <rect x="198" y="150" width="10" height="14" />
-            <rect x="216" y="150" width="10" height="14" />
-          </g>
-          <path d="M0 296 H300 V315 H0Z" fill="#605f5c" />
+          <rect width="300" height="315" fill="#EBD8BE" />
+          <circle cx="96" cy="86" r="24" fill="#F6E8D2" />
+          <path
+            d="M40 315 V150 a110 110 0 0 1 220 0 V315 h-56 V150 a54 54 0 0 0 -108 0 V315Z"
+            fill="#C68A5E"
+          />
+          <path d="M0 300 H300 V315 H0Z" fill="#A5774F" />
+          <path d="M96 315 V182 a54 54 0 0 1 108 0 V315Z" fill="#E3C7A4" opacity=".75" />
         </>
       )}
-      {variant === 'hills' && (
+      {variant === 'cactus' && (
         <>
-          <circle cx="82" cy="72" r="22" fill="#f1f0ec" />
-          <path
-            d="M0 196 C70 150 120 176 176 192 C226 206 262 176 300 186 V315 H0Z"
-            fill="#9b9a96"
-          />
-          <path d="M0 236 C80 206 160 224 300 218 V315 H0Z" fill="#7d7c78" />
-          <path d="M96 236 C90 200 93 166 101 142 C110 166 113 200 107 236Z" fill="#4a4946" />
-          <path d="M206 244 C201 212 204 184 211 166 C219 184 222 212 217 244Z" fill="#545350" />
-          <path d="M0 276 C100 262 200 268 300 270 V315 H0Z" fill="#686764" />
+          <rect width="300" height="315" fill="#EDDCC3" />
+          <circle cx="234" cy="70" r="22" fill="#F7EAD5" />
+          <path d="M0 248 C90 232 200 240 300 236 V315 H0Z" fill="#C79A70" />
+          <g fill="#9BA97E">
+            <rect x="126" y="120" width="34" height="140" rx="17" />
+            <path d="M126 176 h-24 a14 14 0 0 0 -14 14 v20 a14 14 0 0 0 14 14 h24Z" />
+            <path d="M160 156 h26 a14 14 0 0 1 14 14 v42 a14 14 0 0 1 -14 14 h-26Z" />
+          </g>
+          <g fill="#8A9770">
+            <rect x="52" y="196" width="20" height="64" rx="10" />
+            <rect x="226" y="184" width="22" height="76" rx="11" />
+          </g>
+          <path d="M0 292 H300 V315 H0Z" fill="#A97E56" />
         </>
       )}
     </svg>
@@ -466,7 +539,7 @@ export function PhotoPlaceholder({
 }
 
 /**
- * Engraved landscape used as the venue postcard when no photo is uploaded.
+ * Desert landscape used as the venue postcard when no photo is uploaded.
  * 3:2, like the `venue` slot.
  */
 export function PostcardPlaceholder({ className }: { className?: string }) {
@@ -479,26 +552,26 @@ export function PostcardPlaceholder({ className }: { className?: string }) {
       focusable="false"
     >
       <defs>
-        <linearGradient id="ni-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e8e8e8" />
-          <stop offset="1" stopColor="#bdbdbd" />
+        <linearGradient id="tb-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#F5DFC0" />
+          <stop offset="1" stopColor="#E9BE95" />
         </linearGradient>
       </defs>
-      <rect width="300" height="200" fill="url(#ni-sky)" />
-      <circle cx="230" cy="52" r="16" fill="#f7f7f7" />
-      <path d="M0 120 C60 95 110 100 160 112 C210 124 250 100 300 108 V200 H0Z" fill="#9a9a9a" />
-      <path d="M0 150 C80 130 150 140 300 138 V200 H0Z" fill="#7a7a7a" />
-      <rect x="120" y="112" width="70" height="38" fill="#d6d6d6" />
-      <path d="M114 114 L155 94 L196 114Z" fill="#6b6b6b" />
-      <rect x="132" y="124" width="8" height="10" fill="#555" />
-      <rect x="150" y="124" width="8" height="10" fill="#555" />
-      <rect x="168" y="124" width="8" height="10" fill="#555" />
-      <rect x="150" y="138" width="10" height="12" fill="#444" />
-      <path d="M95 150 C90 120 92 90 99 70 C106 90 108 120 103 150Z" fill="#3c3c3c" />
-      <path d="M212 150 C208 124 210 100 216 84 C222 100 224 124 220 150Z" fill="#454545" />
-      <ellipse cx="40" cy="160" rx="26" ry="14" fill="#5a5a5a" />
-      <ellipse cx="262" cy="164" rx="30" ry="15" fill="#555" />
-      <path d="M0 176 C100 166 200 170 300 172 V200 H0Z" fill="#666" />
+      <rect width="300" height="200" fill="url(#tb-sky)" />
+      <circle cx="222" cy="54" r="20" fill="#F6E7CF" />
+      <path d="M0 122 C50 96 96 104 140 116 C190 130 244 104 300 112 V200 H0Z" fill="#CE9A6E" />
+      <path d="M0 150 C80 132 160 142 300 140 V200 H0Z" fill="#B8814F" />
+      <path
+        d="M96 164 V108 a34 34 0 0 1 68 0 V164 h-18 V108 a16 16 0 0 0 -32 0 V164Z"
+        fill="#9C6238"
+      />
+      <g fill="#8E9C72">
+        <rect x="36" y="130" width="14" height="40" rx="7" />
+        <path d="M36 142 h-10 a8 8 0 0 0 -8 8 v8 a8 8 0 0 0 8 8 h10Z" />
+        <rect x="250" y="136" width="13" height="36" rx="6.5" />
+      </g>
+      <ellipse cx="200" cy="178" rx="34" ry="9" fill="#A9754A" opacity=".7" />
+      <path d="M0 182 C100 172 200 176 300 178 V200 H0Z" fill="#A06A3E" />
     </svg>
   );
 }

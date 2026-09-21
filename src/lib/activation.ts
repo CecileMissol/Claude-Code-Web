@@ -4,7 +4,7 @@ import { CONTENT_VERSION, type Locale } from '@/content/schema';
 import { defaultContent } from '@/content/defaults';
 import { adminEmails } from '@/lib/env';
 import { sendMail } from '@/lib/mail';
-import { getThemeIdBySlug } from '@/db/seed-themes';
+import { getThemeIdBySlug } from '@/db/seed';
 import { isThemeSlug, loadTheme } from '@/themes/registry';
 import {
   createActivation,

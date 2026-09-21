@@ -1,35 +1,38 @@
 import { z } from 'zod';
 
 /**
- * Theme-specific `content.extras` for "Noir & ivoire".
+ * Theme-specific `content.extras` for "Terracotta Bloom".
  *
- * These are the decorative blocks of the mock-up that other themes may not be
- * able to draw: the torn train ticket of the story chapter, the handwritten
- * note on kraft paper, and the envelope kicker line.
+ * The shape is deliberately the same as the one "Noir & ivoire" declares: the
+ * keepsake of the story chapter, the handwritten note, and the envelope kicker
+ * line. The couple can switch themes without losing them — only the drawing
+ * changes (here the keepsake is printed as a bar/table card rather than as a
+ * torn train ticket).
  */
 
 const Text = (max: number) => z.string().trim().max(max);
 
 export const Memento = z.object({
+  /** Kept as `'ticket'` for cross-theme compatibility of `extras`. */
   kind: z.literal('ticket'),
-  /** e.g. "Marseille → Paris" */
+  /** Headline of the card: "The Cactus Bar", "Palm Springs → Joshua Tree"… */
   route: Text(30),
-  /** Free-form, printed as-is: "14.02.19" */
+  /** Free-form, printed as-is: "05.18.21" */
   date: Text(12),
-  /** e.g. "Voiture 12" */
+  /** e.g. "Table 4" */
   lineA: Text(20),
-  /** e.g. "Places 45 · 46" */
+  /** e.g. "Two lemonades" */
   lineB: Text(20),
 });
 export type Memento = z.infer<typeof Memento>;
 
 export const Extras = z.object({
   memento: Memento.optional(),
-  /** Short handwritten note on kraft paper: "elle a dit oui". */
+  /** Short handwritten note on kraft paper: "she said yes". */
   note: Text(30).optional(),
   envelope: z
     .object({
-      /** Line shown above the envelope: "Une lettre pour vous". */
+      /** Line shown above the envelope: "Sealed by hand, for you". */
       kicker: Text(40).optional(),
     })
     .optional(),

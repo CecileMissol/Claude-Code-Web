@@ -6,7 +6,7 @@ import { buildIntroTimeline, resetIntro, type IntroElements } from './intro';
 import { activeLineIndex, clamp01 } from './thresholds';
 
 /**
- * All the motion of the invitation, in one effect.
+ * All the motion of the "Riviera Postcard" invitation, in one effect.
  *
  * Why one hook: the editor re-renders `<Invitation mode="preview">` on every
  * keystroke, so every timeline, ScrollTrigger, listener and scroll lock must be
@@ -124,9 +124,9 @@ export function useInvitationMotion(
           back: pick('[data-env-back]'),
           seal: pick('[data-env-seal]'),
           flap: pick('[data-env-flap]'),
-          ticket: pick('[data-env-ticket]'),
-          polaroid1: pick('[data-env-polaroid="1"]'),
-          polaroid2: pick('[data-env-polaroid="2"]'),
+          card: pick('[data-env-card]'),
+          snap1: pick('[data-env-snap="1"]'),
+          snap2: pick('[data-env-snap="2"]'),
           tuck1: pick('[data-env-tuck="1"]'),
           tuck2: pick('[data-env-tuck="2"]'),
         };

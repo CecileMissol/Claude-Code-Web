@@ -7,11 +7,12 @@ import { remainingMs } from '../animations/time';
 import type { Messages } from '../messages';
 
 /**
- * The countdown of the "date" chapter.
+ * The countdown of the "date" chapter — four arched tiles of clay, sand and
+ * sage.
  *
  * Anchored on the event's own time zone (`content.event.timezone`), not the
- * guest's: a guest in Montréal and a guest in Paris must see the same number of
- * days left. See `animations/time.ts`.
+ * guest's: a guest in Los Angeles and a guest in Paris must see the same number
+ * of days left. See `animations/time.ts`.
  *
  * The first render is deterministic (all zeros) so the server markup and the
  * first client markup agree; the real figures land on the first tick.
@@ -36,9 +37,9 @@ export function Countdown({ content, t }: { content: InvitationContent; t: Messa
   ];
 
   return (
-    <div className="count" role="timer" aria-label={t.countdown.label}>
+    <div className="tb-count" role="timer" aria-label={t.countdown.label}>
       {cells.map(([value, label]) => (
-        <div key={label}>
+        <div key={label} className="tb-tile">
           <b>{value}</b>
           <small>{label}</small>
         </div>

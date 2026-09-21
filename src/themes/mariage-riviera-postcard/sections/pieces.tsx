@@ -2,8 +2,8 @@ import type { CSSProperties, ReactNode } from 'react';
 import { PhotoPlaceholder, PostcardPlaceholder, placeholderVariant } from '../assets/illustrations';
 
 /**
- * Small building blocks shared by the chapters: the polaroid, the postcard
- * image, and the generic "piece of the collage" wrapper.
+ * Small building blocks shared by the chapters: the bordered snapshot, the
+ * postcard image, and the generic "piece of the collage" wrapper.
  */
 
 /** A photo of `content.photos`, with its public R2 URL already resolved. */
@@ -58,15 +58,19 @@ export function Piece({
 }
 
 /**
- * Polaroid. Renders the uploaded photo when the slot is filled, and an engraved
- * SVG scene when it is not — never a broken image.
+ * A holiday snapshot in its deckled postcard border — the Riviera equivalent of
+ * a polaroid, with a wider white margin at the bottom for the handwritten
+ * caption and a thin striped edge along the top.
+ *
+ * Renders the uploaded photo when the slot is filled, and a sun-bleached SVG
+ * scene when it is not — never a broken image.
  *
  * Photos are resized and converted to WebP in the browser before upload and
  * stored at a single size (phase 2, §5.4: one key per slot,
  * `invitations/{id}/photos/{uuid}.webp`), so there is no `srcset` to build:
  * `width`/`height` come from the content and reserve the space.
  */
-export function Polaroid({
+export function Snapshot({
   photo,
   slotId,
   caption,

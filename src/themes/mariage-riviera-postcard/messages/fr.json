@@ -1,24 +1,34 @@
 {
   "intro": {
-    "kicker": "Une lettre pour vous",
+    "kicker": "Une carte postale pour vous",
     "openLabel": "Ouvrir l'enveloppe",
     "openButton": "Ouvrir",
     "hint": "Touchez l'enveloppe pour l'ouvrir",
     "scrollCue": "Faites défiler",
-    "saveTheDate": "Save the date",
-    "weAreGettingMarried": "on se marie !"
+    "saveTheDate": "Réservez la date",
+    "weAreGettingMarried": "on se marie !",
+    "airmail": "Par avion · by air mail",
+    "stampCountry": "Riviera"
   },
   "chapters": {
     "story": "Notre histoire",
     "date": "La date",
-    "program": "Le programme",
+    "program": "La journée",
     "place": "Le lieu"
   },
   "story": {
     "mementoDate": "Date"
   },
+  "date": {
+    "day": "jour",
+    "month": "mois",
+    "year": "année"
+  },
+  "program": {
+    "menuKicker": "Le menu du jour"
+  },
   "countdown": {
-    "label": "Compte à rebours avant le mariage",
+    "label": "Compte à rebours jusqu'au mariage",
     "days": "jours",
     "hours": "heures",
     "minutes": "minutes",
@@ -46,16 +56,16 @@
     "closed": "Les réponses sont closes.",
     "honeypot": "Laissez ce champ vide",
     "errors": {
-      "invalid": "Vérifiez les champs : quelque chose manque.",
+      "invalid": "Vérifiez le formulaire : il manque quelque chose.",
       "rateLimited": "Trop de tentatives. Réessayez dans quelques minutes.",
       "server": "L'envoi a échoué. Réessayez dans un instant."
     },
-    "dataNotice": "Votre réponse (nom, e-mail, présence, nombre de personnes, régime et message) est transmise uniquement aux mariés pour organiser la journée. Elle est hébergée dans l'Union européenne et supprimée six mois après l'événement. Pour y accéder, la corriger ou la faire effacer, écrivez aux mariés.",
+    "dataNotice": "Votre réponse (nom, e-mail, présence, nombre de personnes, régime et message) est transmise uniquement aux mariés, pour organiser la journée. Elle est hébergée dans l'Union européenne et supprimée six mois après l'événement. Pour y accéder, la corriger ou l'effacer, écrivez aux mariés.",
     "addToCalendar": "Ajouter à mon agenda"
   },
   "signature": {
     "label": "Signature",
-    "farewell": "À très vite"
+    "farewell": "On vous attend au bord de l'eau"
   },
   "demoBanner": "Démonstration"
 }

@@ -19,7 +19,7 @@ import { Rsvp } from './sections/Rsvp';
 import { Signature } from './sections/Signature';
 
 /**
- * Animated root of the "Noir & ivoire" invitation.
+ * Animated root of the "Terracotta Bloom" invitation.
  *
  * Everything below this component is client-side: the envelope timeline, the
  * scroll-driven chapters and the RSVP form all need the browser. The server
@@ -73,7 +73,7 @@ export function InvitationClient({
   return (
     <div
       ref={rootRef}
-      className="invitation"
+      className="invitation tb-root"
       data-theme="mariage-terracotta-bloom"
       data-palette={paletteId}
       data-mode={mode}
@@ -85,7 +85,7 @@ export function InvitationClient({
     >
       <IllustrationDefs />
 
-      {mode === 'demo' && <p className="demo-banner">{t.demoBanner}</p>}
+      {mode === 'demo' && <p className="tb-demo-banner">{t.demoBanner}</p>}
 
       <Intro
         t={t}

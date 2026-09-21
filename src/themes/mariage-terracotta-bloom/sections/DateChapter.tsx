@@ -1,17 +1,18 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { Calla } from '../assets/illustrations';
+import { Eucalyptus, Pampas, SunArch } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle } from './pieces';
 import { Countdown } from './Countdown';
 
 /**
- * Chapter 2 — "The date".
+ * Chapter 2 — "The day".
  *
- * Day, month and year land on three different papers, two arums frame the
- * scene, the highlight word is wiped in, and the countdown appears last.
+ * The day lands inside a terracotta arch, the month on sand paper and the year
+ * on a sage slip; a sun rises in the corner, the highlight word is wiped in and
+ * the countdown closes the scene on four arched tiles.
  */
 export function DateChapter({
   t,
@@ -31,92 +32,102 @@ export function DateChapter({
 
   return (
     <section
-      className="chapter"
+      className="tb-chapter"
       data-chapter="date"
       style={{ '--len': `${CHAPTER_LENGTH.date}vh` } as React.CSSProperties}
       aria-label={t.chapters.date}
     >
-      <div className="sticky">
-        <div className="board">
+      <div className="tb-sticky">
+        <div className="tb-board">
           <Piece
             at={at.day}
-            className="shadow"
             style={pieceStyle(
-              { left: '3%', top: '6%', width: '36%' },
-              { from: 'translateY(-90vh) rotate(-30deg)', to: 'rotate(-5deg)' },
+              { right: '2%', top: '0%', width: '26%', transformOrigin: '70% 30%' },
+              { from: 'scale(0) rotate(-40deg)', to: 'none' },
             )}
           >
-            <div className="scrap d1 torn">
+            <SunArch />
+          </Piece>
+
+          <Piece
+            at={at.day}
+            className="tb-shadow"
+            style={pieceStyle(
+              { left: '3%', top: '5%', width: '40%' },
+              { from: 'translateY(-90vh) rotate(-22deg)', to: 'rotate(-3deg)' },
+            )}
+          >
+            <div className="tb-arch-card tb-d1">
               <b>{day}</b>
             </div>
           </Piece>
 
           <Piece
             at={at.month}
-            className="shadow"
+            className="tb-shadow"
             style={pieceStyle(
-              { left: '33%', top: '20%', width: '34%' },
-              { from: 'translate(70vw, 20vh) rotate(35deg)', to: 'rotate(3deg)' },
+              { right: '8%', top: '25%', width: '36%' },
+              { from: 'translate(70vw, 18vh) rotate(30deg)', to: 'rotate(3deg)' },
             )}
           >
-            <div className="scrap d2 torn">
+            <div className="tb-slip tb-d2 tb-torn">
               <b>{month}</b>
             </div>
           </Piece>
 
           <Piece
             at={at.year}
-            className="shadow"
+            className="tb-shadow"
             style={pieceStyle(
-              { left: '62%', top: '4%', width: '35%' },
-              { from: 'translate(40vw, -80vh) rotate(-25deg)', to: 'rotate(-2deg)' },
+              { left: '12%', top: '40%', width: '32%' },
+              { from: 'translate(-40vw, 30vh) rotate(-28deg)', to: 'rotate(-2deg)' },
             )}
           >
-            <div className="scrap d3 torn">
+            <div className="tb-slip tb-d3 tb-torn-b">
               <b>{year.slice(2)}</b>
             </div>
           </Piece>
 
           <Piece
-            at={at.callaLeft}
+            at={at.sprigLeft}
             style={pieceStyle(
-              { left: '-2%', top: '40%', width: '11%', height: '46%' },
-              { from: 'translateY(50vh) rotate(-50deg)', to: 'rotate(-14deg)' },
+              { left: '-7%', top: '30%', width: '13%', height: '44%' },
+              { from: 'translateY(50vh) rotate(-50deg)', to: 'rotate(-12deg)' },
             )}
           >
-            <Calla />
+            <Eucalyptus />
           </Piece>
 
           <Piece
-            at={at.callaRight}
+            at={at.sprigRight}
             style={pieceStyle(
-              { right: '-1%', top: '44%', width: '11%', height: '44%' },
-              { from: 'translateY(50vh) rotate(50deg)', to: 'rotate(16deg)' },
+              { right: '-6%', top: '40%', width: '14%', height: '44%' },
+              { from: 'translateY(50vh) rotate(50deg)', to: 'rotate(14deg)' },
             )}
           >
-            <Calla />
+            <Pampas />
           </Piece>
 
           {content.dateChapter.highlight && (
             <Piece
               at={at.highlight}
-              className="reveal"
+              className="tb-reveal"
               style={pieceStyle(
-                { left: '5%', top: '55%', width: '90%' },
+                { left: '4%', top: '60%', width: '92%' },
                 { from: 'none', to: 'none' },
               )}
             >
-              <div className="bigscript">{content.dateChapter.highlight}</div>
+              <div className="tb-bigscript">{content.dateChapter.highlight}</div>
             </Piece>
           )}
 
-          <Piece at={at.countdown} style={pieceStyle({ left: '6%', top: '78%', width: '88%' })}>
+          <Piece at={at.countdown} style={pieceStyle({ left: '5%', top: '78%', width: '90%' })}>
             <Countdown content={content} t={t} />
           </Piece>
         </div>
 
-        <div className="text">
-          <h2 className="ch-title">{t.chapters.date}</h2>
+        <div className="tb-text">
+          <h2 className="tb-ch-title">{t.chapters.date}</h2>
           <ChapterLines lines={lines} thresholds={thresholds} />
         </div>
       </div>

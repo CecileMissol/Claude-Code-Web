@@ -86,17 +86,30 @@ export async function createInvitation(
   return created;
 }
 
-/** Updates the JSON content of an invitation the user owns. */
+/**
+ * Updates the JSON content of an invitation the user owns.
+ *
+ * `locale` is resynchronised in the same statement: `content.locale` is what
+ * the renderer reads, but the column is what the dashboard, the sharing page
+ * and the e-mails read, and the two drifted apart as soon as the couple changed
+ * the language of their invitation in the editor.
+ */
 export async function updateInvitationContentForOwner(
   db: Database,
   id: string,
   ownerId: string,
   content: string,
   contentVersion: number,
+  locale?: string,
 ): Promise<Invitation | null> {
   const updated = await db
     .update(invitations)
-    .set({ content, contentVersion, updatedAt: new Date() })
+    .set({
+      content,
+      contentVersion,
+      ...(locale ? { locale } : {}),
+      updatedAt: new Date(),
+    })
     .where(and(eq(invitations.id, id), eq(invitations.ownerId, ownerId)))
     .returning();
 

@@ -8,10 +8,55 @@
 @theme {
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /*
+   * Brand tokens (see `src/brand.ts`). Each utility below is a thin wrapper
+   * around the matching `--brand-*` custom property, which the application
+   * shell sets on its own wrapper (`.brand-shell`, in
+   * `src/app/(app)/layout.tsx`) from the active `BRAND_ID` preset. Because
+   * these are runtime `var()` references, not baked-in values, the same
+   * utility classes (`bg-brand-accent`, `text-brand-fg`, `font-brand-heading`…)
+   * repaint automatically when the brand changes — and they are simply
+   * unused outside `.brand-shell`, so `/[slug]` and `/demo/*` (which never
+   * render that wrapper) are unaffected.
+   */
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-bg-alt: var(--brand-bg-alt);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-2: var(--brand-accent-2);
+  --color-brand-on-accent: var(--brand-on-accent);
+  --font-brand-heading: var(--brand-font-heading);
+  --font-brand-body: var(--brand-font-body);
+  --font-brand-script: var(--brand-font-script);
 }
 
 :root {
   color-scheme: light dark;
+}
+
+/*
+ * Fallback brand tokens, in case a brand-* utility ever renders outside
+ * `.brand-shell` (belt and braces — the shell itself always sets these
+ * from the resolved `brand` object). Matches the "Kraft & Bloom" default.
+ */
+:root {
+  --brand-bg: #f7efe1;
+  --brand-bg-alt: #f0e4cf;
+  --brand-fg: #3b2e26;
+  --brand-muted: #b79e85;
+  --brand-accent: #c1633d;
+  --brand-accent-2: #d9a441;
+  --brand-on-accent: #f7efe1;
+  --brand-font-heading: Georgia, 'Times New Roman', serif;
+  --brand-font-body: var(--font-sans);
+  --brand-font-script: var(--brand-font-heading);
+}
+
+.brand-shell {
+  background-color: var(--brand-bg);
+  color: var(--brand-fg);
 }
 
 body {

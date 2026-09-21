@@ -1,11 +1,24 @@
 import type { ThemeManifest } from '../types';
 
 /**
- * Manifest of the "Noir & ivoire" wedding theme.
+ * Manifest of the "Riviera Postcard" wedding theme.
  *
- * Palette values are taken verbatim from the validated mock-up
- * (`reference/invitation-mariage-demo.html`): the six CSS custom properties
- * `--env`, `--env-2`, `--seal`, `--accent`, `--stem` and `--liner`.
+ * The three palettes are the ones specified in `docs/strategie-produit.md` §3.3
+ * (Côte d'Azur, Positano Sunset, Capri Citrus), mapped onto the six CSS custom
+ * properties every theme shares (`--env`, `--env-2`, `--seal`, `--accent`,
+ * `--stem`, `--liner`).
+ *
+ * The mapping is not the one of a dark theme, and that is the point: here the
+ * envelope is a **white air-mail envelope**, so `--env` and `--env-2` are the
+ * two whites of the paper, `--seal` is the strong ink (cobalt, coral, azure) —
+ * it colours the wax seal, the buttons and every heavy rule — `--accent` is the
+ * citrus yellow of the stamps and the awnings, `--stem` the foliage of the
+ * lemon tree and the cypresses, and `--liner` the ink of the striped lining
+ * printed inside the envelope.
+ *
+ * The photo slots are deliberately identical to the other wedding themes
+ * (`envelope-1`, `envelope-2`, `story-1`, `story-2`, `venue`): switching theme
+ * must never lose a couple's uploads (BRIEF §7.2).
  */
 export const manifest: ThemeManifest = {
   slug: 'mariage-riviera-postcard',
@@ -15,74 +28,74 @@ export const manifest: ThemeManifest = {
 
   palettes: [
     {
-      id: 'noir',
-      label: { en: 'Black & ivory', fr: 'Noir et ivoire' },
-      swatch: '#1D1D1B',
+      id: 'azur',
+      label: { en: "Côte d'Azur", fr: "Côte d'Azur" },
+      swatch: '#1E3A5F',
       vars: {
-        '--env': '#1D1D1B',
-        '--env-2': '#262624',
-        '--seal': '#55632F',
-        '--accent': '#6E8228',
-        '--stem': '#7C972C',
-        '--liner': '#DCD7CB',
+        '--env': '#FDF8F0',
+        '--env-2': '#F4ECDD',
+        '--seal': '#1E3A5F',
+        '--accent': '#E8B923',
+        '--stem': '#4C7A5E',
+        '--liner': '#1E3A5F',
       },
     },
     {
-      id: 'olivier',
-      label: { en: 'Olive', fr: 'Olivier' },
-      swatch: '#4B5632',
+      id: 'positano',
+      label: { en: 'Positano Sunset', fr: 'Coucher de Positano' },
+      swatch: '#E8735C',
       vars: {
-        '--env': '#4B5632',
-        '--env-2': '#414B2B',
-        '--seal': '#1D1D1B',
-        '--accent': '#4B5632',
-        '--stem': '#6F8A2A',
-        '--liner': '#E3DDCF',
+        '--env': '#FFF8EE',
+        '--env-2': '#F8EADA',
+        '--seal': '#E8735C',
+        '--accent': '#D8A83B',
+        '--stem': '#3E8E8E',
+        '--liner': '#3E8E8E',
       },
     },
     {
-      id: 'encre',
-      label: { en: 'Blue ink', fr: 'Encre bleue' },
-      swatch: '#1F324E',
+      id: 'capri',
+      label: { en: 'Capri Citrus', fr: 'Citrons de Capri' },
+      swatch: '#F4C430',
       vars: {
-        '--env': '#1F324E',
-        '--env-2': '#1A2B44',
-        '--seal': '#9A3A2A',
-        '--accent': '#1F324E',
-        '--stem': '#6F8A2A',
-        '--liner': '#E1DDD3',
+        '--env': '#FCFBF6',
+        '--env-2': '#F2EFE2',
+        '--seal': '#2F6690',
+        '--accent': '#F4C430',
+        '--stem': '#6E7F4B',
+        '--liner': '#2F6690',
       },
     },
   ],
 
   scripts: [
     {
-      id: 'pinyon',
-      label: 'Pinyon Script',
-      fontFamily: "'Pinyon Script', 'Snell Roundhand', cursive",
+      id: 'playball',
+      label: 'Playball',
+      fontFamily: "'Playball', 'Brush Script MT', cursive",
     },
     {
-      id: 'delafield',
-      label: 'Mrs Saint Delafield',
-      fontFamily: "'Mrs Saint Delafield', 'Snell Roundhand', cursive",
+      id: 'alex-brush',
+      label: 'Alex Brush',
+      fontFamily: "'Alex Brush', 'Snell Roundhand', cursive",
     },
     {
-      id: 'allura',
-      label: 'Allura',
-      fontFamily: "'Allura', 'Snell Roundhand', cursive",
+      id: 'yellowtail',
+      label: 'Yellowtail',
+      fontFamily: "'Yellowtail', 'Brush Script MT', cursive",
     },
   ],
 
   photoSlots: [
     {
       id: 'envelope-1',
-      label: { en: 'Envelope, left polaroid', fr: 'Enveloppe, polaroïd de gauche' },
+      label: { en: 'Envelope, left snapshot', fr: 'Enveloppe, photo de gauche' },
       aspect: 1 / 1.05,
       required: false,
     },
     {
       id: 'envelope-2',
-      label: { en: 'Envelope, right polaroid', fr: 'Enveloppe, polaroïd de droite' },
+      label: { en: 'Envelope, right snapshot', fr: 'Enveloppe, photo de droite' },
       aspect: 1 / 1.05,
       required: false,
     },
@@ -117,8 +130,8 @@ export const manifest: ThemeManifest = {
     infoItems: [0, 6],
   },
 
-  defaultPaletteId: 'noir',
-  defaultScriptId: 'pinyon',
+  defaultPaletteId: 'azur',
+  defaultScriptId: 'playball',
 };
 
 export default manifest;

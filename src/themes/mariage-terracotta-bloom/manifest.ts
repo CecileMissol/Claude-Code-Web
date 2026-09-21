@@ -1,11 +1,20 @@
 import type { ThemeManifest } from '../types';
 
 /**
- * Manifest of the "Noir & ivoire" wedding theme.
+ * Manifest of the "Terracotta Bloom" wedding theme (bohemian desert).
  *
- * Palette values are taken verbatim from the validated mock-up
- * (`reference/invitation-mariage-demo.html`): the six CSS custom properties
- * `--env`, `--env-2`, `--seal`, `--accent`, `--stem` and `--liner`.
+ * The three palettes are the ones specified in `docs/strategie-produit.md` §3.2
+ * — *Sienna Dust*, *Desert Rose*, *Amber Dune* — mapped onto the six CSS custom
+ * properties every theme must define (`--env`, `--env-2`, `--seal`, `--accent`,
+ * `--stem`, `--liner`).
+ *
+ * Two of the three envelopes are light (dusty rose, mustard): the stylesheet
+ * repaints the address ink per palette through `[data-palette]`, so the names
+ * on the envelope stay readable whichever palette the couple picks.
+ *
+ * The photo slots are deliberately the same five as "Noir & ivoire"
+ * (`envelope-1`, `envelope-2`, `story-1`, `story-2`, `venue`): switching theme
+ * must never lose the couple's content (BRIEF §7.2).
  */
 export const manifest: ThemeManifest = {
   slug: 'mariage-terracotta-bloom',
@@ -15,80 +24,80 @@ export const manifest: ThemeManifest = {
 
   palettes: [
     {
-      id: 'noir',
-      label: { en: 'Black & ivory', fr: 'Noir et ivoire' },
-      swatch: '#1D1D1B',
+      id: 'sienna',
+      label: { en: 'Sienna dust', fr: 'Terre de Sienne' },
+      swatch: '#C1653A',
       vars: {
-        '--env': '#1D1D1B',
-        '--env-2': '#262624',
-        '--seal': '#55632F',
-        '--accent': '#6E8228',
-        '--stem': '#7C972C',
-        '--liner': '#DCD7CB',
+        '--env': '#C1653A',
+        '--env-2': '#AE5631',
+        '--seal': '#9CAA7C',
+        '--accent': '#7A3B2E',
+        '--stem': '#8FA070',
+        '--liner': '#F3E3CD',
       },
     },
     {
-      id: 'olivier',
-      label: { en: 'Olive', fr: 'Olivier' },
-      swatch: '#4B5632',
+      id: 'desert-rose',
+      label: { en: 'Desert rose', fr: 'Rose du désert' },
+      swatch: '#D9A79C',
       vars: {
-        '--env': '#4B5632',
-        '--env-2': '#414B2B',
-        '--seal': '#1D1D1B',
-        '--accent': '#4B5632',
-        '--stem': '#6F8A2A',
-        '--liner': '#E3DDCF',
+        '--env': '#D9A79C',
+        '--env-2': '#C9948A',
+        '--seal': '#7C8B6F',
+        '--accent': '#B5651D',
+        '--stem': '#7C8B6F',
+        '--liner': '#F7EFE6',
       },
     },
     {
-      id: 'encre',
-      label: { en: 'Blue ink', fr: 'Encre bleue' },
-      swatch: '#1F324E',
+      id: 'amber-dune',
+      label: { en: 'Amber dune', fr: 'Dune ambrée' },
+      swatch: '#D9A441',
       vars: {
-        '--env': '#1F324E',
-        '--env-2': '#1A2B44',
-        '--seal': '#9A3A2A',
-        '--accent': '#1F324E',
-        '--stem': '#6F8A2A',
-        '--liner': '#E1DDD3',
+        '--env': '#D9A441',
+        '--env-2': '#C4902F',
+        '--seal': '#93A187',
+        '--accent': '#4A342A',
+        '--stem': '#93A187',
+        '--liner': '#EFE3CE',
       },
     },
   ],
 
   scripts: [
     {
-      id: 'pinyon',
-      label: 'Pinyon Script',
-      fontFamily: "'Pinyon Script', 'Snell Roundhand', cursive",
+      id: 'beau-rivage',
+      label: 'Beau Rivage',
+      fontFamily: "'Beau Rivage', 'Snell Roundhand', cursive",
     },
     {
-      id: 'delafield',
-      label: 'Mrs Saint Delafield',
-      fontFamily: "'Mrs Saint Delafield', 'Snell Roundhand', cursive",
+      id: 'windsong',
+      label: 'WindSong',
+      fontFamily: "'WindSong', 'Snell Roundhand', cursive",
     },
     {
-      id: 'allura',
-      label: 'Allura',
-      fontFamily: "'Allura', 'Snell Roundhand', cursive",
+      id: 'miss-fajardose',
+      label: 'Miss Fajardose',
+      fontFamily: "'Miss Fajardose', 'Snell Roundhand', cursive",
     },
   ],
 
   photoSlots: [
     {
       id: 'envelope-1',
-      label: { en: 'Envelope, left polaroid', fr: 'Enveloppe, polaroïd de gauche' },
+      label: { en: 'Envelope, left photo', fr: 'Enveloppe, photo de gauche' },
       aspect: 1 / 1.05,
       required: false,
     },
     {
       id: 'envelope-2',
-      label: { en: 'Envelope, right polaroid', fr: 'Enveloppe, polaroïd de droite' },
+      label: { en: 'Envelope, right photo', fr: 'Enveloppe, photo de droite' },
       aspect: 1 / 1.05,
       required: false,
     },
     {
       id: 'story-1',
-      label: { en: 'Story, first photo', fr: 'Histoire, première photo' },
+      label: { en: 'Story, arch photo', fr: 'Histoire, photo en arche' },
       aspect: 1 / 1.05,
       required: false,
     },
@@ -117,8 +126,8 @@ export const manifest: ThemeManifest = {
     infoItems: [0, 6],
   },
 
-  defaultPaletteId: 'noir',
-  defaultScriptId: 'pinyon',
+  defaultPaletteId: 'sienna',
+  defaultScriptId: 'beau-rivage',
 };
 
 export default manifest;

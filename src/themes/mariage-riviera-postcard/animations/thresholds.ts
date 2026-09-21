@@ -1,26 +1,28 @@
 /**
- * Pure scroll-animation maths for "Noir & ivoire".
+ * Pure scroll-animation maths for "Riviera Postcard".
  *
  * Everything the chapters need to decide *what shows when* lives here, with no
- * DOM and no GSAP, so it can be unit-tested and reasoned about. The values come
- * straight from the validated mock-up (`reference/invitation-mariage-demo.html`)
- * — the mock-up hard-codes them per element; here they are derived, so a couple
- * with three story lines or six programme items still gets a balanced chapter.
+ * DOM and no GSAP, so it can be unit-tested and reasoned about. The engine is
+ * the one validated in phase 3 (`docs/phase-3-theme-noir-ivoire.md` §3.2): a
+ * sticky scene, a 0→1 progress, pieces switched on at their threshold. Only the
+ * composition differs — this theme lays its programme out as a single trattoria
+ * menu board instead of a pile of torn notes, so it needs row thresholds rather
+ * than a card layout.
  */
 
-/** Chapter length, as a multiple of the viewport height (the mock-up's `--len`). */
+/** Chapter length, as a multiple of the viewport height. */
 export const CHAPTER_LENGTH = {
-  story: 420,
-  date: 320,
-  program: 380,
-  place: 300,
+  story: 400,
+  date: 340,
+  program: 360,
+  place: 320,
 } as const;
 
 export type ChapterId = keyof typeof CHAPTER_LENGTH;
 
 /**
- * Where the first and the last sentence of each chapter land, taken from the
- * mock-up. Sentences in between are spread evenly.
+ * Where the first and the last sentence of each chapter land. Sentences in
+ * between are spread evenly over the band.
  */
 export const LINE_SPAN: Record<ChapterId, readonly [start: number, end: number]> = {
   story: [0.04, 0.78],
@@ -29,11 +31,8 @@ export const LINE_SPAN: Record<ChapterId, readonly [start: number, end: number]>
   place: [0.04, 0.66],
 };
 
-/** Where the programme cards land, whatever their number (mock-up: 4 → .08 … .68). */
-export const PROGRAM_SPAN: readonly [start: number, end: number] = [0.08, 0.68];
-
-/** Vertical band the programme cards are laid out in, in board percent. */
-export const PROGRAM_TOP_SPAN: readonly [start: number, end: number] = [2, 68];
+/** Where the programme rows are written onto the menu board, whatever their number. */
+export const PROGRAM_SPAN: readonly [start: number, end: number] = [0.14, 0.7];
 
 /** Fixed thresholds of the decorative pieces, per chapter. */
 export const PIECE_AT = {
@@ -41,28 +40,30 @@ export const PIECE_AT = {
     photo1: 0.05,
     memento: 0.23,
     photo2: 0.41,
-    calla: 0.58,
+    parasol: 0.56,
     note: 0.62,
-    bloom: 0.8,
+    bougainvillea: 0.8,
   },
   date: {
     day: 0.06,
     month: 0.2,
     year: 0.34,
-    callaLeft: 0.44,
-    callaRight: 0.47,
-    highlight: 0.52,
-    countdown: 0.7,
+    cypressLeft: 0.44,
+    cypressRight: 0.47,
+    highlight: 0.54,
+    waves: 0.62,
+    countdown: 0.72,
   },
   program: {
-    bloom: 0.84,
+    board: 0.04,
+    lemon: 0.82,
   },
   place: {
     postcard: 0.06,
     stamp: 0.3,
-    postmark: 0.38,
-    bloom: 0.62,
-    amaranth: 0.74,
+    postmark: 0.4,
+    shell: 0.6,
+    vespa: 0.74,
   },
 } as const;
 
@@ -70,9 +71,9 @@ export const PIECE_AT = {
 export const DIRECTIONS_AT = 0.66;
 
 /**
- * Scroll progress of a sticky chapter, exactly as the mock-up computes it:
- * 0 when the chapter's top reaches the top of the viewport, 1 when its bottom
- * reaches the bottom. `top` is the chapter's `getBoundingClientRect().top`.
+ * Scroll progress of a sticky chapter: 0 when the chapter's top reaches the top
+ * of the viewport, 1 when its bottom reaches the bottom. `top` is the chapter's
+ * `getBoundingClientRect().top`.
  *
  * ScrollTrigger gives the same number without depending on `innerHeight`, which
  * is what makes it stable while the iOS address bar collapses; this function
@@ -114,7 +115,7 @@ export function lineThresholds(chapter: ChapterId, count: number): number[] {
 /**
  * Index of the sentence to show at a given progress, or `-1` before the first
  * one. Only that sentence is visible; earlier ones are marked "past" and drift
- * upwards, as in the mock-up.
+ * upwards.
  */
 export function activeLineIndex(progress: number, thresholds: readonly number[]): number {
   let active = -1;
@@ -133,36 +134,29 @@ export function isPieceOn(progress: number, at: number): boolean {
 /* Programme layout                                                           */
 /* -------------------------------------------------------------------------- */
 
-export interface ProgramSlot {
-  /** Scroll threshold at which the card flies in. */
+export interface ProgramRow {
+  /** Scroll threshold at which the row is written onto the board. */
   at: number;
-  /** `true` when the card enters from the right and hugs the right edge. */
-  fromRight: boolean;
-  /** Board percentages. */
-  top: number;
-  width: number;
-  /** Resting tilt, in degrees. */
-  rotate: number;
+  /** Rows lean alternately, like chalk written by a hurried hand. */
+  tilt: number;
 }
 
-const PROGRAM_ROTATIONS = [-3, 2.5, -1.5, 3, -2, 1.8] as const;
+const ROW_TILTS = [-0.6, 0.5, -0.4, 0.7, -0.5, 0.4] as const;
 
 /**
- * Lays the programme cards out so the pile stays legible from one to six
- * items: they alternate left/right, spread over the same vertical band, and
- * narrow slightly as they get more numerous.
+ * Lays the programme rows out on the menu board. Unlike the collage of theme 1,
+ * the cards do not fly in from the sides: the board arrives first and the lines
+ * are written on it one after another, which is what a chalkboard menu does and
+ * what keeps six items legible on a 390 px screen.
+ *
+ * The board itself is sized from the row count by the stylesheet (`--rows`).
  */
-export function programLayout(count: number): ProgramSlot[] {
+export function programRows(count: number): ProgramRow[] {
   const ats = spread(PROGRAM_SPAN[0], PROGRAM_SPAN[1], count);
-  const tops = spread(PROGRAM_TOP_SPAN[0], PROGRAM_TOP_SPAN[1], count);
-  const width = count <= 4 ? 56 : count === 5 ? 50 : 45;
 
   return Array.from({ length: count }, (_, index) => ({
     at: ats[index] ?? PROGRAM_SPAN[1],
-    fromRight: index % 2 === 1,
-    top: tops[index] ?? PROGRAM_TOP_SPAN[1],
-    width,
-    rotate: PROGRAM_ROTATIONS[index % PROGRAM_ROTATIONS.length] ?? 0,
+    tilt: ROW_TILTS[index % ROW_TILTS.length] ?? 0,
   }));
 }
 
@@ -171,9 +165,10 @@ export function programLayout(count: number): ProgramSlot[] {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Cue points of the envelope-opening timeline, in seconds. Same beats as the
- * mock-up's `setTimeout` chain (0 / 800 / 1050 / 1500 / 1550 / 2300 / 2700 ms),
- * replayed here by a single GSAP timeline.
+ * Cue points of the envelope-opening timeline, in seconds. The air-mail
+ * envelope turns over, the blue seal pops, the flap lifts, the postcard and the
+ * two snapshots slide out, the greenery tucks itself in, and scrolling is
+ * released on the last beat.
  */
 export const INTRO = {
   flip: 0,

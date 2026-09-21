@@ -1,7 +1,7 @@
 'use client';
 
+import { Postmark, Shell, Stamp, Vespa } from '../assets/illustrations';
 import type { InvitationContent } from '@/content/schema';
-import { Amaranth, Hydrangea, Postmark, Stamp } from '../assets/illustrations';
 import { CHAPTER_LENGTH, DIRECTIONS_AT, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle, PostcardImage, type ResolvedPhotos } from './pieces';
@@ -9,9 +9,13 @@ import { ChapterLines, Piece, pieceStyle, PostcardImage, type ResolvedPhotos } f
 /**
  * Chapter 4 — "The venue".
  *
- * The postcard slides in, a big stamp is slapped on it, the postmark is wiped
- * across, flowers close the composition. The directions button belongs to the
- * text column, so it stays reachable by keyboard and tappable on mobile.
+ * A real postcard: deckled white border, a striped band down its edge, the
+ * "par avion" bar across the top, the city written in script over the photo and
+ * the address typed on the back panel. A stamp is slapped on, the sun postmark
+ * is wiped across it, a shell and a scooter finish the composition.
+ *
+ * The directions button belongs to the text column, so it stays reachable by
+ * keyboard and tappable on mobile.
  */
 export function Place({
   t,
@@ -41,30 +45,39 @@ export function Place({
           <Piece
             at={at.postcard}
             style={pieceStyle(
-              { left: '3%', top: '14%', width: '86%' },
-              { from: 'translate(-20vw, 70vh) rotate(-24deg)', to: 'rotate(-3deg)' },
+              { left: '2%', top: '16%', width: '88%' },
+              { from: 'translate(-20vw, 70vh) rotate(-22deg)', to: 'rotate(-3deg)' },
             )}
           >
             <div className="postcard">
+              <span className="pc-air" aria-hidden="true" />
               <PostcardImage photo={photos.venue} caption={content.venue.city} />
+              <p className="pc-addr">
+                <span>{content.venue.name}</span>
+                <span>{content.venue.addressLine}</span>
+                <span>
+                  {content.venue.city}
+                  {content.venue.country ? ` · ${content.venue.country}` : ''}
+                </span>
+              </p>
             </div>
           </Piece>
 
           <Piece
             at={at.stamp}
             style={pieceStyle(
-              { right: '4%', top: '4%', width: '22%' },
+              { right: '3%', top: '3%', width: '23%' },
               { from: 'scale(2.4) rotate(-20deg)', to: 'rotate(7deg)' },
             )}
           >
-            <Stamp variant="calla" className="big-stamp" value="1,39" />
+            <Stamp motif="parasol" className="big-stamp" value="2.10" country={t.intro.stampCountry} />
           </Piece>
 
           <Piece
             at={at.postmark}
             className="reveal inkmark"
             style={pieceStyle(
-              { right: '14%', top: '12%', width: '34%' },
+              { right: '13%', top: '10%', width: '36%' },
               { from: 'none', to: 'rotate(-8deg)' },
             )}
           >
@@ -72,23 +85,23 @@ export function Place({
           </Piece>
 
           <Piece
-            at={at.bloom}
+            at={at.shell}
             style={pieceStyle(
-              { right: '-5%', bottom: '10%', width: '36%', transformOrigin: '90% 90%' },
-              { from: 'scale(0) rotate(-30deg)', to: 'none' },
+              { left: '-2%', bottom: '14%', width: '22%', transformOrigin: '20% 80%' },
+              { from: 'scale(0) rotate(-40deg)', to: 'rotate(-12deg)' },
             )}
           >
-            <Hydrangea />
+            <Shell />
           </Piece>
 
           <Piece
-            at={at.amaranth}
+            at={at.vespa}
             style={pieceStyle(
-              { left: '-1%', top: '-8%', width: '13%', height: '50%', transformOrigin: '50% 0%' },
-              { from: 'translateY(-50vh) rotate(-34deg)', to: 'rotate(-13deg)' },
+              { right: '-4%', bottom: '2%', width: '42%' },
+              { from: 'translateX(70vw) rotate(6deg)', to: 'rotate(-2deg)' },
             )}
           >
-            <Amaranth />
+            <Vespa />
           </Piece>
         </div>
 

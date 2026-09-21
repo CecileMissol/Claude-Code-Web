@@ -3,13 +3,13 @@
 import type { InfoItem } from '@/content/schema';
 import type { Messages } from '../messages';
 
-/** Slight tilts, so the labels never look printed by a machine. */
+/** Slight tilts, so the tags never look printed by a machine. */
 const TILT = [-1.5, 1.5, -1, 2, -2, 1] as const;
 
 /**
- * "Good to know" — the practical labels.
+ * "Good to know" — the practical notes, written on luggage tags.
  *
- * No scroll scene here: each label simply slides in when it reaches the
+ * No scroll scene here: each tag simply swings in when it reaches the
  * viewport. `data-observe` is picked up by `useInvitationMotion`, which uses a
  * one-shot ScrollTrigger (same job as the mock-up's IntersectionObserver, one
  * fewer observer to tear down between preview re-renders).

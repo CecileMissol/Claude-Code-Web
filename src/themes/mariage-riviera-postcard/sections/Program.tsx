@@ -1,26 +1,25 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { Hydrangea } from '../assets/illustrations';
-import { CHAPTER_LENGTH, lineThresholds, PIECE_AT, programLayout } from '../animations/thresholds';
+import { LemonBranch } from '../assets/illustrations';
+import { CHAPTER_LENGTH, lineThresholds, PIECE_AT, programRows } from '../animations/thresholds';
 import { formatTime } from '../animations/format';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle } from './pieces';
 
-/** Papers the programme cards are torn from, cycling through the palette. */
-const CARD_TONE = ['', 'dark', '', 'kraft', 'dark', ''] as const;
-
 /**
  * Chapter 3 — "The programme".
  *
- * A pile of torn notes flying in alternately from the left and the right. The
- * layout is computed (`programLayout`), so one item or six both look composed:
- * the cards keep alternating, share the same vertical band and narrow as they
- * get more numerous.
+ * A single trattoria menu under its striped awning, rather than a pile of torn
+ * notes flying in from both sides. The board arrives first and the hours are
+ * written onto it one after another, which is what keeps six items legible on a
+ * 390 px screen: nothing overlaps, nothing shrinks, the eye reads down a list.
+ *
+ * `--rows` tells the stylesheet how tall the board has to be.
  */
 export function Program({ t, content }: { t: Messages; content: InvitationContent }) {
   const items = content.program.items;
-  const layout = programLayout(items.length);
+  const rows = programRows(items.length);
   const thresholds = lineThresholds('program', content.program.lines.length);
 
   return (
@@ -32,48 +31,49 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
     >
       <div className="sticky">
         <div className="board">
-          {items.map((item, index) => {
-            const slot = layout[index];
-            if (!slot) return null;
-            const tone = CARD_TONE[index % CARD_TONE.length];
-            const edge = slot.fromRight
-              ? { right: `${index % 4 === 1 ? 2 : 3}%` }
-              : { left: `${index % 4 === 0 ? 2 : 3}%` };
-
-            return (
-              <Piece
-                key={`${item.time}-${item.title}`}
-                at={slot.at}
-                className="shadow"
-                style={pieceStyle(
-                  { ...edge, top: `${slot.top}%`, width: `${slot.width}%` },
-                  {
-                    from: `translate(${slot.fromRight ? '70vw' : '-70vw'}, ${
-                      index > 1 ? '10vh' : '0'
-                    }) rotate(${slot.fromRight ? 20 : -20}deg)`,
-                    to: `rotate(${slot.rotate}deg)`,
-                  },
-                )}
-              >
-                <div className={`prog torn${tone ? ` ${tone}` : ''}`}>
-                  {/* `dateTime` keeps the machine-readable value; the text is
-                      written the way the invitation's language writes it. */}
-                  <time dateTime={item.time}>{formatTime(item.time, content.locale)}</time>
-                  <strong>{item.title}</strong>
-                  {item.detail && <em>{item.detail}</em>}
-                </div>
-              </Piece>
-            );
-          })}
-
           <Piece
-            at={PIECE_AT.program.bloom}
+            at={PIECE_AT.program.board}
+            className="shadow"
             style={pieceStyle(
-              { left: '-6%', bottom: '-4%', width: '36%', transformOrigin: '10% 90%' },
-              { from: 'scale(0) rotate(40deg)', to: 'none' },
+              { left: '4%', top: '5%', width: '92%', '--rows': items.length } as React.CSSProperties,
+              { from: 'translateY(-40vh) rotate(-4deg)', to: 'rotate(-1deg)' },
             )}
           >
-            <Hydrangea />
+            <div className="menu">
+              <div className="awning" aria-hidden="true" />
+              <p className="menu-kicker">{t.program.menuKicker}</p>
+              <ul className="menu-list">
+                {items.map((item, index) => {
+                  const row = rows[index];
+                  return (
+                    <li
+                      key={`${item.time}-${item.title}`}
+                      className="it row"
+                      data-at={row?.at ?? 1}
+                      style={{ '--tilt': `${row?.tilt ?? 0}deg` } as React.CSSProperties}
+                    >
+                      {/* `dateTime` keeps the machine-readable value; the text
+                          is written the way the invitation's language writes it. */}
+                      <time dateTime={item.time}>{formatTime(item.time, content.locale)}</time>
+                      <span className="what">
+                        <strong>{item.title}</strong>
+                        {item.detail && <em>{item.detail}</em>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </Piece>
+
+          <Piece
+            at={PIECE_AT.program.lemon}
+            style={pieceStyle(
+              { right: '-6%', bottom: '-4%', width: '30%', transformOrigin: '70% 100%' },
+              { from: 'scale(0.2) rotate(40deg)', to: 'rotate(8deg)' },
+            )}
+          >
+            <LemonBranch />
           </Piece>
         </div>
 

@@ -1,22 +1,22 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { Hydrangea } from '../assets/illustrations';
+import { DriedBloom, Pampas } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT, programLayout } from '../animations/thresholds';
 import { formatTime } from '../animations/format';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle } from './pieces';
 
-/** Papers the programme cards are torn from, cycling through the palette. */
-const CARD_TONE = ['', 'dark', '', 'kraft', 'dark', ''] as const;
+/** Papers the programme cards are cut from, cycling through the palette. */
+const CARD_TONE = ['', 'tb-clay', 'tb-sand', 'tb-sage', 'tb-clay', ''] as const;
 
 /**
- * Chapter 3 — "The programme".
+ * Chapter 3 — "The plan".
  *
- * A pile of torn notes flying in alternately from the left and the right. The
- * layout is computed (`programLayout`), so one item or six both look composed:
- * the cards keep alternating, share the same vertical band and narrow as they
- * get more numerous.
+ * A pile of cut papers flying in alternately from the left and the right, each
+ * with its hour in a clay disc. The layout is computed (`programLayout`), so
+ * one item or six both look composed: the cards keep alternating, share the
+ * same vertical band and narrow as they get more numerous.
  */
 export function Program({ t, content }: { t: Messages; content: InvitationContent }) {
   const items = content.program.items;
@@ -25,13 +25,13 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
 
   return (
     <section
-      className="chapter"
+      className="tb-chapter"
       data-chapter="program"
       style={{ '--len': `${CHAPTER_LENGTH.program}vh` } as React.CSSProperties}
       aria-label={t.chapters.program}
     >
-      <div className="sticky">
-        <div className="board">
+      <div className="tb-sticky">
+        <div className="tb-board">
           {items.map((item, index) => {
             const slot = layout[index];
             if (!slot) return null;
@@ -44,7 +44,7 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
               <Piece
                 key={`${item.time}-${item.title}`}
                 at={slot.at}
-                className="shadow"
+                className="tb-shadow"
                 style={pieceStyle(
                   { ...edge, top: `${slot.top}%`, width: `${slot.width}%` },
                   {
@@ -55,12 +55,16 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
                   },
                 )}
               >
-                <div className={`prog torn${tone ? ` ${tone}` : ''}`}>
-                  {/* `dateTime` keeps the machine-readable value; the text is
-                      written the way the invitation's language writes it. */}
-                  <time dateTime={item.time}>{formatTime(item.time, content.locale)}</time>
-                  <strong>{item.title}</strong>
-                  {item.detail && <em>{item.detail}</em>}
+                <div className={`tb-prog tb-cut${tone ? ` ${tone}` : ''}`}>
+                  <span className="tb-prog-hour">
+                    {/* `dateTime` keeps the machine-readable value; the text is
+                        written the way the invitation's language writes it. */}
+                    <time dateTime={item.time}>{formatTime(item.time, content.locale)}</time>
+                  </span>
+                  <span className="tb-prog-body">
+                    <strong>{item.title}</strong>
+                    {item.detail && <em>{item.detail}</em>}
+                  </span>
                 </div>
               </Piece>
             );
@@ -69,16 +73,26 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
           <Piece
             at={PIECE_AT.program.bloom}
             style={pieceStyle(
-              { left: '-6%', bottom: '-4%', width: '36%', transformOrigin: '10% 90%' },
+              { left: '-8%', bottom: '-4%', width: '38%', transformOrigin: '10% 90%' },
               { from: 'scale(0) rotate(40deg)', to: 'none' },
             )}
           >
-            <Hydrangea />
+            <DriedBloom />
+          </Piece>
+
+          <Piece
+            at={PIECE_AT.program.bloom}
+            style={pieceStyle(
+              { right: '-6%', bottom: '-8%', width: '16%', height: '44%' },
+              { from: 'translateY(40vh) rotate(40deg)', to: 'rotate(12deg)' },
+            )}
+          >
+            <Pampas />
           </Piece>
         </div>
 
-        <div className="text">
-          <h2 className="ch-title">{t.chapters.program}</h2>
+        <div className="tb-text">
+          <h2 className="tb-ch-title">{t.chapters.program}</h2>
           <ChapterLines lines={content.program.lines} thresholds={thresholds} />
         </div>
       </div>

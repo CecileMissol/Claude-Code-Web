@@ -100,15 +100,22 @@ export function zoneOffsetMs(instant: Date, timeZone: string): number {
   return asIfUtc - instant.getTime();
 }
 
+const DAY_MS = 86_400_000;
+
 /**
  * Turns a wall-clock date (`YYYY-MM-DD`) and time (`HH:MM`) in an IANA zone
  * into the absolute instant it designates.
  *
- * Two passes settle DST transitions: the first guess uses the offset in force
- * at the naive instant, the second the offset actually in force at that guess.
- * Wall-clock times that do not exist (the spring-forward gap) land on the
- * instant just after the jump; ambiguous ones (autumn) resolve to the first
- * occurrence, which is what calendar software does.
+ * A wall clock is not always a single instant. We therefore build the two
+ * candidates that the offsets in force a day before and a day after the date
+ * allow, then keep the ones that really read back as the requested wall clock:
+ *
+ * - normal day — both candidates collapse onto the same instant;
+ * - autumn, clocks back — both are valid (02:30 happens twice); we keep the
+ *   first occurrence, as calendar software does;
+ * - spring, clocks forward — neither is valid (02:30 never happens); we keep
+ *   the later one, so the time shifts forward past the gap (02:30 → 03:30)
+ *   instead of silently moving to the day before.
  *
  * Falls back on the naive local instant when the zone is unknown.
  */
@@ -120,12 +127,23 @@ export function zonedTimeToUtc(date: string, time: string, timeZone: string): Da
     return new Date(`${date}T${time}:00`);
   }
 
-  const naive = Date.UTC(year as number, (month as number) - 1, day as number, hour, minute, 0);
+  const wallClock = Date.UTC(year as number, (month as number) - 1, day as number, hour, minute, 0);
 
   try {
-    let instant = naive - zoneOffsetMs(new Date(naive), timeZone);
-    instant = naive - zoneOffsetMs(new Date(instant), timeZone);
-    return new Date(instant);
+    const offsets = [
+      zoneOffsetMs(new Date(wallClock - DAY_MS), timeZone),
+      zoneOffsetMs(new Date(wallClock + DAY_MS), timeZone),
+    ];
+    const earlier = wallClock - Math.max(...offsets);
+    const later = wallClock - Math.min(...offsets);
+
+    // A candidate is right when reading it back in the zone gives the wall
+    // clock we started from.
+    const reads = (instant: number): boolean =>
+      instant + zoneOffsetMs(new Date(instant), timeZone) === wallClock;
+
+    if (reads(earlier)) return new Date(earlier);
+    return new Date(later);
   } catch {
     // Unknown IANA zone: the naive reading is better than a crash.
     return new Date(`${date}T${time}:00`);

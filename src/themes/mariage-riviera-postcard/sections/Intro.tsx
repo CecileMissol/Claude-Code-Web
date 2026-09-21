@@ -1,11 +1,15 @@
 'use client';
 
-import { Calla, Hydrangea, Postmark, Stamp } from '../assets/illustrations';
+import { Bougainvillea, LemonBranch, Postmark, Stamp } from '../assets/illustrations';
 import type { Messages } from '../messages';
-import { Polaroid, type ResolvedPhotos } from './pieces';
+import { Snapshot, type ResolvedPhotos } from './pieces';
 
 /**
- * The envelope.
+ * The air-mail envelope.
+ *
+ * White paper, blue-and-red edging, illustrated stamps, a blue postal seal —
+ * the postcard that comes back from the Riviera, not the black envelope of
+ * theme 1.
  *
  * Markup order matters: the flap sits above the pocket until the timeline drops
  * its `z-index`, and the seal sits above the flap. `data-env-*` attributes are
@@ -55,8 +59,8 @@ export function Intro({
         A div with `role="button"`, not a real <button>: the envelope is a
         size container with absolutely positioned children, and form controls
         have engine-specific internal layout that fights `container-type` and
-        `overflow`. The mock-up does the same. Keyboard support is restored by
-        hand, so Enter and Space both open the envelope.
+        `overflow`. Keyboard support is restored by hand, so Enter and Space
+        both open the envelope.
       */}
       <div
         className="env-wrap"
@@ -73,47 +77,53 @@ export function Intro({
       >
         {/* ---- Address side ---- */}
         <span className="face front" data-env-front>
+          <span className="air-edge" aria-hidden="true" />
+
           <span className="stamps">
-            <Stamp variant="calla" value="1,39" />
-            <Stamp variant="bloom" value="2,10" />
+            <Stamp motif="lemon" value="1.39" country={t.intro.stampCountry} />
+            <Stamp motif="cypress" value="2.10" country={t.intro.stampCountry} />
           </span>
           <Postmark className="postmark" date={postmark} />
+
+          <span className="par-avion">{t.intro.airmail}</span>
+
           <span className="addr">
             <span className="script">{names}</span>
             <span className="caps">{shortDate}</span>
           </span>
-          <Calla className="lay" />
+
+          <LemonBranch className="lay" />
         </span>
 
         {/* ---- Inside ---- */}
         <span className="face back" data-env-back>
           <span className="liner" />
 
-          <span className="pol p1 tape" data-env-polaroid="1">
-            <Polaroid photo={photos['envelope-1']} slotId="envelope-1" eager />
+          <span className="snap s1 tape" data-env-snap="1">
+            <Snapshot photo={photos['envelope-1']} slotId="envelope-1" eager />
           </span>
-          <span className="pol p2" data-env-polaroid="2">
-            <Polaroid photo={photos['envelope-2']} slotId="envelope-2" eager />
+          <span className="snap s2" data-env-snap="2">
+            <Snapshot photo={photos['envelope-2']} slotId="envelope-2" eager />
           </span>
 
-          <span className="ticket" data-env-ticket>
-            <span className="stub">
-              <span>{names}</span>
+          {/* The save-the-date, as a small postcard slid into the pocket. */}
+          <span className="card" data-env-card>
+            <span className="cmain">
+              <span className="c1">{t.intro.saveTheDate}</span>
+              <span className="c2">{shortDate}</span>
+              <span className="c3">{t.intro.weAreGettingMarried}</span>
             </span>
-            <span className="tmain">
-              <span className="t1">{t.intro.saveTheDate}</span>
-              <span className="t2">{shortDate}</span>
-              <span className="t3">{t.intro.weAreGettingMarried}</span>
-            </span>
+            <span className="cband" aria-hidden="true" />
+            <span className="cnames script">{names}</span>
           </span>
 
           <span className="pocket" />
 
           <span className="tuck tuck1" data-env-tuck="1">
-            <Hydrangea />
+            <LemonBranch />
           </span>
           <span className="tuck tuck2" data-env-tuck="2">
-            <Calla rotate={-28} />
+            <Bougainvillea />
           </span>
 
           <span className="flap" data-env-flap />

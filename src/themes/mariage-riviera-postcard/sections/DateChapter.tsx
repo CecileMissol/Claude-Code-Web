@@ -1,7 +1,7 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { Calla } from '../assets/illustrations';
+import { Cypress, Waves } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle } from './pieces';
@@ -10,8 +10,10 @@ import { Countdown } from './Countdown';
 /**
  * Chapter 2 — "The date".
  *
- * Day, month and year land on three different papers, two arums frame the
- * scene, the highlight word is wiped in, and the countdown appears last.
+ * The day, the month and the year are glazed onto three **azulejo tiles**, set
+ * side by side like a course of ceramic on a Mediterranean wall — not scattered
+ * on torn papers. Two cypresses stand guard, the highlight is painted across
+ * the wall, a line of waves runs under it and the countdown closes the scene.
  */
 export function DateChapter({
   t,
@@ -29,6 +31,12 @@ export function DateChapter({
   // A sentence may carry `{date}`, replaced by the localised long date.
   const lines = content.dateChapter.lines.map((line) => line.replace('{date}', longDate));
 
+  const tiles: [key: string, value: string, label: string, at: number][] = [
+    ['day', day, t.date.day, at.day],
+    ['month', month, t.date.month, at.month],
+    ['year', year.slice(2), t.date.year, at.year],
+  ];
+
   return (
     <section
       className="chapter"
@@ -38,63 +46,44 @@ export function DateChapter({
     >
       <div className="sticky">
         <div className="board">
+          {tiles.map(([key, value, label, tileAt], index) => (
+            <Piece
+              key={key}
+              at={tileAt}
+              className="shadow"
+              style={pieceStyle(
+                { left: `${2 + index * 33}%`, top: '6%', width: '31%' },
+                {
+                  from: `translate(${index === 1 ? '0' : index === 0 ? '-60vw' : '60vw'}, -60vh) rotate(${index === 1 ? 0 : index === 0 ? -30 : 30}deg)`,
+                  to: `rotate(${[-2, 1.2, -1.4][index] ?? 0}deg)`,
+                },
+              )}
+            >
+              <div className={`azulejo az-${key}`}>
+                <b>{value}</b>
+                <small>{label}</small>
+              </div>
+            </Piece>
+          ))}
+
           <Piece
-            at={at.day}
-            className="shadow"
+            at={at.cypressLeft}
             style={pieceStyle(
-              { left: '3%', top: '6%', width: '36%' },
-              { from: 'translateY(-90vh) rotate(-30deg)', to: 'rotate(-5deg)' },
+              { left: '-1%', top: '38%', width: '13%', height: '46%' },
+              { from: 'translateY(50vh) rotate(-24deg)', to: 'rotate(-4deg)' },
             )}
           >
-            <div className="scrap d1 torn">
-              <b>{day}</b>
-            </div>
+            <Cypress />
           </Piece>
 
           <Piece
-            at={at.month}
-            className="shadow"
+            at={at.cypressRight}
             style={pieceStyle(
-              { left: '33%', top: '20%', width: '34%' },
-              { from: 'translate(70vw, 20vh) rotate(35deg)', to: 'rotate(3deg)' },
+              { right: '-1%', top: '42%', width: '12%', height: '44%' },
+              { from: 'translateY(50vh) rotate(24deg)', to: 'rotate(5deg)' },
             )}
           >
-            <div className="scrap d2 torn">
-              <b>{month}</b>
-            </div>
-          </Piece>
-
-          <Piece
-            at={at.year}
-            className="shadow"
-            style={pieceStyle(
-              { left: '62%', top: '4%', width: '35%' },
-              { from: 'translate(40vw, -80vh) rotate(-25deg)', to: 'rotate(-2deg)' },
-            )}
-          >
-            <div className="scrap d3 torn">
-              <b>{year.slice(2)}</b>
-            </div>
-          </Piece>
-
-          <Piece
-            at={at.callaLeft}
-            style={pieceStyle(
-              { left: '-2%', top: '40%', width: '11%', height: '46%' },
-              { from: 'translateY(50vh) rotate(-50deg)', to: 'rotate(-14deg)' },
-            )}
-          >
-            <Calla />
-          </Piece>
-
-          <Piece
-            at={at.callaRight}
-            style={pieceStyle(
-              { right: '-1%', top: '44%', width: '11%', height: '44%' },
-              { from: 'translateY(50vh) rotate(50deg)', to: 'rotate(16deg)' },
-            )}
-          >
-            <Calla />
+            <Cypress />
           </Piece>
 
           {content.dateChapter.highlight && (
@@ -102,7 +91,7 @@ export function DateChapter({
               at={at.highlight}
               className="reveal"
               style={pieceStyle(
-                { left: '5%', top: '55%', width: '90%' },
+                { left: '5%', top: '44%', width: '90%' },
                 { from: 'none', to: 'none' },
               )}
             >
@@ -110,7 +99,18 @@ export function DateChapter({
             </Piece>
           )}
 
-          <Piece at={at.countdown} style={pieceStyle({ left: '6%', top: '78%', width: '88%' })}>
+          <Piece
+            at={at.waves}
+            className="sea"
+            style={pieceStyle(
+              { left: '17%', top: '62%', width: '66%' },
+              { from: 'translateY(6vh)', to: 'none' },
+            )}
+          >
+            <Waves />
+          </Piece>
+
+          <Piece at={at.countdown} style={pieceStyle({ left: '5%', top: '73%', width: '90%' })}>
             <Countdown content={content} t={t} />
           </Piece>
         </div>

@@ -12,6 +12,7 @@ import {
   updateInvitationContentForOwner,
 } from '@/db/queries';
 import { requireUser } from '@/lib/auth';
+import { allowFreeDrafts } from '@/lib/env';
 import { getUserLocale } from '@/i18n/locale';
 import { loadTheme } from '@/themes/registry';
 import { parseDraftContent } from './content-schema';
@@ -39,12 +40,19 @@ export type SaveResult =
 /**
  * Creates a blank draft on the default theme and opens the editor.
  *
- * Temporary entry point: once the Etsy activation is live, the draft is created
- * by the activation flow instead. The content is the localised default of
- * `src/content/defaults.ts`, restyled with the theme's own default palette.
+ * A buyer never comes through here: their draft is created by the Etsy
+ * activation. This entry point is reserved for administrators and for
+ * development (`ALLOW_FREE_DRAFTS=true`); anybody else is sent to `/activate`.
+ * The dashboard hides the button under the same rule, and this check is what
+ * actually enforces it — a form can be posted without the page.
+ *
+ * The content is the localised default of `src/content/defaults.ts`, restyled
+ * with the theme's own default palette.
  */
 export async function createDraftInvitationAction(): Promise<void> {
   const user = await requireUser();
+  if (!user.isAdmin && !allowFreeDrafts()) redirect('/activate');
+
   const db = getDb();
 
   const theme = await ensureThemeSeeded(db, DEFAULT_THEME_SLUG);
@@ -102,12 +110,16 @@ export async function saveInvitationContentAction(
     };
   }
 
+  // `invitations.locale` follows `content.locale`: the couple changes the
+  // language of their invitation in the editor, and the column is what the
+  // dashboard and the e-mails read.
   const updated = await updateInvitationContentForOwner(
     db,
     invitationId,
     user.id,
     JSON.stringify(parsed.data),
     CONTENT_VERSION,
+    parsed.data.locale,
   );
   if (!updated) return { ok: false, error: 'forbidden' };
 

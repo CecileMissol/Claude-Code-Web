@@ -11,7 +11,7 @@ import './fonts';
 import './styles.css';
 
 /**
- * "Noir & ivoire" — server half of the theme.
+ * "Terracotta Bloom" — server half of the theme.
  *
  * It does the three things that must not happen in the browser:
  *
@@ -56,7 +56,7 @@ export default function Invitation({ content, mode, slug }: InvitationProps) {
  * Photos are stored at a single size — the browser resizes and converts them to
  * WebP before upload (phase 2, §5.4) — so there is no `srcset` to build; the
  * stored `width`/`height` reserve the box and prevent layout shift. An empty
- * slot is simply absent, and the theme draws an engraved placeholder instead of
+ * slot is simply absent, and the theme draws a warm desert placeholder instead of
  * a broken image.
  *
  * `publicPhotoUrl` throws when the environment is incomplete; the demo and the
