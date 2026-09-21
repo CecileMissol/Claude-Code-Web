@@ -168,7 +168,15 @@ Le script `src/db/seed-cli.mjs` est du JavaScript simple lancé par `node` : il
 importe `registry.ts` et les `manifest.ts` (Node 22 retire les types), construit
 le SQL et le passe à `wrangler d1 execute --local`. C'est pourquoi `seed.ts`
 n'a que des imports statiques **de types** et des imports dynamiques pour le
-reste. L'agent « activation Etsy » réutilise `ensureThemeSeeded` / `seedThemes`.
+reste.
+
+> **À consolider** : la phase 7 (activation Etsy) a ajouté en parallèle
+> `src/db/seed-themes.ts` (`ensureThemesSeeded`, `getThemeIdBySlug`), qui fait la
+> même chose avec des identifiants aléatoires là où `seed.ts` utilise des
+> identifiants déterministes (`theme-<slug>`). Les deux sont idempotents et
+> compatibles (le premier qui s'exécute crée la ligne, l'autre la retrouve par
+> `slug`), mais il faudra n'en garder qu'un — de préférence `src/db/seed.ts`,
+> qui sert aussi au script `pnpm db:seed:local`.
 
 ---
 
