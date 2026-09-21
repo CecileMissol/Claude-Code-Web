@@ -1,18 +1,18 @@
 {
   "intro": {
-    "kicker": "A letter for you",
+    "kicker": "Sealed by hand, for you",
     "openLabel": "Open the envelope",
     "openButton": "Open",
-    "hint": "Tap the envelope to open it",
-    "scrollCue": "Scroll",
+    "hint": "Tap the envelope to break the seal",
+    "scrollCue": "keep scrolling",
     "saveTheDate": "Save the date",
-    "weAreGettingMarried": "we're getting married!"
+    "weAreGettingMarried": "we're saying yes!"
   },
   "chapters": {
-    "story": "Our story",
-    "date": "The date",
-    "program": "The programme",
-    "place": "The venue"
+    "story": "How we began",
+    "date": "The day",
+    "program": "The plan",
+    "place": "The place"
   },
   "story": {
     "mementoDate": "Date"
@@ -25,24 +25,24 @@
     "seconds": "seconds"
   },
   "place": {
-    "directions": "Open directions"
+    "directions": "Get directions"
   },
   "info": {
     "title": "Good to know"
   },
   "rsvp": {
-    "title": "Will you join us?",
+    "title": "Will you come?",
     "name": "Full name",
     "email": "Email",
     "attendingLegend": "Will you be there?",
-    "yes": "With joy",
+    "yes": "Count us in",
     "no": "Sadly no",
     "guests": "Number of guests",
     "diet": "Allergies or special diet",
     "message": "A word for the couple",
     "submit": "Send my reply",
     "sending": "Sending…",
-    "thanks": "Thank you, your reply has arrived.",
+    "thanks": "Thank you — your reply has landed.",
     "closed": "Replies are closed.",
     "honeypot": "Leave this field empty",
     "errors": {
@@ -55,7 +55,7 @@
   },
   "signature": {
     "label": "Signature",
-    "farewell": "See you very soon"
+    "farewell": "See you in the sun"
   },
   "demoBanner": "Demo"
 }

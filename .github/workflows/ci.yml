@@ -14,6 +14,8 @@ env:
   # Placeholder: the build and the unit tests never send an email and never
   # reach Cloudflare, they only need the variable to validate.
   BETTER_AUTH_SECRET: ci-placeholder-secret-32-characters
+  # No browser is downloaded on install; the e2e job asks for Chromium
+  # explicitly, which this flag does not prevent.
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
 
 jobs:
@@ -55,3 +57,49 @@ jobs:
 
       - name: Build (Cloudflare Workers bundle)
         run: pnpm build:cf
+
+  e2e:
+    name: End-to-end (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Cloudflare binding types
+        run: pnpm cf-typegen
+
+      # Only place in the project where a browser is downloaded: the local
+      # development image already ships one at /opt/pw-browsers/chromium.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # `pretest:e2e` applies the D1 migrations and seeds the themes; the
+      # Playwright config then starts `next dev`, the only server that has the
+      # local Cloudflare bindings.
+      # The Playwright config falls back on the browser Playwright manages when
+      # /opt/pw-browsers/chromium (the development image) does not exist.
+      - name: End-to-end tests
+        run: pnpm test:e2e
+        env:
+          ADMIN_EMAILS: admin@example.com
+
+      - name: Upload the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            tests/e2e/screenshots/
+          retention-days: 7

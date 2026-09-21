@@ -41,8 +41,10 @@ Spécification de référence : `BRIEF.md` §4.1, §4.3, §5, §8 ; cadrage
   ou a une activation `approved`. La réponse de l'API reste toujours neutre
   (« si votre commande est validée, vous recevrez un e-mail »), qu'un e-mail
   ait effectivement été envoyé ou non.
-- Table `themes` : seed idempotent (`ensureThemesSeeded()`,
-  `src/db/seed-themes.ts`), appelé au premier accès à `/activate` et `/admin`.
+- Table `themes` : seed idempotent (`ensureThemesSeeded()`), appelé au premier
+  accès à `/activate` et `/admin`. Depuis la phase 8, cette fonction vit dans
+  `src/db/seed.ts` (identifiants déterministes) et `src/db/seed-themes.ts` a
+  été supprimé.
 
 ## 2. Règle métier : une commande = une invitation par thème
 

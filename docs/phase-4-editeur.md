@@ -170,13 +170,10 @@ le SQL et le passe à `wrangler d1 execute --local`. C'est pourquoi `seed.ts`
 n'a que des imports statiques **de types** et des imports dynamiques pour le
 reste.
 
-> **À consolider** : la phase 7 (activation Etsy) a ajouté en parallèle
-> `src/db/seed-themes.ts` (`ensureThemesSeeded`, `getThemeIdBySlug`), qui fait la
-> même chose avec des identifiants aléatoires là où `seed.ts` utilise des
-> identifiants déterministes (`theme-<slug>`). Les deux sont idempotents et
-> compatibles (le premier qui s'exécute crée la ligne, l'autre la retrouve par
-> `slug`), mais il faudra n'en garder qu'un — de préférence `src/db/seed.ts`,
-> qui sert aussi au script `pnpm db:seed:local`.
+> **Consolidé en phase 8** : `src/db/seed-themes.ts` (ajouté en parallèle par la
+> phase 7, avec des identifiants aléatoires) a été supprimé. `src/db/seed.ts`
+> est le seul mécanisme et porte désormais aussi `ensureThemesSeeded()` et
+> `getThemeIdBySlug()`. Voir `docs/phase-8-reconciliation.md` §1.
 
 ---
 
@@ -255,12 +252,13 @@ Vérifié ici : `pnpm lint`, `pnpm typecheck`, `pnpm test` (300 tests),
    l'aide du champ.
 5. **`story.photoSlots` n'est pas éditable** : c'est la liste des emplacements
    utilisés par le chapitre Histoire, dictée par le thème, pas par le couple.
-6. **`invitations.locale` n'est pas resynchronisée** quand le couple change la
-   langue dans l'éditeur : c'est `content.locale` qui fait foi pour le rendu.
-   Si la page de partage a besoin de la colonne, ajouter la mise à jour dans
-   `saveInvitationContentAction`.
-7. **Le bouton « Créer une invitation » est provisoire** : il ne vérifie aucun
-   achat. À remplacer (ou restreindre) quand l'activation Etsy sera en place.
+6. ~~**`invitations.locale` n'est pas resynchronisée**~~ — corrigé en phase 8 :
+   `saveInvitationContentAction` passe `content.locale` à
+   `updateInvitationContentForOwner`, qui l'écrit dans la même requête.
+7. ~~**Le bouton « Créer une invitation » est provisoire**~~ — restreint en
+   phase 8 : il n'apparaît que pour un administrateur ou si
+   `ALLOW_FREE_DRAFTS=true`, et l'action serveur applique la même règle. Un
+   acheteur reçoit son brouillon par l'activation.
 8. **Pas de suppression d'invitation** depuis le tableau de bord (hors périmètre
    de la phase).
 9. **L'éditeur sort du conteneur `max-w-3xl`** du groupe `(app)` par une largeur

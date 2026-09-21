@@ -66,18 +66,23 @@ export function Place({
           <Piece
             at={at.stamp}
             style={pieceStyle(
-              { right: '3%', top: '3%', width: '23%' },
+              { right: '3%', top: '5%', width: '23%' },
               { from: 'scale(2.4) rotate(-20deg)', to: 'rotate(7deg)' },
             )}
           >
-            <Stamp motif="parasol" className="big-stamp" value="2.10" country={t.intro.stampCountry} />
+            <Stamp
+              motif="parasol"
+              className="big-stamp"
+              value="2.10"
+              country={t.intro.stampCountry}
+            />
           </Piece>
 
           <Piece
             at={at.postmark}
             className="reveal inkmark"
             style={pieceStyle(
-              { right: '13%', top: '10%', width: '36%' },
+              { right: '12%', top: '13%', width: '36%' },
               { from: 'none', to: 'rotate(-8deg)' },
             )}
           >

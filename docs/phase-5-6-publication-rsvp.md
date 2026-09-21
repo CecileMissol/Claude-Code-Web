@@ -239,6 +239,11 @@ idempotente :
    correctement comme chaînes ;
 2. bascule en `expired` les publications dont la fenêtre d'hébergement est close.
 
+> **Réglé en phase 8** : le point d'entrée du Worker est désormais
+> `worker/index.ts` (`"main"` dans `wrangler.jsonc`), qui délègue `fetch` au
+> worker généré et ajoute `scheduled()`. La section ci-dessous décrit l'état
+> antérieur ; la route HTTP reste en secours.
+
 ### Pourquoi une route HTTP et pas un handler `scheduled`
 
 `@opennextjs/cloudflare` **régénère `.open-next/worker.js` à chaque build**, et
@@ -373,9 +378,9 @@ Le thème statique de la phase 2 n'a pas de formulaire RSVP fonctionnel (son
 | `CRON_SECRET`    | protège `/api/cron/retention` (32 caractères aléatoires)   | oui en production, sinon la route refuse tout |
 
 Les deux sont des **secrets** (`wrangler secret put …`), à mettre dans
-`.dev.vars` et `.env.local` en local. Elles ne sont volontairement pas ajoutées à
-`src/lib/env.ts` ni à `.env.example`, fichiers partagés avec les autres chantiers
-en cours : à intégrer en phase 8, en une ligne chacune.
+`.dev.vars` et `.env.local` en local. Intégrées à `src/lib/env.ts` et à
+`.env.example` en phase 8 : `rsvpIpSalt()` et `cronSecret()` s'y lisent
+désormais, plus aucun module ne touche `process.env` directement.
 
 ---
 
@@ -384,16 +389,16 @@ en cours : à intégrer en phase 8, en une ligne chacune.
 1. **Le cache KV n'est pas branché** (§2). C'est un choix, pas un oubli : sans
    invalidation à la sauvegarde, il casserait la visibilité immédiate des
    modifications.
-2. **Le déclencheur cron n'a rien à appeler** tant que le point d'entrée du
-   Worker n'est pas enveloppé (§6). En production, planifier un appel à
-   `/api/cron/retention` en attendant, ou la rétention ne s'exécutera jamais.
+2. ~~**Le déclencheur cron n'a rien à appeler**~~ — réglé en phase 8 :
+   `worker/index.ts` expose `scheduled()`.
 3. **Pas d'image Open Graph** (§7).
 4. **`@types/qrcode` tire le point d'entrée Node de `qrcode`**, qui embarque le
    rendu PNG (`pngjs`) dont nous ne nous servons pas. Si la taille du bundle
    Worker devenait un problème, importer `qrcode/lib/browser.js` (rendu SVG seul)
    et déclarer son type localement.
-5. **Le test e2e ne tourne pas dans la CI** : `next start` n'a pas de binding D1,
-   et Playwright n'est de toute façon pas branché dans le workflow (phase 2 §6).
+5. ~~**Le test e2e ne tourne pas dans la CI**~~ — réglé en phase 8 :
+   `pnpm test:e2e` démarre `next dev` (donc avec les bindings) et un job
+   `e2e` a été ajouté à `.github/workflows/ci.yml`.
 6. **La limite de débit en mémoire est par isolat** (limite connue de la phase 2) ;
    c'est le comptage en base qui fait le vrai travail (§4).
 7. **Le lien est verrouillé quand l'invitation est en ligne.** C'est délibéré.

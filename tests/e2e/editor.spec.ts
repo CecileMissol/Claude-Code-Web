@@ -7,16 +7,23 @@ import { expect, test, type Page } from '@playwright/test';
  * that a second couple cannot open the first one's invitation.
  *
  * It needs the Cloudflare bindings (D1 for the invitations, R2 for the photos),
- * which only `next dev` provides — `next start` runs without them. So this file
- * is run against a development server:
- *
- *   pnpm db:migrate:local && pnpm db:seed:local
- *   PORT=3102 pnpm dev &
- *   PLAYWRIGHT_BASE_URL=http://localhost:3102 pnpm exec playwright test tests/e2e/editor.spec.ts
+ * which only `next dev` provides — `next start` runs without them. Since
+ * phase 8 that is what `pnpm test:e2e` starts, so this file needs no special
+ * command any more.
  *
  * The magic link is not read from an inbox: in development the mailer only
  * prints it, so the token is read straight from the local D1 database, exactly
  * where Better Auth stored it.
+ *
+ * Two rules of the application shape the setup:
+ *
+ * - since phase 7, a magic link is only sent to an address that is an
+ *   administrator, already has an account, or has an approved activation. The
+ *   accounts used here are therefore created in the database first, which is
+ *   what an approved activation would have done;
+ * - the "Create an invitation" button only exists for an administrator or when
+ *   `ALLOW_FREE_DRAFTS=true`, which `playwright.config.ts` sets for the
+ *   development server it starts.
  */
 
 const PROJECT_DIR = process.env.E2E_PROJECT_DIR ?? process.cwd();
@@ -37,6 +44,28 @@ function queryLocalD1(sql: string): Record<string, unknown>[] {
   return parsed[0]?.results ?? [];
 }
 
+/** Runs a write against the local D1 database. */
+function execLocalD1(sql: string): void {
+  execFileSync(
+    'pnpm',
+    ['exec', 'wrangler', 'd1', 'execute', 'invitations-db', '--local', '--command', sql],
+    { encoding: 'utf8', cwd: PROJECT_DIR, stdio: ['ignore', 'ignore', 'pipe'] },
+  );
+}
+
+/**
+ * Gives an address an account, so the phase-7 sign-in lock lets it through.
+ * Idempotent: `email` is unique, and a second run is a no-op.
+ */
+function ensureAccount(email: string): void {
+  const now = Math.floor(Date.now() / 1000);
+  const id = `e2e-${email.replace(/[^a-z0-9]/gi, '-')}`;
+  execLocalD1(
+    `insert or ignore into user (id, name, email, email_verified, created_at, updated_at) ` +
+      `values ('${id}', 'E2E', '${email}', 1, ${now}, ${now});`,
+  );
+}
+
 /** The magic-link token Better Auth stored for this address. */
 function magicLinkToken(email: string): string {
   const rows = queryLocalD1(
@@ -50,6 +79,8 @@ function magicLinkToken(email: string): string {
 
 /** Signs in through the real magic-link flow and lands on the dashboard. */
 async function signIn(page: Page, email: string): Promise<void> {
+  ensureAccount(email);
+
   await page.goto('/login');
   await page.getByLabel('Email address').fill(email);
   await page.getByRole('button', { name: 'Send me a link' }).click();

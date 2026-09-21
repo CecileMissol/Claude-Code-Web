@@ -1,92 +1,93 @@
 {
   "version": 1,
-  "locale": "fr",
+  "locale": "en",
   "eventType": "wedding",
   "couple": {
-    "partner1": { "firstName": "Zoé" },
-    "partner2": { "firstName": "Dylan" }
+    "partner1": { "firstName": "Willa" },
+    "partner2": { "firstName": "Beau" }
   },
   "event": {
-    "date": "2027-06-12",
-    "time": "14:30",
-    "timezone": "Europe/Paris"
+    "date": "2027-10-09",
+    "time": "16:30",
+    "timezone": "America/Los_Angeles"
   },
   "venue": {
-    "name": "Domaine des Oliviers",
-    "addressLine": "Route de Vaugines",
-    "city": "Lourmarin",
-    "country": "France",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lourmarin",
+    "name": "Rancho Alma",
+    "addressLine": "6120 Border Avenue",
+    "city": "Joshua Tree",
+    "country": "United States",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Joshua+Tree+California",
     "photoSlot": "venue"
   },
   "photos": {},
   "story": {
     "lines": [
-      "Un soir de février, dans un train pour Paris.",
-      "Il était assis à ma place. J'ai gardé le billet.",
-      "Sept ans, deux appartements et un chat plus tard…",
-      "… il a posé un genou sur le sable de Porquerolles.",
-      "Maintenant, on aimerait vous avoir près de nous pour la suite."
+      "A wrong turn on Highway 62, an hour before sunset.",
+      "Yours was the only other car at the lookout.",
+      "We shared a thermos of coffee and stayed for the stars.",
+      "Six years, one old truck and a very small dog later…",
+      "… he asked again, on the same patch of warm sand.",
+      "Now we would love you there for all the rest of it."
     ],
     "photoSlots": ["story-1", "story-2"]
   },
   "dateChapter": {
-    "lines": ["Sortez votre agenda.", "{date}.", "Et le compte à rebours a déjà commencé."],
-    "highlight": "le grand jour"
+    "lines": ["Circle it on the calendar.", "{date}.", "The countdown has already started."],
+    "highlight": "the big day"
   },
   "program": {
     "lines": [
-      "Une journée en quatre temps.",
-      "Prévoyez des chaussures pour marcher dans l'herbe.",
-      "Et d'autres pour danser."
+      "One long golden day.",
+      "Bring shoes you can walk on sand in.",
+      "And something warm for the night."
     ],
     "items": [
-      { "time": "14:30", "title": "Cérémonie", "detail": "sous le vieux chêne" },
-      { "time": "16:30", "title": "Vin d'honneur", "detail": "dans l'oliveraie" },
-      { "time": "20:00", "title": "Dîner", "detail": "dans la cour du mas" },
-      { "time": "23:00", "title": "On danse", "detail": "jusqu'au bout de la nuit" }
+      { "time": "16:30", "title": "Ceremony", "detail": "under the stone arch" },
+      { "time": "17:30", "title": "Golden hour", "detail": "drinks in the cactus garden" },
+      { "time": "19:30", "title": "Dinner", "detail": "long tables, string lights" },
+      { "time": "22:00", "title": "Dancing", "detail": "until the desert cools down" }
     ]
   },
   "place": {
     "lines": [
-      "Rendez-vous au Domaine des Oliviers.",
-      "Route de Vaugines, à Lourmarin.",
-      "Parking sur place. On vous attend."
+      "Rancho Alma, just off Border Avenue.",
+      "Twenty minutes from the west gate of the park.",
+      "Parking on site — we'll wave you in."
     ]
   },
   "info": [
     {
-      "title": "Hébergement",
-      "body": "Des chambres sont réservées au village. Dites-le dans votre réponse, on s'occupe du reste."
+      "title": "Getting there",
+      "body": "Palm Springs is the closest airport, two hours by car. A shuttle leaves town at 3 pm and brings everyone back at midnight."
     },
     {
-      "title": "Tenue",
-      "body": "Chic champêtre. Évitez les talons fins, la cérémonie a lieu sur l'herbe."
+      "title": "What to wear",
+      "body": "Desert formal. Flat soles for the sand, and a layer for the moment the sun drops behind the rocks."
     },
     {
-      "title": "Enfants",
-      "body": "Ils sont les bienvenus, un coin jeux les attend pendant le dîner."
+      "title": "Staying over",
+      "body": "We are holding a block of rooms in town. Say so in your reply and we will send you the booking link."
     }
   ],
   "rsvp": {
     "enabled": true,
-    "maxGuestsPerReply": 5,
+    "maxGuestsPerReply": 4,
     "askEmail": true,
     "askDiet": true,
     "askMessage": true,
     "notifyByEmail": true
   },
-  "signature": { "text": "À très vite" },
-  "style": { "paletteId": "noir", "scriptId": "pinyon" },
+  "signature": { "text": "See you in the sun" },
+  "style": { "paletteId": "sienna", "scriptId": "beau-rivage" },
   "extras": {
     "memento": {
       "kind": "ticket",
-      "route": "Marseille → Paris",
-      "date": "14.02.19",
-      "lineA": "Voiture 12",
-      "lineB": "Places 45 · 46"
+      "route": "The Cactus Bar",
+      "date": "05.18.21",
+      "lineA": "Table 4",
+      "lineB": "Two lemonades"
     },
-    "note": "elle a dit oui",
-    "envelope": { "kicker": "Une lettre pour vous" }
+    "note": "she said yes",
+    "envelope": { "kicker": "Sealed by hand, for you" }
   }
 }

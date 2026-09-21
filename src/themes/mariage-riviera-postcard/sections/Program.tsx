@@ -35,7 +35,12 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
             at={PIECE_AT.program.board}
             className="shadow"
             style={pieceStyle(
-              { left: '4%', top: '5%', width: '92%', '--rows': items.length } as React.CSSProperties,
+              {
+                left: '4%',
+                top: '5%',
+                width: '92%',
+                '--rows': items.length,
+              } as React.CSSProperties,
               { from: 'translateY(-40vh) rotate(-4deg)', to: 'rotate(-1deg)' },
             )}
           >

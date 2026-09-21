@@ -7,20 +7,11 @@ import { expect, test, type APIRequestContext, type BrowserContext } from '@play
  *
  * ## How to run it
  *
- * This journey needs the D1 binding, which only exists when the server runs
- * through `initOpenNextCloudflareForDev()` — that is, under `next dev`. The
- * default Playwright server (`next start`, production build) has no binding, so
- * the spec detects that and skips rather than failing for the wrong reason.
- *
- * ```bash
- * PORT=3103 pnpm dev                                    # terminal 1
- * PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 pnpm test:e2e tests/e2e/rsvp.spec.ts --workers=1
- * ```
- *
- * `--workers=1` matters: the fixtures are written by `wrangler d1 execute
- * --local`, a second process on the same SQLite file, and Miniflare's local D1
- * returns internal errors when several workers write to it at once. It is a
- * limitation of the local emulator, not of the application.
+ * `pnpm test:e2e` — nothing else. This journey needs the D1 binding, which
+ * only exists when the server runs through `initOpenNextCloudflareForDev()`,
+ * and `playwright.config.ts` now starts `next dev` with a single worker for
+ * exactly that reason (phase 8; it used to run against `next start`, which has
+ * no bindings, and the spec skipped itself).
  *
  * The fixtures are written straight into the local D1 database with
  * `wrangler d1 execute --local`, the same tool that applies the migrations.
@@ -210,32 +201,22 @@ async function reply(request: APIRequestContext, body: Record<string, unknown>) 
 
 test.describe('RSVP journey', () => {
   let fixture: Fixture;
-  let seeded = false;
 
   test.beforeAll(async ({}, testInfo) => {
-    // One fixture per worker: `fullyParallel` spreads the tests of this file
-    // over several workers, each of which runs `beforeAll` on its own.
+    // One fixture per worker, so a run split over several of them (or several
+    // viewports) never reuses the same rows.
     fixture = makeFixture(`${testInfo.project.name}-w${testInfo.workerIndex}`);
-    try {
-      seed(fixture);
-      seeded = true;
-    } catch (error) {
-      console.warn(`[rsvp.spec] could not seed the local D1 database: ${String(error)}`);
-    }
+    seed(fixture);
   });
 
-  test.afterAll(() => {
-    if (seeded) cleanup(fixture);
-  });
+  test.afterAll(() => cleanup(fixture));
 
   test.beforeEach(async ({ page }) => {
-    test.skip(!seeded, 'The local D1 database could not be seeded.');
-
     const response = await page.goto(`/${fixture.slug}`);
-    test.skip(
-      response?.status() !== 200,
-      'The server has no D1 binding — run it with `pnpm dev` (see the header of this file).',
-    );
+    expect(
+      response?.status(),
+      'the published fixture was not served — is the server `next dev`, with the D1 binding?',
+    ).toBe(200);
   });
 
   test('a guest opens the invitation, replies, and the couple sees the reply', async ({

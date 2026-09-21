@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { brand } from '@/brand';
-import { THEME_SLUGS, loadAllManifests } from '@/themes/registry';
+import { loadAllManifests } from '@/themes/registry';
 import type { Locale } from '@/i18n/config';
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,17 +1,17 @@
 {
   "intro": {
-    "kicker": "Une lettre pour vous",
+    "kicker": "Cachetée à la main, pour vous",
     "openLabel": "Ouvrir l'enveloppe",
     "openButton": "Ouvrir",
-    "hint": "Touchez l'enveloppe pour l'ouvrir",
-    "scrollCue": "Faites défiler",
+    "hint": "Touchez l'enveloppe pour briser le cachet",
+    "scrollCue": "continuez",
     "saveTheDate": "Save the date",
-    "weAreGettingMarried": "on se marie !"
+    "weAreGettingMarried": "on se dit oui !"
   },
   "chapters": {
-    "story": "Notre histoire",
-    "date": "La date",
-    "program": "Le programme",
+    "story": "Nos débuts",
+    "date": "Le jour J",
+    "program": "Le déroulé",
     "place": "Le lieu"
   },
   "story": {
@@ -25,7 +25,7 @@
     "seconds": "secondes"
   },
   "place": {
-    "directions": "Ouvrir l'itinéraire"
+    "directions": "Voir l'itinéraire"
   },
   "info": {
     "title": "Bon à savoir"
@@ -42,7 +42,7 @@
     "message": "Un mot pour les mariés",
     "submit": "Envoyer ma réponse",
     "sending": "Envoi…",
-    "thanks": "Merci, votre réponse est bien arrivée.",
+    "thanks": "Merci, votre réponse vient d'arriver.",
     "closed": "Les réponses sont closes.",
     "honeypot": "Laissez ce champ vide",
     "errors": {
@@ -55,7 +55,7 @@
   },
   "signature": {
     "label": "Signature",
-    "farewell": "À très vite"
+    "farewell": "À très vite, au soleil"
   },
   "demoBanner": "Démonstration"
 }

@@ -306,7 +306,10 @@ export function IllustrationDefs() {
           d="M44 84 C40 60 50 42 72 38 L96 36 L104 22 L120 22 L114 40 C132 48 142 62 142 84Z"
           style={{ fill: 'var(--seal)' }}
         />
-        <path d="M72 40 C58 46 52 60 54 78 L86 78 C84 60 78 48 72 40Z" fill="rgba(255,255,255,.2)" />
+        <path
+          d="M72 40 C58 46 52 60 54 78 L86 78 C84 60 78 48 72 40Z"
+          fill="rgba(255,255,255,.2)"
+        />
         <path
           d="M96 36 L136 32"
           style={{ stroke: 'var(--seal)' }}
@@ -490,7 +493,8 @@ export function Postmark({ className, date }: { className?: string; date: string
   );
 }
 
-const STAMP_MOTIFS = ['lemon', 'cypress', 'vespa', 'parasol', 'shell'] as const;
+/** The five illustrated stamps of the sheet. */
+export const STAMP_MOTIFS = ['lemon', 'cypress', 'vespa', 'parasol', 'shell'] as const;
 export type StampMotif = (typeof STAMP_MOTIFS)[number];
 
 /** The motif inside a stamp, without its frame. */
@@ -572,7 +576,10 @@ export function PhotoPlaceholder({
       {variant === 'coast' && (
         <>
           <circle cx="232" cy="66" r="30" fill="#F6DC8E" />
-          <path d="M0 176 C60 150 120 162 180 152 C224 145 262 150 300 142 V315 H0Z" fill="#9FC2A6" />
+          <path
+            d="M0 176 C60 150 120 162 180 152 C224 145 262 150 300 142 V315 H0Z"
+            fill="#9FC2A6"
+          />
           <path d="M0 196 H300 V315 H0Z" fill="#3E7FA8" />
           <g fill="none" stroke="#BFDCEA" strokeWidth="5" strokeLinecap="round">
             <path d="M-10 226 q30 -12 60 0 t60 0 t60 0 t60 0 t60 0" />
