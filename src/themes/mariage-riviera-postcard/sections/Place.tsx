@@ -1,6 +1,6 @@
 'use client';
 
-import { Postmark, Shell, Stamp, Vespa } from '../assets/illustrations';
+import { Postmark, Shell, Stamp, Waves } from '../assets/illustrations';
 import type { InvitationContent } from '@/content/schema';
 import { CHAPTER_LENGTH, DIRECTIONS_AT, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
@@ -11,8 +11,8 @@ import { ChapterLines, Piece, pieceStyle, PostcardImage, type ResolvedPhotos } f
  *
  * A real postcard: deckled white border, a striped band down its edge, the
  * "par avion" bar across the top, the city written in script over the photo and
- * the address typed on the back panel. A stamp is slapped on, the sun postmark
- * is wiped across it, a shell and a scooter finish the composition.
+ * the address typed on the back panel. A scooter stamp is slapped on, the sun
+ * postmark is wiped across it, a shell and a line of sea close the scene.
  *
  * The directions button belongs to the text column, so it stays reachable by
  * keyboard and tappable on mobile.
@@ -71,7 +71,7 @@ export function Place({
             )}
           >
             <Stamp
-              motif="parasol"
+              motif="vespa"
               className="big-stamp"
               value="2.10"
               country={t.intro.stampCountry}
@@ -100,13 +100,14 @@ export function Place({
           </Piece>
 
           <Piece
-            at={at.vespa}
+            at={at.waves}
+            className="sea"
             style={pieceStyle(
-              { right: '-4%', bottom: '2%', width: '42%' },
-              { from: 'translateX(70vw) rotate(6deg)', to: 'rotate(-2deg)' },
+              { right: '2%', bottom: '4%', width: '54%' },
+              { from: 'translateX(70vw)', to: 'none' },
             )}
           >
-            <Vespa />
+            <Waves />
           </Piece>
         </div>
 

@@ -42,7 +42,7 @@ export function DateChapter({
           <Piece
             at={at.day}
             style={pieceStyle(
-              { right: '2%', top: '0%', width: '26%', transformOrigin: '70% 30%' },
+              { right: '1%', top: '-1%', width: '30%', transformOrigin: '70% 40%' },
               { from: 'scale(0) rotate(-40deg)', to: 'none' },
             )}
           >

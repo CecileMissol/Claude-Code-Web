@@ -86,11 +86,14 @@ export function buildIntroTimeline(gsap: Gsap, els: IntroElements, onReady: () =
     timeline.set(els.flap, { zIndex: 1 }, INTRO.under);
   }
 
-  // The postcard and the two snapshots come out of the pocket.
+  // The postcard and the two snapshots come out of the pocket. -60 % is not a
+  // free number: the pocket's mouth is at 40 % of the envelope and the card is
+  // 56 % tall, so this is what puts "save the date", the date and the script
+  // line entirely above the paper edge.
   if (els.card) {
     timeline.to(
       els.card,
-      { yPercent: -54, rotate: -2.5, duration: 1.15, ease: 'expo.out' },
+      { yPercent: -60, rotate: -2, duration: 1.15, ease: 'expo.out' },
       INTRO.rise,
     );
   }

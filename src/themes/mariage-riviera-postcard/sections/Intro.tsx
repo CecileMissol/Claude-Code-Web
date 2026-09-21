@@ -108,13 +108,12 @@ export function Intro({
 
           {/* The save-the-date, as a small postcard slid into the pocket. */}
           <span className="card" data-env-card>
+            <span className="cband" aria-hidden="true" />
             <span className="cmain">
               <span className="c1">{t.intro.saveTheDate}</span>
               <span className="c2">{shortDate}</span>
               <span className="c3">{t.intro.weAreGettingMarried}</span>
             </span>
-            <span className="cband" aria-hidden="true" />
-            <span className="cnames script">{names}</span>
           </span>
 
           <span className="pocket" />

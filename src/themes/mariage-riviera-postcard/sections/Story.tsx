@@ -12,7 +12,7 @@ import { ChapterLines, Piece, pieceStyle, Snapshot, type ResolvedPhotos } from '
  *
  * A sticky scene, 400 vh of scroll. The composition is built around a striped
  * beach parasol planted in the bottom-left corner: the first snapshot leans in
- * from the left, the keepsake luggage tag drops in from above on its string,
+ * from the left, the keepsake luggage tag drops in from above,
  * the second snapshot lands bottom-right, the note is a scribbled café napkin
  * and a bougainvillea spray closes the top-left corner.
  */
@@ -61,7 +61,6 @@ export function Story({
               )}
             >
               <div className="luggage">
-                <span className="string" aria-hidden="true" />
                 <span className="eyelet" aria-hidden="true" />
                 <p className="route">{extras.memento.route}</p>
                 <div>
@@ -90,8 +89,8 @@ export function Story({
           <Piece
             at={at.parasol}
             style={pieceStyle(
-              { left: '-8%', bottom: '-2%', width: '38%', transformOrigin: '50% 100%' },
-              { from: 'translateY(60vh) rotate(-38deg)', to: 'rotate(-8deg)' },
+              { left: '-6%', bottom: '-4%', width: '46%', transformOrigin: '50% 100%' },
+              { from: 'translateY(60vh) rotate(-38deg)', to: 'rotate(-6deg)' },
             )}
           >
             <Parasol />

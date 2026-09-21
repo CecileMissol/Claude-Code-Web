@@ -74,7 +74,7 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
           <Piece
             at={PIECE_AT.program.lemon}
             style={pieceStyle(
-              { right: '-6%', bottom: '-4%', width: '30%', transformOrigin: '70% 100%' },
+              { right: '-2%', bottom: '2%', width: '26%', transformOrigin: '70% 100%' },
               { from: 'scale(0.2) rotate(40deg)', to: 'rotate(8deg)' },
             )}
           >

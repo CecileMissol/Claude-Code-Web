@@ -29,6 +29,11 @@ async function scrollChapter(page: Page, chapter: string, fraction: number) {
 }
 
 async function shot(page: Page, name: string, project: string) {
+  // The dev server paints its own overlay in a corner; these captures are the
+  // deliverable, so it has to go before the shutter.
+  await page.evaluate(() => {
+    document.querySelectorAll('nextjs-portal').forEach((node) => node.remove());
+  });
   await page.screenshot({ path: `${SHOTS}/${name}-${project}.png` });
 }
 
@@ -211,10 +216,7 @@ test.describe('Riviera Postcard', () => {
     );
     expect(hidden).toBe(0);
 
-    await page.screenshot({
-      path: `${SHOTS}/reduced-motion-${testInfo.project.name}.png`,
-      fullPage: false,
-    });
+    await shot(page, 'reduced-motion', testInfo.project.name);
   });
 });
 

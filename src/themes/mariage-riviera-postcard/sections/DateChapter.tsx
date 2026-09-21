@@ -52,7 +52,7 @@ export function DateChapter({
               at={tileAt}
               className="shadow"
               style={pieceStyle(
-                { left: `${2 + index * 33}%`, top: '6%', width: '31%' },
+                { left: `${2 + index * 33}%`, top: '10%', width: '31%' },
                 {
                   from: `translate(${index === 1 ? '0' : index === 0 ? '-60vw' : '60vw'}, -60vh) rotate(${index === 1 ? 0 : index === 0 ? -30 : 30}deg)`,
                   to: `rotate(${[-2, 1.2, -1.4][index] ?? 0}deg)`,
@@ -69,7 +69,7 @@ export function DateChapter({
           <Piece
             at={at.cypressLeft}
             style={pieceStyle(
-              { left: '-1%', top: '38%', width: '13%', height: '46%' },
+              { left: '-7%', top: '30%', width: '22%', height: '40%' },
               { from: 'translateY(50vh) rotate(-24deg)', to: 'rotate(-4deg)' },
             )}
           >
@@ -79,7 +79,7 @@ export function DateChapter({
           <Piece
             at={at.cypressRight}
             style={pieceStyle(
-              { right: '-1%', top: '42%', width: '12%', height: '44%' },
+              { right: '-7%', top: '33%', width: '21%', height: '38%' },
               { from: 'translateY(50vh) rotate(24deg)', to: 'rotate(5deg)' },
             )}
           >
@@ -103,14 +103,14 @@ export function DateChapter({
             at={at.waves}
             className="sea"
             style={pieceStyle(
-              { left: '17%', top: '62%', width: '66%' },
+              { left: '22%', top: '58%', width: '56%' },
               { from: 'translateY(6vh)', to: 'none' },
             )}
           >
             <Waves />
           </Piece>
 
-          <Piece at={at.countdown} style={pieceStyle({ left: '5%', top: '73%', width: '90%' })}>
+          <Piece at={at.countdown} style={pieceStyle({ left: '5%', top: '74%', width: '90%' })}>
             <Countdown content={content} t={t} />
           </Piece>
         </div>

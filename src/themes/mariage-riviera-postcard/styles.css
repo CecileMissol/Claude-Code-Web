@@ -1,10 +1,18 @@
 /*
  * "Riviera Postcard" — theme stylesheet.
  *
- * Every rule is scoped under `[data-theme='mariage-riviera-postcard']`, which
- * the theme root carries alongside `.invitation`: three wedding themes now ship
- * in the same application and their class names (`.card`, `.stamp`, `.board`…)
- * are deliberately the same vocabulary. The attribute is what keeps them apart.
+ * Every rule is scoped under `.invitation[data-theme='mariage-riviera-postcard']`,
+ * the two attributes the theme root carries: three wedding themes now ship in the
+ * same application, their class names (`.card`, `.stamp`, `.board`…) are
+ * deliberately the same vocabulary, and `/demo/[theme]` pre-renders all three, so
+ * all three stylesheets end up in one bundle.
+ *
+ * The `.invitation` in front of the attribute is not decoration: theme 1 scopes
+ * its own rules under `.invitation` alone, so `.invitation .postcard .img`
+ * (which sets `grayscale(1)`) ties on specificity with an attribute-only scope
+ * and wins on source order — the venue postcard came out black and white. The
+ * extra class puts every rule of this theme one notch above, whatever the order
+ * the bundler chooses.
  *
  * Three rules govern this file:
  *
@@ -22,7 +30,7 @@
  * values below are fallbacks, so the sheet still renders on its own.
  */
 
-[data-theme='mariage-riviera-postcard'] {
+.invitation[data-theme='mariage-riviera-postcard'] {
   /* Palette fallback: "azur" (Côte d'Azur). */
   --env: #fdf8f0;
   --env-2: #f4ecdd;
@@ -58,42 +66,54 @@
 }
 
 /* The bougainvillea takes the warmest tone of each palette. */
-[data-theme='mariage-riviera-postcard'][data-palette='positano'] {
+.invitation[data-theme='mariage-riviera-postcard'][data-palette='positano'] {
   --bloom: #d9436b;
   --terra: #d95d3f;
 }
 
-[data-theme='mariage-riviera-postcard'][data-palette='capri'] {
+.invitation[data-theme='mariage-riviera-postcard'][data-palette='capri'] {
   --bloom: #c4487f;
   --terra: #c86a3d;
 }
 
-[data-theme='mariage-riviera-postcard'] *,
-[data-theme='mariage-riviera-postcard'] *::before,
-[data-theme='mariage-riviera-postcard'] *::after {
+.invitation[data-theme='mariage-riviera-postcard'] *,
+.invitation[data-theme='mariage-riviera-postcard'] *::before,
+.invitation[data-theme='mariage-riviera-postcard'] *::after {
   box-sizing: inherit;
 }
 
 /*
  * Two full-page washes, both fixed and both inert:
- *  - `::before` a very faint gingham, the tablecloth the whole collage is laid
- *    on (strategy §3.3, "tissu vichy en fond de scène");
+ *  - `::before` the Mediterranean light — warm from above, sea-blue in the
+ *    bottom corner — over the woven check of a café tablecloth (strategy §3.3,
+ *    "tissu vichy en fond de scène"). The check is drawn as threads rather than
+ *    as filled squares: at 50 % duty it reads as a transparency checkerboard,
+ *    which is the one thing a wedding invitation must not look like.
  *  - `::after` a film grain, much lighter than the engraved theme's, because
  *    the photographs here are in colour and grain must not grey them.
  */
-[data-theme='mariage-riviera-postcard']::before {
+.invitation[data-theme='mariage-riviera-postcard']::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    repeating-linear-gradient(0deg, var(--seal) 0 11px, transparent 11px 22px),
-    repeating-linear-gradient(90deg, var(--seal) 0 11px, transparent 11px 22px);
-  opacity: 0.045;
+    radial-gradient(120% 62% at 50% -12%, rgb(232 185 35 / 15%), transparent 62%),
+    radial-gradient(100% 52% at 100% 104%, rgb(62 127 168 / 10%), transparent 62%),
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--seal) 8%, transparent) 0 1.4px,
+      transparent 1.4px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--seal) 8%, transparent) 0 1.4px,
+      transparent 1.4px 24px
+    );
   pointer-events: none;
   z-index: 0;
 }
 
-[data-theme='mariage-riviera-postcard']::after {
+.invitation[data-theme='mariage-riviera-postcard']::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -104,36 +124,36 @@
   mix-blend-mode: multiply;
 }
 
-[data-theme='mariage-riviera-postcard'] > * {
+.invitation[data-theme='mariage-riviera-postcard'] > * {
   position: relative;
   z-index: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] button,
-[data-theme='mariage-riviera-postcard'] input,
-[data-theme='mariage-riviera-postcard'] select,
-[data-theme='mariage-riviera-postcard'] textarea {
+.invitation[data-theme='mariage-riviera-postcard'] button,
+.invitation[data-theme='mariage-riviera-postcard'] input,
+.invitation[data-theme='mariage-riviera-postcard'] select,
+.invitation[data-theme='mariage-riviera-postcard'] textarea {
   font: inherit;
   color: inherit;
 }
 
-[data-theme='mariage-riviera-postcard'] :focus-visible {
+.invitation[data-theme='mariage-riviera-postcard'] :focus-visible {
   outline: 2px solid var(--seal);
   outline-offset: 3px;
 }
 
-[data-theme='mariage-riviera-postcard'] .script {
+.invitation[data-theme='mariage-riviera-postcard'] .script {
   font-family: var(--script);
   font-weight: 400;
 }
 
-[data-theme='mariage-riviera-postcard'] .caps {
+.invitation[data-theme='mariage-riviera-postcard'] .caps {
   text-transform: uppercase;
   letter-spacing: 0.26em;
   font-size: 0.72em;
 }
 
-[data-theme='mariage-riviera-postcard'] .sr-only {
+.invitation[data-theme='mariage-riviera-postcard'] .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -165,7 +185,7 @@ html.invitation-locked body {
 }
 
 /* Hidden <defs> holder. */
-[data-theme='mariage-riviera-postcard'] .rp-defs {
+.invitation[data-theme='mariage-riviera-postcard'] .rp-defs {
   position: absolute;
   width: 0;
   height: 0;
@@ -180,14 +200,14 @@ html.invitation-locked body {
  * The snapshot: a holiday photo in a postcard border — wide white margin at the
  * bottom for the handwritten caption, thin dashed sea-blue rule along the top.
  */
-[data-theme='mariage-riviera-postcard'] .snap {
+.invitation[data-theme='mariage-riviera-postcard'] .snap {
   background: #fffdf7;
   padding: 6% 6% 22%;
   box-shadow: 0 14px 28px -12px rgb(27 42 58 / 42%);
   position: relative;
 }
 
-[data-theme='mariage-riviera-postcard'] .snap::after {
+.invitation[data-theme='mariage-riviera-postcard'] .snap::after {
   content: '';
   position: absolute;
   left: 6%;
@@ -204,7 +224,7 @@ html.invitation-locked body {
   opacity: 0.75;
 }
 
-[data-theme='mariage-riviera-postcard'] .snap .cap {
+.invitation[data-theme='mariage-riviera-postcard'] .snap .cap {
   position: absolute;
   left: 0;
   right: 0;
@@ -220,33 +240,35 @@ html.invitation-locked body {
  * Colour, sun-bleached — never black and white. A touch of sepia and a lifted
  * black point are what "film left on the dashboard" looks like.
  */
-[data-theme='mariage-riviera-postcard'] .photo {
+.invitation[data-theme='mariage-riviera-postcard'] .photo {
   aspect-ratio: 1 / 1.05;
   position: relative;
   display: block;
   width: 100%;
   object-fit: cover;
   filter: saturate(0.9) contrast(1.04) brightness(1.05) sepia(0.14);
+  box-shadow: none;
   background: #dceaf1;
 }
 
-[data-theme='mariage-riviera-postcard'] .photo-wrap {
+.invitation[data-theme='mariage-riviera-postcard'] .photo-wrap {
   position: relative;
   display: block;
 }
 
 /* Warm haze over every photograph, the way a summer negative fades. */
-[data-theme='mariage-riviera-postcard'] .photo-wrap::after,
-[data-theme='mariage-riviera-postcard'] .postcard .img::after {
+.invitation[data-theme='mariage-riviera-postcard'] .photo-wrap::after,
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(200deg, rgb(255 236 186 / 26%), rgb(62 127 168 / 14%));
+  opacity: 1;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
 
-[data-theme='mariage-riviera-postcard'] .tape::before {
+.invitation[data-theme='mariage-riviera-postcard'] .tape::before {
   content: '';
   position: absolute;
   top: -4%;
@@ -264,7 +286,7 @@ html.invitation-locked body {
   z-index: 2;
 }
 
-[data-theme='mariage-riviera-postcard'] .torn {
+.invitation[data-theme='mariage-riviera-postcard'] .torn {
   clip-path: polygon(
     0 3%,
     7% 0,
@@ -290,7 +312,7 @@ html.invitation-locked body {
 }
 
 /* Perforated stamp: the perforation is a CSS mask, the motif is the SVG. */
-[data-theme='mariage-riviera-postcard'] .stamp {
+.invitation[data-theme='mariage-riviera-postcard'] .stamp {
   display: block;
   background: #fffdf5;
   padding: 4px;
@@ -303,7 +325,7 @@ html.invitation-locked body {
   filter: drop-shadow(0 2px 3px rgb(27 42 58 / 22%));
 }
 
-[data-theme='mariage-riviera-postcard'] .stamp .in {
+.invitation[data-theme='mariage-riviera-postcard'] .stamp .in {
   aspect-ratio: 0.8;
   background: linear-gradient(175deg, #eaf3f8 0 46%, #fdf3dc 46% 100%);
   display: grid;
@@ -313,12 +335,12 @@ html.invitation-locked body {
   box-shadow: inset 0 0 0 1.5px var(--seal);
 }
 
-[data-theme='mariage-riviera-postcard'] .stamp .in > svg {
+.invitation[data-theme='mariage-riviera-postcard'] .stamp .in > svg {
   width: 56%;
   height: 74%;
 }
 
-[data-theme='mariage-riviera-postcard'] .stamp i {
+.invitation[data-theme='mariage-riviera-postcard'] .stamp i {
   position: absolute;
   right: 7%;
   bottom: 3%;
@@ -328,7 +350,7 @@ html.invitation-locked body {
   color: var(--seal);
 }
 
-[data-theme='mariage-riviera-postcard'] .stamp em {
+.invitation[data-theme='mariage-riviera-postcard'] .stamp em {
   position: absolute;
   left: 0;
   right: 0;
@@ -343,19 +365,19 @@ html.invitation-locked body {
   color: var(--seal);
 }
 
-[data-theme='mariage-riviera-postcard'] .st-cypress .in {
+.invitation[data-theme='mariage-riviera-postcard'] .st-cypress .in {
   background: linear-gradient(175deg, #fdf3dc 0 44%, #e7f0e6 44% 100%);
 }
 
-[data-theme='mariage-riviera-postcard'] .st-parasol .in {
+.invitation[data-theme='mariage-riviera-postcard'] .st-parasol .in {
   background: linear-gradient(175deg, #fdf3dc 0 52%, #e3eef6 52% 100%);
 }
 
-[data-theme='mariage-riviera-postcard'] .st-vespa .in {
+.invitation[data-theme='mariage-riviera-postcard'] .st-vespa .in {
   background: linear-gradient(175deg, #f7ecd8 0 60%, #e9e3d4 60% 100%);
 }
 
-[data-theme='mariage-riviera-postcard'] .st-shell .in {
+.invitation[data-theme='mariage-riviera-postcard'] .st-shell .in {
   background: linear-gradient(175deg, #eaf3f8 0 58%, #f6e9cf 58% 100%);
 }
 
@@ -363,7 +385,7 @@ html.invitation-locked body {
 /* Intro — the air-mail envelope                                    */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-riviera-postcard'] .intro {
+.invitation[data-theme='mariage-riviera-postcard'] .intro {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -374,7 +396,7 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-riviera-postcard'] .kicker {
+.invitation[data-theme='mariage-riviera-postcard'] .kicker {
   font-family: var(--script);
   font-size: clamp(32px, 8.4vw, 50px);
   line-height: 1.1;
@@ -384,11 +406,11 @@ html.invitation-locked body {
   transition: opacity 0.5s;
 }
 
-[data-theme='mariage-riviera-postcard'] .intro.opened .kicker {
+.invitation[data-theme='mariage-riviera-postcard'] .intro.opened .kicker {
   opacity: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .env-wrap {
+.invitation[data-theme='mariage-riviera-postcard'] .env-wrap {
   position: relative;
   width: min(84vw, 450px);
   aspect-ratio: 1.45;
@@ -398,13 +420,13 @@ html.invitation-locked body {
   -webkit-tap-highlight-color: transparent;
 }
 
-[data-theme='mariage-riviera-postcard'] .face {
+.invitation[data-theme='mariage-riviera-postcard'] .face {
   position: absolute;
   inset: 0;
   border-radius: 3px;
 }
 
-[data-theme='mariage-riviera-postcard'] .front {
+.invitation[data-theme='mariage-riviera-postcard'] .front {
   background: var(--env);
   overflow: hidden;
   box-shadow: 0 22px 40px -16px rgb(27 42 58 / 45%);
@@ -415,7 +437,12 @@ html.invitation-locked body {
  * `::after` covers the middle back in envelope white — a two-layer trick that
  * works everywhere, unlike `mask-composite`, which is recent.
  */
-[data-theme='mariage-riviera-postcard'] .air-edge {
+/* Theme 1 screens a grain over `.front`; white air-mail paper does not want it. */
+.invitation[data-theme='mariage-riviera-postcard'] .front::after {
+  content: none;
+}
+
+.invitation[data-theme='mariage-riviera-postcard'] .air-edge {
   position: absolute;
   inset: 0;
   border-radius: 3px;
@@ -428,7 +455,7 @@ html.invitation-locked body {
   );
 }
 
-[data-theme='mariage-riviera-postcard'] .air-edge::after {
+.invitation[data-theme='mariage-riviera-postcard'] .air-edge::after {
   content: '';
   position: absolute;
   inset: 2.2cqw;
@@ -436,7 +463,7 @@ html.invitation-locked body {
   background: var(--env);
 }
 
-[data-theme='mariage-riviera-postcard'] .stamps {
+.invitation[data-theme='mariage-riviera-postcard'] .stamps {
   position: absolute;
   right: 5%;
   top: 8%;
@@ -446,24 +473,24 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] .stamps .stamp {
+.invitation[data-theme='mariage-riviera-postcard'] .stamps .stamp {
   flex: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] .stamps .st-cypress {
+.invitation[data-theme='mariage-riviera-postcard'] .stamps .st-cypress {
   transform: rotate(4deg) translateY(6%);
 }
 
-[data-theme='mariage-riviera-postcard'] .postmark {
+.invitation[data-theme='mariage-riviera-postcard'] .postmark {
   position: absolute;
   right: 22%;
   top: 13%;
   width: 32%;
-  color: color-mix(in srgb, var(--seal) 58%, transparent);
+  color: color-mix(in srgb, var(--seal) 72%, transparent);
   z-index: 2;
 }
 
-[data-theme='mariage-riviera-postcard'] .par-avion {
+.invitation[data-theme='mariage-riviera-postcard'] .par-avion {
   position: absolute;
   left: 7%;
   top: 11%;
@@ -480,7 +507,7 @@ html.invitation-locked body {
   transform: rotate(-1.5deg);
 }
 
-[data-theme='mariage-riviera-postcard'] .addr {
+.invitation[data-theme='mariage-riviera-postcard'] .addr {
   position: absolute;
   left: 8%;
   bottom: 16%;
@@ -489,13 +516,13 @@ html.invitation-locked body {
   text-align: left;
 }
 
-[data-theme='mariage-riviera-postcard'] .addr .script {
+.invitation[data-theme='mariage-riviera-postcard'] .addr .script {
   font-size: 12.5cqw;
   line-height: 1;
   display: block;
 }
 
-[data-theme='mariage-riviera-postcard'] .addr .caps {
+.invitation[data-theme='mariage-riviera-postcard'] .addr .caps {
   font-family: var(--didone);
   font-size: 3.2cqw;
   letter-spacing: 0.4em;
@@ -504,7 +531,7 @@ html.invitation-locked body {
   color: var(--muted);
 }
 
-[data-theme='mariage-riviera-postcard'] .lay {
+.invitation[data-theme='mariage-riviera-postcard'] .lay {
   position: absolute;
   width: 17%;
   left: 58%;
@@ -515,12 +542,12 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] .back {
+.invitation[data-theme='mariage-riviera-postcard'] .back {
   transform: scaleX(0);
 }
 
 /* Inside of the envelope: a striped Riviera lining. */
-[data-theme='mariage-riviera-postcard'] .liner {
+.invitation[data-theme='mariage-riviera-postcard'] .liner {
   position: absolute;
   inset: 0;
   border-radius: 3px;
@@ -538,18 +565,38 @@ html.invitation-locked body {
  * risen, and a V pinches it to a third of the envelope's width exactly where
  * the date is printed (phase 3, §8.1 — the one known defect of theme 1).
  */
-[data-theme='mariage-riviera-postcard'] .pocket {
+.invitation[data-theme='mariage-riviera-postcard'] .pocket {
   position: absolute;
   inset: 0;
   z-index: 4;
   border-radius: 0 0 3px 3px;
-  clip-path: polygon(0 0, 16% 36%, 84% 36%, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 15% 40%, 85% 40%, 100% 0, 100% 100%, 0 100%);
   background:
+    linear-gradient(180deg, transparent 0 40%, rgb(30 58 95 / 26%) 40% 40.9%, transparent 41%),
+    linear-gradient(180deg, transparent 0 41%, rgb(30 58 95 / 12%) 41%, transparent 47%),
     linear-gradient(160deg, rgb(255 255 255 / 70%), transparent 40%),
-    linear-gradient(20deg, rgb(30 58 95 / 14%), transparent 52%), var(--env);
+    linear-gradient(20deg, rgb(30 58 95 / 8%), transparent 52%), var(--env);
 }
 
-[data-theme='mariage-riviera-postcard'] .flap {
+/* The same barber stripe as the front, along the hem of the pocket. */
+.invitation[data-theme='mariage-riviera-postcard'] .pocket::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.4cqw;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--seal) 0 8px,
+    #fff 8px 16px,
+    var(--terra) 16px 24px,
+    #fff 24px 32px
+  );
+  opacity: 0.9;
+}
+
+.invitation[data-theme='mariage-riviera-postcard'] .flap {
   position: absolute;
   left: 0;
   top: 0;
@@ -562,7 +609,7 @@ html.invitation-locked body {
 }
 
 /* Blue postal seal, with a dotted ring like a rubber stamp. */
-[data-theme='mariage-riviera-postcard'] .seal {
+.invitation[data-theme='mariage-riviera-postcard'] .seal {
   position: absolute;
   left: 50%;
   top: 54%;
@@ -591,12 +638,12 @@ html.invitation-locked body {
 
 /* ---- The save-the-date postcard inside ---- */
 
-[data-theme='mariage-riviera-postcard'] .card {
+.invitation[data-theme='mariage-riviera-postcard'] .card {
   position: absolute;
   left: 10%;
   width: 80%;
-  bottom: 4%;
-  height: 58%;
+  bottom: 3%;
+  height: 56%;
   z-index: 3;
   background: var(--card);
   color: var(--card-ink);
@@ -604,31 +651,51 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-[data-theme='mariage-riviera-postcard'] .cmain {
+/*
+ * The air-mail band runs along the very top edge of the postcard, not across
+ * its middle: everything below the pocket's mouth is never seen, so every
+ * millimetre of the visible band has to carry the date.
+ */
+.invitation[data-theme='mariage-riviera-postcard'] .cband {
   position: absolute;
-  left: 12%;
-  right: 12%;
-  top: 3%;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1.6%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--seal) 0 5%,
+    transparent 5% 10%,
+    var(--terra) 10% 15%,
+    transparent 15% 20%
+  );
+}
+
+.invitation[data-theme='mariage-riviera-postcard'] .cmain {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 4.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-[data-theme='mariage-riviera-postcard'] .c1 {
+.invitation[data-theme='mariage-riviera-postcard'] .c1 {
   font-family: var(--sans);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  font-size: 2.8cqw;
+  font-size: 2.6cqw;
   line-height: 1.3;
   color: var(--muted);
-  margin: 0 0 0.6cqw;
+  margin: 0 0 0.5cqw;
 }
 
-[data-theme='mariage-riviera-postcard'] .c2 {
+.invitation[data-theme='mariage-riviera-postcard'] .c2 {
   font-family: var(--didone);
-  font-size: 10.5cqw;
+  font-size: 10cqw;
   line-height: 1;
   letter-spacing: 0.02em;
   color: var(--seal);
@@ -636,97 +703,70 @@ html.invitation-locked body {
   margin: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .c3 {
+.invitation[data-theme='mariage-riviera-postcard'] .c3 {
   font-family: var(--script);
-  font-size: 6cqw;
+  font-size: 5.6cqw;
   color: var(--terra);
   line-height: 1.15;
-  margin: 0.4cqw 0 0;
-}
-
-[data-theme='mariage-riviera-postcard'] .cband {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 40%;
-  height: 4%;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--seal) 0 6%,
-    transparent 6% 12%,
-    var(--terra) 12% 18%,
-    transparent 18% 24%
-  );
-  opacity: 0.85;
-}
-
-[data-theme='mariage-riviera-postcard'] .cnames {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 52%;
-  text-align: center;
-  font-size: 8cqw;
-  line-height: 1;
-  color: var(--seal);
-  opacity: 0.9;
+  margin: 0.5cqw 0 0;
 }
 
 /* ---- The two snapshots inside ---- */
 
-[data-theme='mariage-riviera-postcard'] .env-wrap .snap {
+.invitation[data-theme='mariage-riviera-postcard'] .env-wrap .snap {
   position: absolute;
   bottom: 13%;
   width: 37%;
   z-index: 2;
 }
 
-[data-theme='mariage-riviera-postcard'] .env-wrap .s1 {
+.invitation[data-theme='mariage-riviera-postcard'] .env-wrap .s1 {
   left: 7%;
 }
 
-[data-theme='mariage-riviera-postcard'] .env-wrap .s2 {
+.invitation[data-theme='mariage-riviera-postcard'] .env-wrap .s2 {
   right: 7%;
 }
 
-[data-theme='mariage-riviera-postcard'] .tuck {
+.invitation[data-theme='mariage-riviera-postcard'] .tuck {
   position: absolute;
   z-index: 5;
 }
 
-[data-theme='mariage-riviera-postcard'] .tuck1 {
+.invitation[data-theme='mariage-riviera-postcard'] .tuck1 {
   right: -9%;
   top: -16%;
   width: 26%;
   transform-origin: 20% 90%;
 }
 
-[data-theme='mariage-riviera-postcard'] .tuck2 {
-  left: -10%;
-  top: 12%;
-  width: 34%;
+.invitation[data-theme='mariage-riviera-postcard'] .tuck2 {
+  left: -8%;
+  top: 14%;
+  width: 28%;
   transform-origin: 80% 80%;
 }
 
-[data-theme='mariage-riviera-postcard'] .tuck svg {
+.invitation[data-theme='mariage-riviera-postcard'] .tuck svg {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
 }
 
-[data-theme='mariage-riviera-postcard'] .hint {
+.invitation[data-theme='mariage-riviera-postcard'] .hint {
   margin: 0;
   color: var(--muted);
+  font-style: normal;
   text-align: center;
   transition: opacity 0.4s;
 }
 
-[data-theme='mariage-riviera-postcard'] .intro.opened .hint {
+.invitation[data-theme='mariage-riviera-postcard'] .intro.opened .hint {
   opacity: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .cue {
+.invitation[data-theme='mariage-riviera-postcard'] .cue {
   position: absolute;
   bottom: calc(1.2rem + env(safe-area-inset-bottom, 0));
   left: 50%;
@@ -737,6 +777,7 @@ html.invitation-locked body {
   gap: 0.5rem;
   color: var(--muted);
   font-size: 0.9rem;
+  font-style: normal;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   opacity: 0;
@@ -744,7 +785,7 @@ html.invitation-locked body {
   pointer-events: none;
 }
 
-[data-theme='mariage-riviera-postcard'] .cue span {
+.invitation[data-theme='mariage-riviera-postcard'] .cue span {
   width: 2px;
   height: 38px;
   background: linear-gradient(var(--seal), transparent);
@@ -772,12 +813,12 @@ html.invitation-locked body {
   }
 }
 
-[data-theme='mariage-riviera-postcard'] .intro.ready .cue {
+.invitation[data-theme='mariage-riviera-postcard'] .intro.ready .cue {
   opacity: 1;
 }
 
 /* "Open" escape hatch, always visible in the editor preview. */
-[data-theme='mariage-riviera-postcard'] .skip {
+.invitation[data-theme='mariage-riviera-postcard'] .skip {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -797,12 +838,12 @@ html.invitation-locked body {
 /* Scrolling chapters                                               */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-riviera-postcard'] .chapter {
+.invitation[data-theme='mariage-riviera-postcard'] .chapter {
   position: relative;
   height: var(--len, 380vh);
 }
 
-[data-theme='mariage-riviera-postcard'] .sticky {
+.invitation[data-theme='mariage-riviera-postcard'] .sticky {
   position: sticky;
   top: 0;
   height: 100svh;
@@ -811,17 +852,17 @@ html.invitation-locked body {
   grid-template-rows: minmax(0, 1fr) auto;
 }
 
-[data-theme='mariage-riviera-postcard'] .board {
+.invitation[data-theme='mariage-riviera-postcard'] .board {
   position: relative;
   margin: 3svh 4vw 0;
   container-type: size;
 }
 
-[data-theme='mariage-riviera-postcard'] .text {
+.invitation[data-theme='mariage-riviera-postcard'] .text {
   padding: 1rem 7vw calc(2.2rem + env(safe-area-inset-bottom, 0));
 }
 
-[data-theme='mariage-riviera-postcard'] .ch-title {
+.invitation[data-theme='mariage-riviera-postcard'] .ch-title {
   font-family: var(--script);
   font-weight: 400;
   color: var(--seal);
@@ -830,11 +871,11 @@ html.invitation-locked body {
   margin: 0 0 0.4rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .lines {
+.invitation[data-theme='mariage-riviera-postcard'] .lines {
   display: grid;
 }
 
-[data-theme='mariage-riviera-postcard'] .line {
+.invitation[data-theme='mariage-riviera-postcard'] .line {
   grid-area: 1 / 1;
   margin: 0;
   font-size: clamp(19px, 4.9vw, 25px);
@@ -849,26 +890,26 @@ html.invitation-locked body {
     filter 0.6s;
 }
 
-[data-theme='mariage-riviera-postcard'] .line.on {
+.invitation[data-theme='mariage-riviera-postcard'] .line.on {
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-[data-theme='mariage-riviera-postcard'] .line.past {
+.invitation[data-theme='mariage-riviera-postcard'] .line.past {
   opacity: 0;
   transform: translateY(-14px);
   filter: blur(5px);
 }
 
 @media (min-width: 820px) {
-  [data-theme='mariage-riviera-postcard'] .sticky {
+  .invitation[data-theme='mariage-riviera-postcard'] .sticky {
     grid-template-rows: 1fr;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
   }
 
-  [data-theme='mariage-riviera-postcard'] .board {
+  .invitation[data-theme='mariage-riviera-postcard'] .board {
     height: 84svh;
     /*
      * Every piece is sized as a percentage of the board's *width*, so an
@@ -880,13 +921,13 @@ html.invitation-locked body {
     margin: 0 0 0 4vw;
   }
 
-  [data-theme='mariage-riviera-postcard'] .text {
+  .invitation[data-theme='mariage-riviera-postcard'] .text {
     padding: 0 6vw 0 4vw;
   }
 }
 
 /* A piece of the collage. `--from` is where it flies in from, `--to` its rest. */
-[data-theme='mariage-riviera-postcard'] .it {
+.invitation[data-theme='mariage-riviera-postcard'] .it {
   position: absolute;
   opacity: 0;
   transform: var(--from, translateY(40px));
@@ -896,23 +937,23 @@ html.invitation-locked body {
   will-change: transform;
 }
 
-[data-theme='mariage-riviera-postcard'] .it.on {
+.invitation[data-theme='mariage-riviera-postcard'] .it.on {
   opacity: 1;
   transform: var(--to, none);
 }
 
-[data-theme='mariage-riviera-postcard'] .shadow {
+.invitation[data-theme='mariage-riviera-postcard'] .shadow {
   filter: drop-shadow(0 12px 18px rgb(27 42 58 / 26%));
 }
 
-[data-theme='mariage-riviera-postcard'] .it > svg {
+.invitation[data-theme='mariage-riviera-postcard'] .it > svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-[data-theme='mariage-riviera-postcard'] .text .it {
+.invitation[data-theme='mariage-riviera-postcard'] .text .it {
   position: static;
 }
 
@@ -922,10 +963,10 @@ html.invitation-locked body {
  * The keepsake, printed as a luggage tag: pointed at the left, eyelet punched
  * through it, string still knotted on.
  */
-[data-theme='mariage-riviera-postcard'] .luggage {
+.invitation[data-theme='mariage-riviera-postcard'] .luggage {
   background: linear-gradient(170deg, #fdf3de, #f6e7c9);
   color: var(--ink);
-  padding: 6% 7% 6% 16%;
+  padding: 6% 7% 6% 20%;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 2%;
@@ -935,7 +976,7 @@ html.invitation-locked body {
   box-shadow: inset 0 0 0 1px rgb(30 58 95 / 12%);
 }
 
-[data-theme='mariage-riviera-postcard'] .luggage .eyelet {
+.invitation[data-theme='mariage-riviera-postcard'] .luggage .eyelet {
   position: absolute;
   left: 8%;
   top: 50%;
@@ -947,19 +988,7 @@ html.invitation-locked body {
   transform: translateY(-50%);
 }
 
-[data-theme='mariage-riviera-postcard'] .luggage .string {
-  position: absolute;
-  left: 3%;
-  top: 50%;
-  width: 26%;
-  height: 2px;
-  background: var(--stem);
-  transform: translateY(-50%) rotate(-38deg);
-  transform-origin: 0 50%;
-  opacity: 0.8;
-}
-
-[data-theme='mariage-riviera-postcard'] .luggage .route {
+.invitation[data-theme='mariage-riviera-postcard'] .luggage .route {
   font-family: var(--didone);
   font-size: min(5.6cqw, 30px);
   line-height: 1.1;
@@ -968,7 +997,7 @@ html.invitation-locked body {
   margin: 0 0 2%;
 }
 
-[data-theme='mariage-riviera-postcard'] .luggage small {
+.invitation[data-theme='mariage-riviera-postcard'] .luggage small {
   font-size: min(2.5cqw, 12px);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -976,14 +1005,14 @@ html.invitation-locked body {
   display: block;
 }
 
-[data-theme='mariage-riviera-postcard'] .luggage b {
+.invitation[data-theme='mariage-riviera-postcard'] .luggage b {
   font-weight: 600;
   font-size: min(3.5cqw, 18px);
   display: block;
 }
 
 /* The note, scribbled on a café napkin. */
-[data-theme='mariage-riviera-postcard'] .note {
+.invitation[data-theme='mariage-riviera-postcard'] .note {
   background: #fffdf8;
   color: var(--seal);
   padding: 9% 9%;
@@ -997,7 +1026,7 @@ html.invitation-locked body {
 
 /* ---- Chapter 2: the date — azulejo tiles ---- */
 
-[data-theme='mariage-riviera-postcard'] .azulejo {
+.invitation[data-theme='mariage-riviera-postcard'] .azulejo {
   aspect-ratio: 1;
   background: #fffdf7;
   display: grid;
@@ -1012,7 +1041,7 @@ html.invitation-locked body {
 }
 
 /* The four corner motifs of a painted tile. */
-[data-theme='mariage-riviera-postcard'] .azulejo::before {
+.invitation[data-theme='mariage-riviera-postcard'] .azulejo::before {
   content: '';
   position: absolute;
   inset: 2.4cqw;
@@ -1024,7 +1053,7 @@ html.invitation-locked body {
   opacity: 0.75;
 }
 
-[data-theme='mariage-riviera-postcard'] .azulejo b {
+.invitation[data-theme='mariage-riviera-postcard'] .azulejo b {
   font-family: var(--didone);
   font-weight: 400;
   font-size: min(14cqw, 15cqh);
@@ -1033,7 +1062,7 @@ html.invitation-locked body {
   font-variant-numeric: tabular-nums;
 }
 
-[data-theme='mariage-riviera-postcard'] .azulejo small {
+.invitation[data-theme='mariage-riviera-postcard'] .azulejo small {
   font-family: var(--sans);
   font-size: min(2.6cqw, 13px);
   letter-spacing: 0.24em;
@@ -1041,26 +1070,26 @@ html.invitation-locked body {
   color: var(--muted);
 }
 
-[data-theme='mariage-riviera-postcard'] .az-month b {
+.invitation[data-theme='mariage-riviera-postcard'] .az-month b {
   color: var(--terra);
 }
 
-[data-theme='mariage-riviera-postcard'] .az-year b {
+.invitation[data-theme='mariage-riviera-postcard'] .az-year b {
   color: color-mix(in srgb, var(--seal) 78%, var(--stem));
 }
 
-[data-theme='mariage-riviera-postcard'] .reveal {
+.invitation[data-theme='mariage-riviera-postcard'] .reveal {
   clip-path: inset(0 100% 0 0);
   transition:
     clip-path 1.4s cubic-bezier(0.6, 0, 0.2, 1),
     opacity 0.2s;
 }
 
-[data-theme='mariage-riviera-postcard'] .reveal.on {
+.invitation[data-theme='mariage-riviera-postcard'] .reveal.on {
   clip-path: inset(0 -10% 0 0);
 }
 
-[data-theme='mariage-riviera-postcard'] .bigscript {
+.invitation[data-theme='mariage-riviera-postcard'] .bigscript {
   font-family: var(--script);
   font-size: min(13cqw, 13cqh);
   line-height: 1.1;
@@ -1069,29 +1098,29 @@ html.invitation-locked body {
   text-align: center;
 }
 
-[data-theme='mariage-riviera-postcard'] .sea {
+.invitation[data-theme='mariage-riviera-postcard'] .sea {
   opacity: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .sea.on {
+.invitation[data-theme='mariage-riviera-postcard'] .sea.on {
   opacity: 0.8;
 }
 
 /* Countdown: four glazed chips. */
-[data-theme='mariage-riviera-postcard'] .count {
+.invitation[data-theme='mariage-riviera-postcard'] .count {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2.5%;
   text-align: center;
 }
 
-[data-theme='mariage-riviera-postcard'] .count > div {
+.invitation[data-theme='mariage-riviera-postcard'] .count > div {
   background: #fffdf7;
   padding: 4% 2% 5%;
-  box-shadow: inset 0 0 0 0.35cqw color-mix(in srgb, var(--seal) 45%, #fff);
+  box-shadow: inset 0 0 0 0.4cqw color-mix(in srgb, var(--seal) 60%, #fff);
 }
 
-[data-theme='mariage-riviera-postcard'] .count b {
+.invitation[data-theme='mariage-riviera-postcard'] .count b {
   display: block;
   font-family: var(--didone);
   font-weight: 400;
@@ -1101,8 +1130,9 @@ html.invitation-locked body {
   font-variant-numeric: tabular-nums;
 }
 
-[data-theme='mariage-riviera-postcard'] .count small {
+.invitation[data-theme='mariage-riviera-postcard'] .count small {
   font-size: min(2.7cqw, 14px);
+  font-style: normal;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1110,8 +1140,8 @@ html.invitation-locked body {
 
 /* ---- Chapter 3: the programme — the trattoria menu ---- */
 
-[data-theme='mariage-riviera-postcard'] .menu {
-  --row-size: min(calc(6.4cqw - var(--rows, 4) * 0.2cqw), 26px);
+.invitation[data-theme='mariage-riviera-postcard'] .menu {
+  --row-size: min(calc(7.6cqw - var(--rows, 4) * 0.25cqw), 30px);
 
   background: #fffdf6;
   color: var(--card-ink);
@@ -1121,7 +1151,7 @@ html.invitation-locked body {
 }
 
 /* The striped awning, with its scalloped hem. */
-[data-theme='mariage-riviera-postcard'] .menu .awning {
+.invitation[data-theme='mariage-riviera-postcard'] .menu .awning {
   height: 5.5cqw;
   min-height: 22px;
   background: repeating-linear-gradient(
@@ -1134,7 +1164,7 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu .awning::after {
+.invitation[data-theme='mariage-riviera-postcard'] .menu .awning::after {
   content: '';
   position: absolute;
   left: 0;
@@ -1146,7 +1176,7 @@ html.invitation-locked body {
   opacity: 0.85;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-kicker {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-kicker {
   margin: 4.5cqw 0 1cqw;
   text-align: center;
   font-family: var(--script);
@@ -1155,27 +1185,27 @@ html.invitation-locked body {
   line-height: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list {
   list-style: none;
   margin: 0;
   padding: 0 7%;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list .row {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list .row {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 4%;
   align-items: baseline;
-  padding: 2.6% 0;
+  padding: 3.4% 0;
   border-bottom: 1px dotted color-mix(in srgb, var(--seal) 40%, transparent);
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list .row:last-child {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list .row:last-child {
   border-bottom: 0;
 }
 
 /* Rows are written onto the board rather than flown in from off-screen. */
-[data-theme='mariage-riviera-postcard'] .it.row {
+.invitation[data-theme='mariage-riviera-postcard'] .it.row {
   position: static;
   opacity: 0;
   transform: translateX(-10px);
@@ -1185,12 +1215,12 @@ html.invitation-locked body {
   will-change: opacity;
 }
 
-[data-theme='mariage-riviera-postcard'] .it.row.on {
+.invitation[data-theme='mariage-riviera-postcard'] .it.row.on {
   opacity: 1;
   transform: rotate(var(--tilt, 0deg));
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list time {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list time {
   font-family: var(--didone);
   font-size: var(--row-size);
   line-height: 1.1;
@@ -1198,18 +1228,18 @@ html.invitation-locked body {
   font-variant-numeric: tabular-nums;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list .what {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list .what {
   display: block;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list strong {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list strong {
   display: block;
   font-weight: 600;
   font-size: calc(var(--row-size) * 0.78);
   line-height: 1.2;
 }
 
-[data-theme='mariage-riviera-postcard'] .menu-list em {
+.invitation[data-theme='mariage-riviera-postcard'] .menu-list em {
   display: block;
   font-family: var(--script);
   font-style: normal;
@@ -1220,7 +1250,7 @@ html.invitation-locked body {
 
 /* ---- Chapter 4: the venue — the postcard ---- */
 
-[data-theme='mariage-riviera-postcard'] .postcard {
+.invitation[data-theme='mariage-riviera-postcard'] .postcard {
   background: #fffdf7;
   padding: 3.6%;
   box-shadow: 0 16px 30px -12px rgb(27 42 58 / 42%);
@@ -1228,7 +1258,7 @@ html.invitation-locked body {
 }
 
 /* Same two-layer trick as the envelope: a striped air-mail edge. */
-[data-theme='mariage-riviera-postcard'] .pc-air {
+.invitation[data-theme='mariage-riviera-postcard'] .pc-air {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
@@ -1240,33 +1270,41 @@ html.invitation-locked body {
   );
 }
 
-[data-theme='mariage-riviera-postcard'] .pc-air::after {
+.invitation[data-theme='mariage-riviera-postcard'] .pc-air::after {
   content: '';
   position: absolute;
   inset: 1.6cqw;
   background: #fffdf7;
 }
 
-[data-theme='mariage-riviera-postcard'] .postcard .img {
+/*
+ * `filter` is declared even though the value is the neutral film look: theme 1
+ * sets `grayscale(1)` on `.invitation .postcard .img`, and specificity only
+ * arbitrates between declarations of the *same* property — a property this
+ * sheet never mentions stays theme 1's. Same reasoning for `.photo`'s
+ * `box-shadow` and for `.front::after` below.
+ */
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img {
   position: relative;
   z-index: 1;
   aspect-ratio: 3 / 2;
   overflow: hidden;
+  filter: saturate(0.94) contrast(1.03) brightness(1.03);
 }
 
-[data-theme='mariage-riviera-postcard'] .postcard .img svg,
-[data-theme='mariage-riviera-postcard'] .postcard .img img {
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img svg,
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-[data-theme='mariage-riviera-postcard'] .postcard .img img {
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img img {
   filter: saturate(0.92) contrast(1.04) brightness(1.05) sepia(0.12);
 }
 
-[data-theme='mariage-riviera-postcard'] .postcard .img span {
+.invitation[data-theme='mariage-riviera-postcard'] .postcard .img span {
   position: absolute;
   left: 4%;
   bottom: 4%;
@@ -1278,7 +1316,7 @@ html.invitation-locked body {
   text-shadow: 0 2px 10px rgb(27 42 58 / 55%);
 }
 
-[data-theme='mariage-riviera-postcard'] .pc-addr {
+.invitation[data-theme='mariage-riviera-postcard'] .pc-addr {
   position: relative;
   z-index: 1;
   margin: 3% 0 0;
@@ -1291,22 +1329,22 @@ html.invitation-locked body {
   color: var(--muted);
 }
 
-[data-theme='mariage-riviera-postcard'] .pc-addr span:first-child {
+.invitation[data-theme='mariage-riviera-postcard'] .pc-addr span:first-child {
   font-weight: 600;
   color: var(--seal);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-[data-theme='mariage-riviera-postcard'] .big-stamp {
+.invitation[data-theme='mariage-riviera-postcard'] .big-stamp {
   width: 100%;
 }
 
-[data-theme='mariage-riviera-postcard'] .inkmark {
-  color: color-mix(in srgb, var(--seal) 62%, transparent);
+.invitation[data-theme='mariage-riviera-postcard'] .inkmark {
+  color: color-mix(in srgb, var(--seal) 74%, transparent);
 }
 
-[data-theme='mariage-riviera-postcard'] .btn {
+.invitation[data-theme='mariage-riviera-postcard'] .btn {
   display: inline-block;
   margin-top: 1.1rem;
   background: var(--seal);
@@ -1322,11 +1360,11 @@ html.invitation-locked body {
   letter-spacing: 0.06em;
 }
 
-[data-theme='mariage-riviera-postcard'] .btn:hover {
+.invitation[data-theme='mariage-riviera-postcard'] .btn:hover {
   background: color-mix(in srgb, var(--seal) 82%, #000);
 }
 
-[data-theme='mariage-riviera-postcard'] .btn[disabled] {
+.invitation[data-theme='mariage-riviera-postcard'] .btn[disabled] {
   opacity: 0.55;
   cursor: progress;
 }
@@ -1335,13 +1373,13 @@ html.invitation-locked body {
 /* Plain sections                                                   */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-riviera-postcard'] .plain {
+.invitation[data-theme='mariage-riviera-postcard'] .plain {
   max-width: 640px;
   margin: 0 auto;
   padding: 16svh 7vw 6svh;
 }
 
-[data-theme='mariage-riviera-postcard'] .plain h2 {
+.invitation[data-theme='mariage-riviera-postcard'] .plain h2 {
   font-family: var(--script);
   font-weight: 400;
   color: var(--seal);
@@ -1351,13 +1389,13 @@ html.invitation-locked body {
   text-align: center;
 }
 
-[data-theme='mariage-riviera-postcard'] .tags {
+.invitation[data-theme='mariage-riviera-postcard'] .tags {
   display: grid;
   gap: 1.7rem;
 }
 
 /* Practical notes, written on luggage tags. */
-[data-theme='mariage-riviera-postcard'] .tag {
+.invitation[data-theme='mariage-riviera-postcard'] .tag {
   background: var(--card);
   color: var(--card-ink);
   padding: 1.35rem 1.6rem 1.35rem 4rem;
@@ -1371,16 +1409,16 @@ html.invitation-locked body {
     transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
-[data-theme='mariage-riviera-postcard'] .tag:nth-child(even) {
+.invitation[data-theme='mariage-riviera-postcard'] .tag:nth-child(even) {
   transform: translateX(30px) rotate(2deg);
 }
 
-[data-theme='mariage-riviera-postcard'] .tag.on {
+.invitation[data-theme='mariage-riviera-postcard'] .tag.on {
   opacity: 1;
   transform: rotate(var(--r, 0deg));
 }
 
-[data-theme='mariage-riviera-postcard'] .tag::before {
+.invitation[data-theme='mariage-riviera-postcard'] .tag::before {
   content: '';
   position: absolute;
   left: 2rem;
@@ -1393,7 +1431,7 @@ html.invitation-locked body {
   transform: translateY(-50%);
 }
 
-[data-theme='mariage-riviera-postcard'] .tag::after {
+.invitation[data-theme='mariage-riviera-postcard'] .tag::after {
   content: '';
   position: absolute;
   left: 2.6rem;
@@ -1404,7 +1442,7 @@ html.invitation-locked body {
   opacity: 0.8;
 }
 
-[data-theme='mariage-riviera-postcard'] .tag h3 {
+.invitation[data-theme='mariage-riviera-postcard'] .tag h3 {
   font-family: var(--didone);
   font-weight: 500;
   color: var(--seal);
@@ -1412,7 +1450,7 @@ html.invitation-locked body {
   margin: 0 0 0.2rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .tag p {
+.invitation[data-theme='mariage-riviera-postcard'] .tag p {
   margin: 0;
   color: #4a5a68;
   font-size: 0.95rem;
@@ -1420,7 +1458,7 @@ html.invitation-locked body {
 
 /* ---- RSVP ---- */
 
-[data-theme='mariage-riviera-postcard'] .rsvp {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp {
   background: var(--card);
   color: var(--card-ink);
   padding: 2.6rem 1.6rem 2.4rem;
@@ -1428,7 +1466,7 @@ html.invitation-locked body {
   box-shadow: 0 20px 40px -22px rgb(27 42 58 / 45%);
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp::before {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp::before {
   content: '';
   position: absolute;
   left: 0;
@@ -1444,21 +1482,21 @@ html.invitation-locked body {
   );
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp form {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp form {
   display: grid;
   gap: 1.1rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp label {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp label {
   display: grid;
   gap: 0.25rem;
   font-size: 0.98rem;
   color: var(--muted);
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp input,
-[data-theme='mariage-riviera-postcard'] .rsvp select,
-[data-theme='mariage-riviera-postcard'] .rsvp textarea {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp input,
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp select,
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp textarea {
   width: 100%;
   border: 0;
   border-bottom: 1.5px solid color-mix(in srgb, var(--seal) 35%, transparent);
@@ -1469,50 +1507,50 @@ html.invitation-locked body {
   border-radius: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp input:focus,
-[data-theme='mariage-riviera-postcard'] .rsvp select:focus,
-[data-theme='mariage-riviera-postcard'] .rsvp textarea:focus {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp input:focus,
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp select:focus,
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp textarea:focus {
   outline: none;
   border-bottom-color: var(--seal);
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp textarea {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp textarea {
   min-height: 4.5rem;
   resize: vertical;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp fieldset {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp fieldset {
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp legend {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp legend {
   font-size: 0.98rem;
   color: var(--muted);
   margin-bottom: 0.5rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .choice {
+.invitation[data-theme='mariage-riviera-postcard'] .choice {
   display: flex;
   gap: 0.7rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .choice label {
+.invitation[data-theme='mariage-riviera-postcard'] .choice label {
   flex: 1;
   cursor: pointer;
   display: block;
   position: relative;
 }
 
-[data-theme='mariage-riviera-postcard'] .choice input {
+.invitation[data-theme='mariage-riviera-postcard'] .choice input {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
 }
 
-[data-theme='mariage-riviera-postcard'] .choice span {
+.invitation[data-theme='mariage-riviera-postcard'] .choice span {
   display: block;
   text-align: center;
   border: 1.5px solid color-mix(in srgb, var(--seal) 40%, transparent);
@@ -1524,19 +1562,19 @@ html.invitation-locked body {
   line-height: 1.2;
 }
 
-[data-theme='mariage-riviera-postcard'] .choice input:checked + span {
+.invitation[data-theme='mariage-riviera-postcard'] .choice input:checked + span {
   background: var(--seal);
   color: #fff;
   border-color: var(--seal);
 }
 
-[data-theme='mariage-riviera-postcard'] .choice input:focus-visible + span {
+.invitation[data-theme='mariage-riviera-postcard'] .choice input:focus-visible + span {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* Honeypot: off-screen, never announced, never tabbable. */
-[data-theme='mariage-riviera-postcard'] .trap {
+.invitation[data-theme='mariage-riviera-postcard'] .trap {
   position: absolute;
   left: -9999px;
   width: 1px;
@@ -1544,33 +1582,35 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp .btn {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp .btn {
   justify-self: center;
   margin-top: 0.6rem;
 }
 
-[data-theme='mariage-riviera-postcard'] .notice {
+.invitation[data-theme='mariage-riviera-postcard'] .notice {
   margin: 1.4rem 0 0;
   font-size: 0.78rem;
   line-height: 1.5;
   color: var(--muted);
 }
 
-[data-theme='mariage-riviera-postcard'] .error {
+.invitation[data-theme='mariage-riviera-postcard'] .error {
   margin: 0;
   color: var(--terra);
   font-weight: 500;
+  font-style: normal;
 }
 
-[data-theme='mariage-riviera-postcard'] .closed {
+.invitation[data-theme='mariage-riviera-postcard'] .closed {
   margin: 0;
   text-align: center;
   font-size: 1.1rem;
+  font-style: normal;
   color: var(--muted);
 }
 
 /* The reply lands as a blue postal seal. */
-[data-theme='mariage-riviera-postcard'] .done-seal {
+.invitation[data-theme='mariage-riviera-postcard'] .done-seal {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1600,41 +1640,42 @@ html.invitation-locked body {
     opacity 0.3s;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp.sent .done-seal {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp.sent .done-seal {
   transform: translate(-50%, -80%) scale(1);
   opacity: 1;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp.sent form {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp.sent form {
   opacity: 0.12;
   pointer-events: none;
   transition: opacity 0.6s;
 }
 
-[data-theme='mariage-riviera-postcard'] .thanks {
+.invitation[data-theme='mariage-riviera-postcard'] .thanks {
   position: absolute;
   left: 0;
   right: 0;
   top: 58%;
   text-align: center;
   font-size: 1.25rem;
+  font-style: normal;
   color: var(--seal);
   opacity: 0;
   transition: opacity 0.6s 0.4s;
 }
 
-[data-theme='mariage-riviera-postcard'] .rsvp.sent .thanks {
+.invitation[data-theme='mariage-riviera-postcard'] .rsvp.sent .thanks {
   opacity: 1;
 }
 
 /* ---- Signature ---- */
 
-[data-theme='mariage-riviera-postcard'] .sign {
+.invitation[data-theme='mariage-riviera-postcard'] .sign {
   text-align: center;
   padding: 10svh 1rem 16svh;
 }
 
-[data-theme='mariage-riviera-postcard'] .sign-waves {
+.invitation[data-theme='mariage-riviera-postcard'] .sign-waves {
   display: block;
   width: min(220px, 52vw);
   margin: 0 auto 1.4rem;
@@ -1642,16 +1683,17 @@ html.invitation-locked body {
   opacity: 0.55;
 }
 
-[data-theme='mariage-riviera-postcard'] .sign .script {
+.invitation[data-theme='mariage-riviera-postcard'] .sign .script {
   font-size: clamp(52px, 14vw, 90px);
   line-height: 1.1;
   color: var(--seal);
   display: block;
 }
 
-[data-theme='mariage-riviera-postcard'] .sign p {
+.invitation[data-theme='mariage-riviera-postcard'] .sign p {
   margin: 0.6rem 0 0;
   color: var(--muted);
+  font-style: normal;
 }
 
 /* ---- Demo badge ---- */
@@ -1661,7 +1703,7 @@ html.invitation-locked body {
  * heading of the invitation is centred, so a bar across the top would sit on
  * top of them.
  */
-[data-theme='mariage-riviera-postcard'] .demo-banner {
+.invitation[data-theme='mariage-riviera-postcard'] .demo-banner {
   position: fixed;
   top: calc(0.6rem + env(safe-area-inset-top, 0));
   left: 0.6rem;
@@ -1688,11 +1730,11 @@ html.invitation-locked body {
  * block, every piece is simply there, and the sentences stack instead of
  * replacing one another. Nothing moves, nothing is hidden, nothing is locked.
  */
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .chapter {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .chapter {
   height: auto;
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .sticky {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .sticky {
   position: static;
   height: auto;
   overflow: visible;
@@ -1705,48 +1747,48 @@ html.invitation-locked body {
 }
 
 @media (min-width: 820px) {
-  [data-theme='mariage-riviera-postcard'][data-reduced='true'] .sticky {
+  .invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .sticky {
     grid-template-rows: 1fr;
   }
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .line {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .line {
   grid-area: auto;
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .lines {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .lines {
   gap: 0.7rem;
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .it,
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .tag {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .it,
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .tag {
   opacity: 1;
   transform: var(--to, none);
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .it.row {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .it.row {
   transform: rotate(var(--tilt, 0deg));
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .sea {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .sea {
   opacity: 0.8;
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .reveal {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .reveal {
   clip-path: none;
 }
 
-[data-theme='mariage-riviera-postcard'][data-reduced='true'] .cue {
+.invitation[data-theme='mariage-riviera-postcard'][data-reduced='true'] .cue {
   display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-theme='mariage-riviera-postcard'] *,
-  [data-theme='mariage-riviera-postcard'] *::before,
-  [data-theme='mariage-riviera-postcard'] *::after {
+  .invitation[data-theme='mariage-riviera-postcard'] *,
+  .invitation[data-theme='mariage-riviera-postcard'] *::before,
+  .invitation[data-theme='mariage-riviera-postcard'] *::after {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
     animation: none !important;

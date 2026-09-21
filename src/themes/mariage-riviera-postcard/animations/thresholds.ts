@@ -63,7 +63,7 @@ export const PIECE_AT = {
     stamp: 0.3,
     postmark: 0.4,
     shell: 0.6,
-    vespa: 0.74,
+    waves: 0.74,
   },
 } as const;
 

@@ -89,7 +89,7 @@ export function buildIntroTimeline(gsap: Gsap, els: IntroElements, onReady: () =
   if (els.ticket) {
     timeline.to(
       els.ticket,
-      { yPercent: -54, rotate: -2.5, duration: 1.15, ease: 'expo.out' },
+      { yPercent: -60, rotate: -2.5, duration: 1.15, ease: 'expo.out' },
       INTRO.rise,
     );
   }

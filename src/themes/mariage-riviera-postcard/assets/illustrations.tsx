@@ -193,20 +193,26 @@ export function IllustrationDefs() {
       </symbol>
 
       {/* ---- Cypress ---- */}
-      <symbol id={CYPRESS_ID} viewBox="0 0 60 200">
-        <path d="M27 186 L33 186 L32 200 L28 200Z" fill="#7A5B3A" />
+      <symbol id={CYPRESS_ID} viewBox="0 0 80 200">
+        <path d="M35 184 L45 184 L43 200 L37 200Z" fill="#7A5B3A" />
         <path
-          d="M30 4 C44 40 50 82 48 124 C47 158 40 182 30 190 C20 182 13 158 12 124 C10 82 16 40 30 4Z"
+          d="M40 2 C50 26 58 54 62 88 C66 122 64 154 56 178 C50 192 44 196 40 196 C36 196 30 192 24 178 C16 154 14 122 18 88 C22 54 30 26 40 2Z"
           style={{ fill: 'var(--stem)' }}
         />
+        {/* The ragged silhouette that tells a cypress from a cone. */}
         <path
-          d="M30 14 C40 46 45 86 43 124 C42 152 37 172 30 182 C30 130 30 66 30 14Z"
-          fill="rgba(0,0,0,.14)"
+          d="M40 8 C49 30 56 58 59 90 C62 122 60 152 53 174 C48 188 43 192 40 192Z"
+          fill="rgba(0,0,0,.16)"
         />
-        <g stroke="rgba(255,255,255,.22)" strokeWidth="1.6" strokeLinecap="round" fill="none">
-          <path d="M24 44 C22 62 21 86 22 108" />
-          <path d="M37 58 C39 78 39 100 37 120" />
-          <path d="M30 96 C30 118 29 140 27 158" />
+        <g stroke="rgba(255,255,255,.24)" strokeWidth="2" strokeLinecap="round" fill="none">
+          <path d="M31 40 C27 66 25 96 27 124" />
+          <path d="M49 56 C53 82 54 110 51 138" />
+          <path d="M40 92 C40 120 39 148 36 170" />
+        </g>
+        <g style={{ fill: 'var(--stem)' }}>
+          <path d="M18 70 C12 76 10 84 11 92 C16 86 18 78 18 70Z" />
+          <path d="M62 96 C68 102 70 110 69 118 C64 112 62 104 62 96Z" />
+          <path d="M20 132 C14 138 12 146 13 154 C18 148 20 140 20 132Z" />
         </g>
       </symbol>
 
@@ -273,21 +279,32 @@ export function IllustrationDefs() {
 
       {/* ---- Scallop shell ---- */}
       <symbol id={SHELL_ID} viewBox="0 0 120 110">
+        {/* Fan of ribs, wide at the top, closing onto the hinge at the bottom. */}
         <path
-          d="M60 8 C92 8 116 40 116 74 C116 88 108 98 96 100 L24 100 C12 98 4 88 4 74 C4 40 28 8 60 8Z"
+          d="M60 104 C24 104 2 78 6 50 C10 26 32 8 60 8 C88 8 110 26 114 50 C118 78 96 104 60 104Z"
           style={{ fill: 'var(--accent)' }}
-          opacity=".88"
         />
-        <g stroke="rgba(120,80,20,.35)" strokeWidth="2" fill="none" strokeLinecap="round">
-          <path d="M60 14 L60 98" />
-          <path d="M46 16 L32 96" />
-          <path d="M74 16 L88 96" />
-          <path d="M33 26 L14 90" />
-          <path d="M87 26 L106 90" />
-        </g>
+        {/* The scalloped rim. */}
         <path
-          d="M24 100 L96 100 C96 106 88 108 60 108 C32 108 24 106 24 100Z"
-          fill="rgba(120,80,20,.28)"
+          d="M6 50 q7 -12 14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0"
+          transform="translate(0 44)"
+          fill="none"
+          stroke="rgba(150,100,24,.28)"
+          strokeWidth="2"
+        />
+        <g stroke="rgba(150,100,24,.34)" strokeWidth="2.2" fill="none" strokeLinecap="round">
+          <path d="M60 100 L60 12" />
+          <path d="M60 100 L40 16" />
+          <path d="M60 100 L80 16" />
+          <path d="M60 100 L22 28" />
+          <path d="M60 100 L98 28" />
+          <path d="M60 100 L11 48" />
+          <path d="M60 100 L109 48" />
+        </g>
+        {/* Hinge. */}
+        <path
+          d="M48 100 C48 108 53 110 60 110 C67 110 72 108 72 100Z"
+          fill="rgba(150,100,24,.38)"
         />
       </symbol>
 
@@ -302,25 +319,39 @@ export function IllustrationDefs() {
 
       {/* ---- Vespa ---- */}
       <symbol id={VESPA_ID} viewBox="0 0 170 120">
+        {/* Front shield, step-through floor, rear body: the scooter silhouette. */}
         <path
-          d="M44 84 C40 60 50 42 72 38 L96 36 L104 22 L120 22 L114 40 C132 48 142 62 142 84Z"
+          d="M52 40 C62 26 74 22 84 24 L86 38 C76 38 68 44 64 56 L60 88 L44 88 L46 58 C46 50 48 44 52 40Z"
           style={{ fill: 'var(--seal)' }}
         />
+        <path d="M60 80 L104 80 L104 92 L60 92Z" style={{ fill: 'var(--seal)' }} />
         <path
-          d="M72 40 C58 46 52 60 54 78 L86 78 C84 60 78 48 72 40Z"
-          fill="rgba(255,255,255,.2)"
+          d="M100 84 C96 62 104 48 122 46 C140 44 150 58 150 82 L150 92 L100 92Z"
+          style={{ fill: 'var(--seal)' }}
         />
+        {/* Saddle. */}
+        <path d="M96 50 C108 44 124 44 134 48 C126 54 108 56 96 54Z" fill="#2A2A28" />
+        {/* Handlebar and mirror. */}
         <path
-          d="M96 36 L136 32"
+          d="M62 34 L92 24"
           style={{ stroke: 'var(--seal)' }}
-          strokeWidth="5"
+          strokeWidth="6"
           strokeLinecap="round"
         />
-        <circle cx="46" cy="90" r="18" fill="#2A2A28" />
-        <circle cx="46" cy="90" r="7" style={{ fill: 'var(--accent)' }} />
-        <circle cx="138" cy="90" r="18" fill="#2A2A28" />
-        <circle cx="138" cy="90" r="7" style={{ fill: 'var(--accent)' }} />
-        <path d="M118 24 L134 18 L138 26 L122 32Z" style={{ fill: 'var(--accent)' }} />
+        <path
+          d="M58 30 L52 14"
+          style={{ stroke: 'var(--seal)' }}
+          strokeWidth="3.4"
+          strokeLinecap="round"
+        />
+        <circle cx="51" cy="11" r="5" style={{ fill: 'var(--accent)' }} />
+        {/* Headlight. */}
+        <circle cx="50" cy="48" r="8" style={{ fill: 'var(--accent)' }} />
+        {/* Wheels. */}
+        <circle cx="52" cy="94" r="20" fill="#2A2A28" />
+        <circle cx="52" cy="94" r="8" style={{ fill: 'var(--accent)' }} />
+        <circle cx="136" cy="94" r="20" fill="#2A2A28" />
+        <circle cx="136" cy="94" r="8" style={{ fill: 'var(--accent)' }} />
       </symbol>
     </svg>
   );
@@ -359,7 +390,7 @@ export function Cypress({ className, rotate }: IllustrationProps) {
   return (
     <svg
       className={className}
-      viewBox="0 0 60 200"
+      viewBox="0 0 80 200"
       aria-hidden="true"
       focusable="false"
       style={rotateStyle(rotate)}
@@ -619,25 +650,32 @@ export function PhotoPlaceholder({
       {variant === 'terrace' && (
         <>
           <rect width="300" height="315" fill="#F4EDE0" />
-          <rect y="200" width="300" height="115" fill="#E3D6C0" />
+          <rect y="206" width="300" height="109" fill="#E3D6C0" />
+          {/* Striped awning hanging from the top, with a scalloped hem. */}
+          <rect width="300" height="112" fill="#FBF6EA" />
           <g fill="#1E3A5F">
-            <rect x="0" y="96" width="34" height="46" />
-            <rect x="68" y="96" width="34" height="46" />
-            <rect x="136" y="96" width="34" height="46" />
-            <rect x="204" y="96" width="34" height="46" />
-            <rect x="272" y="96" width="28" height="46" />
+            <rect x="0" width="26" height="112" />
+            <rect x="52" width="26" height="112" />
+            <rect x="104" width="26" height="112" />
+            <rect x="156" width="26" height="112" />
+            <rect x="208" width="26" height="112" />
+            <rect x="260" width="26" height="112" />
           </g>
-          <rect y="88" width="300" height="10" fill="#1E3A5F" />
+          <path
+            d="M0 112 q13 22 26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 V112Z"
+            fill="#1E3A5F"
+            opacity=".82"
+          />
           <g fill="#C8553D">
-            <rect x="40" y="228" width="44" height="52" rx="4" />
-            <rect x="196" y="236" width="38" height="44" rx="4" />
+            <rect x="34" y="232" width="46" height="56" rx="5" />
+            <rect x="204" y="240" width="40" height="48" rx="5" />
           </g>
           <g fill="#4C7A5E">
-            <ellipse cx="62" cy="216" rx="30" ry="22" />
-            <ellipse cx="215" cy="228" rx="26" ry="18" />
+            <ellipse cx="57" cy="220" rx="32" ry="24" />
+            <ellipse cx="224" cy="232" rx="27" ry="19" />
           </g>
-          <rect x="112" y="240" width="76" height="8" rx="4" fill="#FBF6EA" />
-          <rect x="146" y="248" width="8" height="46" fill="#CBBFA6" />
+          <rect x="108" y="246" width="84" height="9" rx="4" fill="#FBF6EA" />
+          <rect x="145" y="255" width="10" height="48" fill="#CBBFA6" />
         </>
       )}
     </svg>

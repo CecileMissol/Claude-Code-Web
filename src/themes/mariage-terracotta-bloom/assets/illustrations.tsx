@@ -304,33 +304,34 @@ export function IllustrationDefs() {
         ))}
       </symbol>
 
-      {/* ---- Sun over an arch ---- */}
+      {/* ---- Sun rising inside a desert arch ---- */}
       <symbol id={SUNARCH_ID} viewBox="0 0 120 120">
-        <g style={{ stroke: 'var(--accent)' }} strokeWidth="2.6" strokeLinecap="round" fill="none">
+        {/* The doorway: thick enough to read at 30 % of a board. */}
+        <path
+          d="M22 116 V64 a38 38 0 0 1 76 0 v52"
+          fill="none"
+          style={{ stroke: 'var(--stem)' }}
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
+        {/* The sun stands inside the arch, rays alternating long and short. */}
+        <g style={{ stroke: 'var(--accent)' }} strokeWidth="2.4" strokeLinecap="round" fill="none">
           {Array.from({ length: 12 }, (_, index) => {
             const angle = (index / 12) * Math.PI * 2;
-            const inner = 34;
-            const outer = 46;
+            const outer = index % 2 === 0 ? 30 : 26;
             return (
               <line
                 key={index}
-                x1={round(60 + Math.cos(angle) * inner)}
-                y1={round(56 + Math.sin(angle) * inner)}
+                x1={round(60 + Math.cos(angle) * 22)}
+                y1={round(74 + Math.sin(angle) * 22)}
                 x2={round(60 + Math.cos(angle) * outer)}
-                y2={round(56 + Math.sin(angle) * outer)}
-                opacity={index % 2 === 0 ? 0.9 : 0.5}
+                y2={round(74 + Math.sin(angle) * outer)}
+                opacity={index % 2 === 0 ? 0.95 : 0.55}
               />
             );
           })}
         </g>
-        <circle cx="60" cy="56" r="26" style={{ fill: 'var(--accent)' }} opacity=".92" />
-        <path
-          d="M40 104 V72 a20 20 0 0 1 40 0 v32"
-          fill="none"
-          style={{ stroke: 'var(--stem)' }}
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
+        <circle cx="60" cy="74" r="16" style={{ fill: 'var(--accent)' }} opacity=".92" />
       </symbol>
     </svg>
   );
@@ -493,7 +494,10 @@ export function PhotoPlaceholder({
       {variant === 'dunes' && (
         <>
           <circle cx="212" cy="80" r="30" fill="#F4E3CA" />
-          <path d="M0 200 C60 168 120 186 180 200 C230 212 268 196 300 200 V315 H0Z" fill="#D3AE86" />
+          <path
+            d="M0 200 C60 168 120 186 180 200 C230 212 268 196 300 200 V315 H0Z"
+            fill="#D3AE86"
+          />
           <path d="M0 240 C80 214 160 232 300 226 V315 H0Z" fill="#BE9068" />
           <path d="M0 282 C90 268 190 274 300 276 V315 H0Z" fill="#A5774F" />
           <path

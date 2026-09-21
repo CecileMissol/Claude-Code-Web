@@ -1,7 +1,7 @@
 'use client';
 
 import type { InvitationContent } from '@/content/schema';
-import { DriedBloom, Eucalyptus, Pampas } from '../assets/illustrations';
+import { DriedBloom, Eucalyptus } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
 import type { Messages } from '../messages';
 import type { Extras } from '../schema';
@@ -13,7 +13,7 @@ import { ChapterLines, Frame, Piece, pieceStyle, type ResolvedPhotos } from './p
  * A sticky scene, 420 vh of scroll. The composition is this theme's own: the
  * first photo is an *arch* pinned top right, the keepsake is a bar card tilted
  * across the left, the second photo is a rounded snap on sand paper, and a
- * washi-taped kraft note closes the pile. Eucalyptus climbs the left edge,
+ * washi-taped kraft note closes the pile. Eucalyptus climbs the left edge and
  * dried blooms fill the bottom right.
  */
 export function Story({
@@ -120,16 +120,6 @@ export function Story({
             )}
           >
             <DriedBloom />
-          </Piece>
-
-          <Piece
-            at={at.bloom}
-            style={pieceStyle(
-              { left: '52%', bottom: '-6%', width: '16%', height: '40%' },
-              { from: 'translateY(40vh) rotate(24deg)', to: 'rotate(9deg)' },
-            )}
-          >
-            <Pampas />
           </Piece>
         </div>
 
