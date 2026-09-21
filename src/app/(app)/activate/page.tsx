@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getDb } from '@/db';
 import { ensureThemesSeeded } from '@/db/seed';
-import { loadAllManifests } from '@/themes/registry';
+import { loadAllManifests } from '@/themes/manifests';
 import type { Locale } from '@/i18n/config';
 import { ActivationForm } from './ActivationForm';
 

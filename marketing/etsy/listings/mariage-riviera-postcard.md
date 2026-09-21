@@ -48,8 +48,8 @@ not under physical paper goods.
 **Riviera Postcard — A Coastal Wedding Website That Opens Like a Real
 Letter**
 
-*INSTANT DOWNLOAD — a digital product from {{BRAND_NAME}}. This listing does
-not ship anything physical.*
+_INSTANT DOWNLOAD — a digital product from {{BRAND_NAME}}. This listing does
+not ship anything physical._
 
 No Canva account. No broken layouts on mobile. Just a beautiful, guided
 editor and a real RSVP dashboard.
@@ -128,24 +128,24 @@ postmark and stamps — are genuinely customizable, not fixed images.
 
 **FAQ**
 
-- *Do I need a Canva account?* No — everything happens in our own editor,
+- _Do I need a Canva account?_ No — everything happens in our own editor,
   no third-party software or account required beyond your own login.
-- *Will it work on my guests' phones?* Yes — mobile-first, tested on iOS
+- _Will it work on my guests' phones?_ Yes — mobile-first, tested on iOS
   and Android.
-- *Can I edit after publishing?* Yes, anytime, unlimited edits, changes go
+- _Can I edit after publishing?_ Yes, anytime, unlimited edits, changes go
   live immediately on your existing link.
-- *How long is my invitation hosted?* 18 months from publication, included
+- _How long is my invitation hosted?_ 18 months from publication, included
   in this listing. Extensions available separately.
-- *Can I add real photos?* Yes — upload your own engagement or couple
+- _Can I add real photos?_ Yes — upload your own engagement or couple
   photos; we handle the sun-bright color treatment.
-- *Is there really an RSVP dashboard?* Yes — guest names, headcounts,
+- _Is there really an RSVP dashboard?_ Yes — guest names, headcounts,
   dietary notes, CSV export, email alerts.
-- *What if I need help?* Message us anytime through Etsy.
-- *How fast is activation?* Within 24 hours of submitting your order
+- _What if I need help?_ Message us anytime through Etsy.
+- _How fast is activation?_ Within 24 hours of submitting your order
   number and email on the activation page.
-- *Can I send it in French too?* Yes — the guest-facing page can switch
+- _Can I send it in French too?_ Yes — the guest-facing page can switch
   between English and French.
-- *Is this good for a destination wedding?* Yes — the coastal, postcard
+- _Is this good for a destination wedding?_ Yes — the coastal, postcard
   styling is designed for destination and travel-themed weddings.
 
 **Refund policy**
@@ -156,8 +156,8 @@ if you haven't activated your invitation yet and change your mind. Once
 activated, we don't refund for change of mind, but we always fix a genuine
 technical issue free of charge — message us before opening a return.
 
-*This digital download contains your activation link — nothing is shipped,
-and delivery is instant via Etsy's download system.*
+_This digital download contains your activation link — nothing is shipped,
+and delivery is instant via Etsy's download system._
 
 ---
 
@@ -171,13 +171,13 @@ Overlay text set in Bodoni Moda (titles) / Outfit (labels), on blanc cassé
 1. **Cover — closed envelope, hero shot** (2000×2000). Cobalt-blue
    envelope, sun-shaped postmark, Mediterranean-motif postage stamp, one
    lemon-branch sprig laid diagonally, on a blanc-cassé backdrop with
-   bright, even light. Overlay top third: *"Riviera Postcard"* script
-   font; bottom third: *"A coastal wedding website that opens like a real
-   letter."*
+   bright, even light. Overlay top third: _"Riviera Postcard"_ script
+   font; bottom third: _"A coastal wedding website that opens like a real
+   letter."_
 2. **Envelope opening sequence** (3000×2250, landscape). 3-frame filmstrip:
    closed → flipped with sun postmark stamping down → flap open, ticket
-   and postcard-bordered photos sliding out. Overlay bottom-left: *"Tap. It
-   opens like a real letter."*
+   and postcard-bordered photos sliding out. Overlay bottom-left: _"Tap. It
+   opens like a real letter."_
 3. **Save-the-date ticket + postcard photos close-up** (2000×2000). Macro
    shot of the perforated ticket, two deckle-edged postcard-style photos,
    striped cabana ribbon and a coquillage shell on vichy fabric. No
@@ -185,48 +185,48 @@ Overlay text set in Bodoni Moda (titles) / Outfit (labels), on blanc cassé
 4. **Mobile mockup — "Our story" chapter** (2000×2000). Phone in hand,
    vertical, showing the story section (postcard photo, striped ribbon,
    phrase-by-phrase text) on a vichy-tablecloth desk backdrop. Overlay
-   top: *"Scroll through your story."*
+   top: _"Scroll through your story."_
 5. **Mobile mockup — "The date" countdown** (2000×2000). Phone showing the
-   live countdown on cobalt and citron papers. Overlay top: *"A countdown
-   your guests will actually check."*
+   live countdown on cobalt and citron papers. Overlay top: _"A countdown
+   your guests will actually check."_
 6. **Mobile mockup — "Program" & "Venue" chapters** (2000×2000). Split
    screen, two phones: stacked postcard program notes on the left, venue
    postcard with sun-postmark-stamped pin on the right. Overlay bottom:
-   *"Program, venue, all in the same story."*
+   _"Program, venue, all in the same story."_
 7. **RSVP dashboard screenshot** (2000×2000). Laptop mockup on the same
-   cobalt/citron styling, showing the RSVP response table. Overlay top: *"A
-   real RSVP dashboard — not a Canva form."* Sub-line: *"Guest counts,
-   dietary notes, CSV export, instant email alerts."*
+   cobalt/citron styling, showing the RSVP response table. Overlay top: _"A
+   real RSVP dashboard — not a Canva form."_ Sub-line: _"Guest counts,
+   dietary notes, CSV export, instant email alerts."_
 8. **"No Canva" comparison graphic** (2000×2000). Split-panel infographic:
    left "Typical Canva template" (layout breaks on mobile, fixed graphic
    colors, no dashboard); right "{{BRAND_NAME}}" (guided editor, colorable
-   illustrations, real dashboard). Overlay title: *"Why couples switch
-   from Canva."*
+   illustrations, real dashboard). Overlay title: _"Why couples switch
+   from Canva."_
 9. **Palette & script picker** (2000×2000). Editor screenshot or mockup
    showing the 3 palette swatches (Côte d'Azur / Positano Sunset / Capri
    Citrus) and 3 script previews (Playball, Alex Brush, Yellowtail).
-   Overlay: *"3 palettes. 3 scripts. Your style."*
+   Overlay: _"3 palettes. 3 scripts. Your style."_
 10. **Lifestyle flatlay — phone on styled table** (3000×2250, landscape).
     Phone displaying the published invitation homepage, laid on a flatlay
     of vichy fabric, a lemon branch, a shell and striped ribbon. Overlay
-    centered: *"Yours in about 10 minutes. No design skills needed."*
-    Small corner badge: *"18 months hosting included."*
+    centered: _"Yours in about 10 minutes. No design skills needed."_
+    Small corner badge: _"18 months hosting included."_
 
 ## 15-second video script
 
 Format: vertical 9:16, captions burned in, no voiceover required, bright
 bossa-nova-style/paper-rustle SFX.
 
-| Time | Visual | On-screen text |
-|---|---|---|
-| 0.0–2.5s | Cobalt envelope on vichy table, a hand taps it | *"Watch what happens when you tap 'send'…"* |
-| 2.5–5.0s | Envelope flips, sun postmark stamps down, flap opens | *"…on a Riviera Postcard invitation."* |
-| 5.0–8.0s | Ticket and postcard photos slide out, cut to scroll through "Our story" | *"It opens like a real letter."* |
-| 8.0–10.5s | Quick scroll montage: date countdown → program → venue postcard | *"Then it tells your whole story."* |
-| 10.5–13.0s | Cut to RSVP dashboard on laptop, a new response animating in | *"With a real RSVP dashboard."* |
-| 13.0–15.0s | End card: product name, price badge "$29", CTA | *"{{BRAND_NAME}} — No Canva needed. Link in shop."* |
+| Time       | Visual                                                                  | On-screen text                                      |
+| ---------- | ----------------------------------------------------------------------- | --------------------------------------------------- |
+| 0.0–2.5s   | Cobalt envelope on vichy table, a hand taps it                          | _"Watch what happens when you tap 'send'…"_         |
+| 2.5–5.0s   | Envelope flips, sun postmark stamps down, flap opens                    | _"…on a Riviera Postcard invitation."_              |
+| 5.0–8.0s   | Ticket and postcard photos slide out, cut to scroll through "Our story" | _"It opens like a real letter."_                    |
+| 8.0–10.5s  | Quick scroll montage: date countdown → program → venue postcard         | _"Then it tells your whole story."_                 |
+| 10.5–13.0s | Cut to RSVP dashboard on laptop, a new response animating in            | _"With a real RSVP dashboard."_                     |
+| 13.0–15.0s | End card: product name, price badge "$29", CTA                          | _"{{BRAND_NAME}} — No Canva needed. Link in shop."_ |
 
 ---
 
-*Sources for the pricing and compliance framing: `docs/strategie-produit.md`
-§1, §3.3, §5, §6.*
+_Sources for the pricing and compliance framing: `docs/strategie-produit.md`
+§1, §3.3, §5, §6._

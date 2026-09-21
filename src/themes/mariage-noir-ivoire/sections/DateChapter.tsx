@@ -1,5 +1,6 @@
 'use client';
 
+import { shortDateParts } from '@/content/derived';
 import type { InvitationContent } from '@/content/schema';
 import { Calla } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
@@ -12,6 +13,9 @@ import { Countdown } from './Countdown';
  *
  * Day, month and year land on three different papers, two arums frame the
  * scene, the highlight word is wiped in, and the countdown appears last.
+ *
+ * The first two papers follow the locale: `12` then `06` in French, `06` then
+ * `12` in English (`shortDateParts`). The year is always the third.
  */
 export function DateChapter({
   t,
@@ -24,7 +28,10 @@ export function DateChapter({
 }) {
   const at = PIECE_AT.date;
   const thresholds = lineThresholds('date', content.dateChapter.lines.length);
-  const [year = '', month = '', day = ''] = content.event.date.split('-');
+  // Reading order of the invitation's locale: day-month-year in French,
+  // month-day-year in English. The three papers keep their own position,
+  // paper texture and flight path; only the number written on them moves.
+  const [first, second, yy] = shortDateParts(content);
 
   // A sentence may carry `{date}`, replaced by the localised long date.
   const lines = content.dateChapter.lines.map((line) => line.replace('{date}', longDate));
@@ -47,7 +54,7 @@ export function DateChapter({
             )}
           >
             <div className="scrap d1 torn">
-              <b>{day}</b>
+              <b>{first}</b>
             </div>
           </Piece>
 
@@ -60,7 +67,7 @@ export function DateChapter({
             )}
           >
             <div className="scrap d2 torn">
-              <b>{month}</b>
+              <b>{second}</b>
             </div>
           </Piece>
 
@@ -73,7 +80,7 @@ export function DateChapter({
             )}
           >
             <div className="scrap d3 torn">
-              <b>{year.slice(2)}</b>
+              <b>{yy}</b>
             </div>
           </Piece>
 

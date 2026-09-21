@@ -1,5 +1,6 @@
 'use client';
 
+import { shortDateParts } from '@/content/derived';
 import type { InvitationContent } from '@/content/schema';
 import { Eucalyptus, Pampas, SunArch } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
@@ -13,6 +14,9 @@ import { Countdown } from './Countdown';
  * The day lands inside a terracotta arch, the month on sand paper and the year
  * on a sage slip; a sun rises in the corner, the highlight word is wiped in and
  * the countdown closes the scene on four arched tiles.
+ *
+ * The first two papers follow the locale: `12` then `06` in French, `06` then
+ * `12` in English (`shortDateParts`). The year is always the third.
  */
 export function DateChapter({
   t,
@@ -25,7 +29,10 @@ export function DateChapter({
 }) {
   const at = PIECE_AT.date;
   const thresholds = lineThresholds('date', content.dateChapter.lines.length);
-  const [year = '', month = '', day = ''] = content.event.date.split('-');
+  // Reading order of the invitation's locale: day-month-year in French,
+  // month-day-year in English. The arch, the sand slip and the sage slip keep
+  // their own place and flight path; only the number written on them moves.
+  const [first, second, yy] = shortDateParts(content);
 
   // A sentence may carry `{date}`, replaced by the localised long date.
   const lines = content.dateChapter.lines.map((line) => line.replace('{date}', longDate));
@@ -58,7 +65,7 @@ export function DateChapter({
             )}
           >
             <div className="tb-arch-card tb-d1">
-              <b>{day}</b>
+              <b>{first}</b>
             </div>
           </Piece>
 
@@ -71,7 +78,7 @@ export function DateChapter({
             )}
           >
             <div className="tb-slip tb-d2 tb-torn">
-              <b>{month}</b>
+              <b>{second}</b>
             </div>
           </Piece>
 
@@ -84,7 +91,7 @@ export function DateChapter({
             )}
           >
             <div className="tb-slip tb-d3 tb-torn-b">
-              <b>{year.slice(2)}</b>
+              <b>{yy}</b>
             </div>
           </Piece>
 

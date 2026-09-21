@@ -34,8 +34,8 @@ add-on by design — `docs/strategie-produit.md` §4 and §6.2).
 
 **Keep your wedding website live for 12 more months.**
 
-*INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
-already have a published invitation with us.*
+_INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
+already have a published invitation with us._
 
 Your invitation already came with 18 months of hosting. If your wedding is
 further out, or you want your guests to keep revisiting your story (and
@@ -48,14 +48,17 @@ extension to your existing invitation at {{BRAND_URL}}/app — your link,
 content and RSVP responses are untouched.
 
 **What's included**
+
 - 12 additional months of hosting, added to your current expiry date
 - No change to your existing link, content, palette or RSVP dashboard
 
 **What's NOT included**
+
 - A new invitation — this only extends an existing, already-published one
 - Any edits to your content (use your editor for that, included free)
 
 **How it works**
+
 1. Buy this listing.
 2. Open your instant download for the short guide.
 3. Go to {{BRAND_URL}}/app, sign in, and apply the extension to your
@@ -63,11 +66,12 @@ content and RSVP responses are untouched.
 4. Your new hosting expiry date is confirmed instantly on your dashboard.
 
 **FAQ**
-- *Does this work with any of your wedding themes?* Yes — Black & Ivory,
+
+- _Does this work with any of your wedding themes?_ Yes — Black & Ivory,
   Terracotta Bloom, Riviera Postcard, and any future theme.
-- *Can I buy several extensions?* Yes, stack as many 12-month periods as
+- _Can I buy several extensions?_ Yes, stack as many 12-month periods as
   you need.
-- *Is this a subscription?* No — it's a one-time purchase per extension,
+- _Is this a subscription?_ No — it's a one-time purchase per extension,
   never an automatic recurring charge.
 
 **Refund policy**
@@ -76,5 +80,5 @@ Digital product, delivered instantly. Full refund within 24 hours of
 purchase if the extension hasn't been applied yet. Once applied to your
 invitation, no refund, but we fix any genuine technical issue for free.
 
-*This digital download contains the instructions to apply your extension —
-nothing is shipped, delivery is instant via Etsy's download system.*
+_This digital download contains the instructions to apply your extension —
+nothing is shipped, delivery is instant via Etsy's download system._

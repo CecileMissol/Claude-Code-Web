@@ -1,5 +1,6 @@
 'use client';
 
+import { shortDateParts } from '@/content/derived';
 import type { InvitationContent } from '@/content/schema';
 import { Cypress, Waves } from '../assets/illustrations';
 import { CHAPTER_LENGTH, lineThresholds, PIECE_AT } from '../animations/thresholds';
@@ -26,16 +27,31 @@ export function DateChapter({
 }) {
   const at = PIECE_AT.date;
   const thresholds = lineThresholds('date', content.dateChapter.lines.length);
-  const [year = '', month = '', day = ''] = content.event.date.split('-');
-
   // A sentence may carry `{date}`, replaced by the localised long date.
   const lines = content.dateChapter.lines.map((line) => line.replace('{date}', longDate));
 
-  const tiles: [key: string, value: string, label: string, at: number][] = [
-    ['day', day, t.date.day, at.day],
-    ['month', month, t.date.month, at.month],
-    ['year', year.slice(2), t.date.year, at.year],
-  ];
+  // The three azulejos are read left to right, so their order follows the
+  // locale: day-month-year in French, month-day-year in English
+  // (`shortDateParts`). Each tile keeps the caption that matches its number,
+  // and the arrival thresholds stay attached to the *position* — the leftmost
+  // tile still lands first.
+  const [first, second, yy] = shortDateParts(content);
+  const order: [key: string, value: string, label: string][] =
+    content.locale === 'en'
+      ? [
+          ['month', first, t.date.month],
+          ['day', second, t.date.day],
+          ['year', yy, t.date.year],
+        ]
+      : [
+          ['day', first, t.date.day],
+          ['month', second, t.date.month],
+          ['year', yy, t.date.year],
+        ];
+  const arrivals = [at.day, at.month, at.year];
+  const tiles: [key: string, value: string, label: string, at: number][] = order.map(
+    ([key, value, label], index) => [key, value, label, arrivals[index] ?? at.year],
+  );
 
   return (
     <section

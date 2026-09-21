@@ -8,19 +8,19 @@ confirmé comme disponible).
 
 ## 1. Les trois placeholders
 
-| Placeholder | Rôle | Valeur par défaut utilisée dans ce kit | Où elle vient |
-|---|---|---|---|
-| `{{BRAND_NAME}}` | Nom de la marque, tel qu'affiché dans les textes (logo, signature, PDF) | `Kraft & Bloom` | `docs/marque-et-domaines.md` §5, proposition B (recommandée) |
-| `{{BRAND_URL}}` | Domaine racine de l'application, sans `https://` ni slash final | `kraftandbloom.com` | Déduit de la proposition B — **non vérifié** : disponibilité domaine/marque à confirmer avant tout achat (voir §3 du même document) |
-| `{{SHOP_NAME}}` | Nom exact de la boutique Etsy (identifiant `etsy.com/shop/...`) | `KraftAndBloomCo` | Première des 3 idées de boutique proposées en `docs/marque-et-domaines.md` §5, à vérifier une à une sur Etsy avant choix définitif |
+| Placeholder      | Rôle                                                                    | Valeur par défaut utilisée dans ce kit | Où elle vient                                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `{{BRAND_NAME}}` | Nom de la marque, tel qu'affiché dans les textes (logo, signature, PDF) | `Kraft & Bloom`                        | `docs/marque-et-domaines.md` §5, proposition B (recommandée)                                                                        |
+| `{{BRAND_URL}}`  | Domaine racine de l'application, sans `https://` ni slash final         | `kraftandbloom.com`                    | Déduit de la proposition B — **non vérifié** : disponibilité domaine/marque à confirmer avant tout achat (voir §3 du même document) |
+| `{{SHOP_NAME}}`  | Nom exact de la boutique Etsy (identifiant `etsy.com/shop/...`)         | `KraftAndBloomCo`                      | Première des 3 idées de boutique proposées en `docs/marque-et-domaines.md` §5, à vérifier une à une sur Etsy avant choix définitif  |
 
 Deux placeholders additionnels apparaissent dans le PDF de livraison (générés
 par le script, pas à remplacer à la main) :
 
-| Placeholder | Rôle |
-|---|---|
-| `{{ACTIVATION_URL}}` | Résolu automatiquement à `{{BRAND_URL}}/activate` par `scripts/build-delivery-pdf.mjs` |
-| `{{THEME_NAME_EN}}` / `{{THEME_NAME_FR}}` | Nom du thème acheté, lu depuis `src/themes/<slug>/manifest.ts`, un PDF par thème |
+| Placeholder                               | Rôle                                                                                   |
+| ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| `{{ACTIVATION_URL}}`                      | Résolu automatiquement à `{{BRAND_URL}}/activate` par `scripts/build-delivery-pdf.mjs` |
+| `{{THEME_NAME_EN}}` / `{{THEME_NAME_FR}}` | Nom du thème acheté, lu depuis `src/themes/<slug>/manifest.ts`, un PDF par thème       |
 
 ## 2. Où ces placeholders apparaissent
 
@@ -49,6 +49,7 @@ grep -rl '{{BRAND_NAME}}\|{{BRAND_URL}}\|{{SHOP_NAME}}' marketing scripts/build-
 ```
 
 Notes :
+
 - Sur macOS, `sed -i` demande une extension de sauvegarde vide explicite :
   `sed -i '' -e ...`.
 - `{{BRAND_URL}}` ne doit **pas** inclure `https://` : les textes l'utilisent
@@ -60,9 +61,9 @@ Notes :
   penser à les éditer aussi, la commande `sed` ci-dessus les couvre déjà
   puisqu'elle inclut `scripts/build-delivery-pdf.mjs`).
 - Si un autre nom que la proposition B (Kraft & Bloom) est retenu (par
-  exemple *Unfurl* ou *Petal Post*, voir `docs/marque-et-domaines.md` §4-5),
+  exemple _Unfurl_ ou _Petal Post_, voir `docs/marque-et-domaines.md` §4-5),
   adapter aussi le ton de voix des textes : ce kit est rédigé sur le
   registre « chaleureux et artisanal » de la proposition B. Un changement de
-  marque vers *Unfurl* (chic, épurée) ou *Petal Post* (moderne, joueuse)
+  marque vers _Unfurl_ (chic, épurée) ou _Petal Post_ (moderne, joueuse)
   justifierait une relecture éditoriale des descriptions, pas seulement un
   remplacement de nom.

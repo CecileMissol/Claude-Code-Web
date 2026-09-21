@@ -113,28 +113,28 @@ main (pas d'écran seul) pour maximiser l'effet ASMR/tactile.
    légende : lien en bio.
 2. **Avant/après « Canva vs {{BRAND_NAME}} »** — split screen, à gauche un
    gabarit Canva figé/qui déborde sur mobile, à droite l'enveloppe qui
-   s'anime. Texte à l'écran : *"We got tired of broken Canva templates."*
+   s'anime. Texte à l'écran : _"We got tired of broken Canva templates."_
 3. **Time-lapse de personnalisation** — écran capturé en accéléré : choix
    de la palette, ajout d'une photo, aperçu qui se met à jour en direct.
-   Texte : *"Building a wedding website in under 60 seconds."*
+   Texte : _"Building a wedding website in under 60 seconds."_
 4. **« 3 palettes, 3 écritures »** — carrousel/vidéo montrant l'enveloppe se
-   recolorer en direct (noir → olive → encre bleue), texte : *"Pick your
-   colors. Really pick them."*
+   recolorer en direct (noir → olive → encre bleue), texte : _"Pick your
+   colors. Really pick them."_
 5. **Réaction d'un couple (mise en scène ou vraie cliente)** — un couple
    filme sa réaction en découvrant l'animation pour la première fois sur
    son téléphone. Légende : témoignage court.
 6. **« Ce que contient le tableau de bord RSVP »** — capture d'écran
    filmée du tableau de bord, une réponse arrive en direct avec la
-   notification. Texte : *"A real RSVP dashboard, not a form."*
+   notification. Texte : _"A real RSVP dashboard, not a form."_
 7. **Comparatif des 3 thèmes** — 3 enveloppes différentes (noire,
    terracotta, cobalt) filmées côte à côte s'ouvrant en même temps. Texte :
-   *"Which one is you?"*
+   _"Which one is you?"_
 8. **Flatlay stop-motion** — les éléments du collage (polaroïds, fleurs,
    papier kraft) qui se posent un par un sur la table en stop-motion,
    révélant la composition finale du thème. Pas de texte, juste le son.
 9. **« Le QR code au dos du faire-part physique »** — mise en scène d'un
    téléphone qui scanne un QR code posé sur une enveloppe, ouverture
-   immédiate de l'invitation. Texte : *"Guests scan, it opens instantly."*
+   immédiate de l'invitation. Texte : _"Guests scan, it opens instantly."_
 10. **Behind the scenes / making-of** — courte vidéo « à visage découvert »
     (fondatrice) expliquant en 15 s pourquoi le produit existe (« j'en
     avais marre des sites Canva qui cassent sur mobile »). Format plus
@@ -142,17 +142,17 @@ main (pas d'écran seul) pour maximiser l'effet ASMR/tactile.
 
 ## Indicateurs à suivre
 
-| Indicateur | Où le suivre | Fréquence |
-|---|---|---|
-| Vues de fiche (par thème) | Etsy Stats | Hebdomadaire |
-| Taux de clic depuis Pinterest/Instagram/TikTok | Etsy Stats (source de trafic) + analytics natifs des réseaux | Hebdomadaire |
-| Taux de conversion (visites → ventes) par fiche | Etsy Stats | Hebdomadaire |
-| Nombre de ventes et chiffre d'affaires | Etsy Shop Manager → Finances | Hebdomadaire |
-| Délai moyen de validation d'activation | Suivi manuel (admin) jusqu'à V1 automatique (`BRIEF.md` §8) | Quotidien |
-| Taux d'activation sous 7 jours | Suivi manuel des commandes vs activations | Hebdomadaire |
-| Note moyenne et nombre d'avis | Etsy Shop Manager | Hebdomadaire |
-| Taux d'attachement des options (upsells) | Etsy Shop Manager → Finances, croisé avec les commandes de base | Mensuel |
-| Messages reçus nécessitant une réponse manuelle | Boîte de messagerie Etsy | Quotidien |
+| Indicateur                                      | Où le suivre                                                    | Fréquence    |
+| ----------------------------------------------- | --------------------------------------------------------------- | ------------ |
+| Vues de fiche (par thème)                       | Etsy Stats                                                      | Hebdomadaire |
+| Taux de clic depuis Pinterest/Instagram/TikTok  | Etsy Stats (source de trafic) + analytics natifs des réseaux    | Hebdomadaire |
+| Taux de conversion (visites → ventes) par fiche | Etsy Stats                                                      | Hebdomadaire |
+| Nombre de ventes et chiffre d'affaires          | Etsy Shop Manager → Finances                                    | Hebdomadaire |
+| Délai moyen de validation d'activation          | Suivi manuel (admin) jusqu'à V1 automatique (`BRIEF.md` §8)     | Quotidien    |
+| Taux d'activation sous 7 jours                  | Suivi manuel des commandes vs activations                       | Hebdomadaire |
+| Note moyenne et nombre d'avis                   | Etsy Shop Manager                                               | Hebdomadaire |
+| Taux d'attachement des options (upsells)        | Etsy Shop Manager → Finances, croisé avec les commandes de base | Mensuel      |
+| Messages reçus nécessitant une réponse manuelle | Boîte de messagerie Etsy                                        | Quotidien    |
 
 Revoir les prix après 30-50 ventes ou 2-3 mois (le premier des deux),
 conformément à `docs/strategie-produit.md` §6.2.

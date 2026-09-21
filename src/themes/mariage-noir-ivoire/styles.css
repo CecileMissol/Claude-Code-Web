@@ -2,10 +2,21 @@
  * "Noir & ivoire" — theme stylesheet.
  *
  * Direct port of the validated mock-up (`reference/invitation-mariage-demo.html`),
- * scoped under `.invitation` so the theme never leaks into the Tailwind-styled
- * application shell and the shell never leaks into the invitation.
+ * scoped under `.invitation[data-theme='mariage-noir-ivoire']` — the two
+ * attributes the theme root carries — so the theme never leaks into the
+ * Tailwind-styled application shell, the shell never leaks into the invitation,
+ * and, above all, **this theme never leaks into another theme**.
  *
- * Two rules govern this file:
+ * The attribute is not decoration (phase 9, §3): the three wedding themes share
+ * the same vocabulary of class names (`.card`, `.stamp`, `.board`, `.photo`…)
+ * because they are the same pieces of stationery, and this sheet used to be
+ * scoped under `.invitation` alone. `.invitation .postcard .img { filter:
+ * grayscale(1) }` therefore tied on specificity with a sibling theme's
+ * attribute-only rule and won on source order — the Riviera venue postcard came
+ * out black and white. Every rule of this file now carries its own
+ * `data-theme`, so no two themes can ever address the same element.
+ *
+ * Three rules govern this file:
  *
  * 1. **Dark mode is deliberately absent.** The couple picks a palette and every
  *    guest must see exactly that palette (phase 1, §1.3.8). `prefers-color-scheme`
@@ -13,13 +24,16 @@
  * 2. **The board is a size container.** Every piece of a chapter is sized in
  *    `cqw`/`cqh` and positioned in `%`, which is what keeps the collage intact
  *    from 320 px to 1440 px without a single breakpoint per element.
+ * 3. **Every selector starts with `.invitation[data-theme='mariage-noir-ivoire']`.**
+ *    The single exception is the scroll lock below, which addresses `<html>`
+ *    and is written identically in all three themes.
  *
  * The six palette variables (--env, --env-2, --seal, --accent, --stem, --liner)
  * and --script are injected inline by `Invitation.tsx` from `manifest.ts`. The
  * values below are fallbacks, so the sheet still renders on its own.
  */
 
-.invitation {
+.invitation[data-theme='mariage-noir-ivoire'] {
   /* Palette fallback: "noir". */
   --env: #1d1d1b;
   --env-2: #262624;
@@ -52,14 +66,14 @@
   padding-top: env(safe-area-inset-top, 0);
 }
 
-.invitation *,
-.invitation *::before,
-.invitation *::after {
+.invitation[data-theme='mariage-noir-ivoire'] *,
+.invitation[data-theme='mariage-noir-ivoire'] *::before,
+.invitation[data-theme='mariage-noir-ivoire'] *::after {
   box-sizing: inherit;
 }
 
 /* Paper grain over the whole invitation. */
-.invitation::after {
+.invitation[data-theme='mariage-noir-ivoire']::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -70,31 +84,31 @@
   mix-blend-mode: multiply;
 }
 
-.invitation button,
-.invitation input,
-.invitation select,
-.invitation textarea {
+.invitation[data-theme='mariage-noir-ivoire'] button,
+.invitation[data-theme='mariage-noir-ivoire'] input,
+.invitation[data-theme='mariage-noir-ivoire'] select,
+.invitation[data-theme='mariage-noir-ivoire'] textarea {
   font: inherit;
   color: inherit;
 }
 
-.invitation :focus-visible {
+.invitation[data-theme='mariage-noir-ivoire'] :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-.invitation .script {
+.invitation[data-theme='mariage-noir-ivoire'] .script {
   font-family: var(--script);
   font-weight: 400;
 }
 
-.invitation .caps {
+.invitation[data-theme='mariage-noir-ivoire'] .caps {
   text-transform: uppercase;
   letter-spacing: 0.28em;
   font-size: 0.72em;
 }
 
-.invitation .sr-only {
+.invitation[data-theme='mariage-noir-ivoire'] .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -111,7 +125,7 @@
  *
  * The class is put on <html> by `useInvitationMotion` and taken off on the last
  * beat of the opening timeline. This is the one rule of the theme that is not
- * scoped under `.invitation`: the element that scrolls is the document, not the
+ * scoped under the theme root: the element that scrolls is the document, not the
  * invitation. `overflow: hidden` stops wheel and touch scrolling; `touch-action`
  * and `overscroll-behavior` stop iOS Safari's rubber-banding and its
  * pull-to-refresh, which `overflow` alone does not.
@@ -125,7 +139,7 @@ html.invitation-locked body {
 }
 
 /* Hidden <defs> holder. */
-.invitation .ni-defs {
+.invitation[data-theme='mariage-noir-ivoire'] .ni-defs {
   position: absolute;
   width: 0;
   height: 0;
@@ -136,14 +150,14 @@ html.invitation-locked body {
 /* Shared pieces                                                    */
 /* ---------------------------------------------------------------- */
 
-.invitation .pol {
+.invitation[data-theme='mariage-noir-ivoire'] .pol {
   background: #fbfaf6;
   padding: 6% 6% 24%;
   box-shadow: 0 12px 26px -8px rgb(0 0 0 / 35%);
   position: relative;
 }
 
-.invitation .pol .cap {
+.invitation[data-theme='mariage-noir-ivoire'] .pol .cap {
   position: absolute;
   left: 0;
   right: 0;
@@ -155,7 +169,7 @@ html.invitation-locked body {
   line-height: 1;
 }
 
-.invitation .photo {
+.invitation[data-theme='mariage-noir-ivoire'] .photo {
   aspect-ratio: 1 / 1.05;
   position: relative;
   display: block;
@@ -166,13 +180,13 @@ html.invitation-locked body {
   background: #d8d6d1;
 }
 
-.invitation .photo-wrap {
+.invitation[data-theme='mariage-noir-ivoire'] .photo-wrap {
   position: relative;
   display: block;
 }
 
-.invitation .photo-wrap::after,
-.invitation .postcard .img::after {
+.invitation[data-theme='mariage-noir-ivoire'] .photo-wrap::after,
+.invitation[data-theme='mariage-noir-ivoire'] .postcard .img::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -182,7 +196,7 @@ html.invitation-locked body {
   pointer-events: none;
 }
 
-.invitation .tape::before {
+.invitation[data-theme='mariage-noir-ivoire'] .tape::before {
   content: '';
   position: absolute;
   top: -4%;
@@ -196,7 +210,7 @@ html.invitation-locked body {
   z-index: 2;
 }
 
-.invitation .torn {
+.invitation[data-theme='mariage-noir-ivoire'] .torn {
   clip-path: polygon(
     0 3%,
     7% 0,
@@ -222,7 +236,7 @@ html.invitation-locked body {
 }
 
 /* Perforated stamp: the dentelure is a CSS mask, the motif is the SVG. */
-.invitation .stamp {
+.invitation[data-theme='mariage-noir-ivoire'] .stamp {
   display: block;
   background: #f7f3ea;
   padding: 4px;
@@ -234,7 +248,7 @@ html.invitation-locked body {
     radial-gradient(circle, #0000 2px, #000 2.5px) -4px -4px / 8px 8px;
 }
 
-.invitation .stamp .in {
+.invitation[data-theme='mariage-noir-ivoire'] .stamp .in {
   aspect-ratio: 0.8;
   background: var(--accent);
   display: grid;
@@ -243,12 +257,12 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-.invitation .stamp .in svg {
+.invitation[data-theme='mariage-noir-ivoire'] .stamp .in svg {
   width: 46%;
   height: 82%;
 }
 
-.invitation .stamp i {
+.invitation[data-theme='mariage-noir-ivoire'] .stamp i {
   position: absolute;
   right: 8%;
   bottom: 4%;
@@ -258,7 +272,7 @@ html.invitation-locked body {
   color: #fff;
 }
 
-.invitation .stamp.s2 .in {
+.invitation[data-theme='mariage-noir-ivoire'] .stamp.s2 .in {
   background: #b9b39f;
 }
 
@@ -266,7 +280,7 @@ html.invitation-locked body {
 /* Intro — the envelope                                             */
 /* ---------------------------------------------------------------- */
 
-.invitation .intro {
+.invitation[data-theme='mariage-noir-ivoire'] .intro {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -277,7 +291,7 @@ html.invitation-locked body {
   position: relative;
 }
 
-.invitation .kicker {
+.invitation[data-theme='mariage-noir-ivoire'] .kicker {
   font-family: var(--script);
   font-size: clamp(34px, 9vw, 52px);
   margin: 0;
@@ -285,11 +299,11 @@ html.invitation-locked body {
   transition: opacity 0.5s;
 }
 
-.invitation .intro.opened .kicker {
+.invitation[data-theme='mariage-noir-ivoire'] .intro.opened .kicker {
   opacity: 0;
 }
 
-.invitation .env-wrap {
+.invitation[data-theme='mariage-noir-ivoire'] .env-wrap {
   position: relative;
   width: min(82vw, 440px);
   aspect-ratio: 1.45;
@@ -299,19 +313,19 @@ html.invitation-locked body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.invitation .face {
+.invitation[data-theme='mariage-noir-ivoire'] .face {
   position: absolute;
   inset: 0;
   border-radius: 3px;
 }
 
-.invitation .front {
+.invitation[data-theme='mariage-noir-ivoire'] .front {
   background: var(--env);
   overflow: hidden;
   box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
 }
 
-.invitation .front::after {
+.invitation[data-theme='mariage-noir-ivoire'] .front::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -320,7 +334,7 @@ html.invitation-locked body {
   mix-blend-mode: screen;
 }
 
-.invitation .stamps {
+.invitation[data-theme='mariage-noir-ivoire'] .stamps {
   position: absolute;
   right: 5%;
   top: 8%;
@@ -330,15 +344,15 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-.invitation .stamps .stamp {
+.invitation[data-theme='mariage-noir-ivoire'] .stamps .stamp {
   flex: 1;
 }
 
-.invitation .stamps .s2 {
+.invitation[data-theme='mariage-noir-ivoire'] .stamps .s2 {
   transform: rotate(4deg) translateY(6%);
 }
 
-.invitation .postmark {
+.invitation[data-theme='mariage-noir-ivoire'] .postmark {
   position: absolute;
   right: 24%;
   top: 12%;
@@ -347,7 +361,7 @@ html.invitation-locked body {
   z-index: 2;
 }
 
-.invitation .addr {
+.invitation[data-theme='mariage-noir-ivoire'] .addr {
   position: absolute;
   left: 8%;
   bottom: 17%;
@@ -356,13 +370,13 @@ html.invitation-locked body {
   text-align: left;
 }
 
-.invitation .addr .script {
+.invitation[data-theme='mariage-noir-ivoire'] .addr .script {
   font-size: 12cqw;
   line-height: 1;
   display: block;
 }
 
-.invitation .addr .caps {
+.invitation[data-theme='mariage-noir-ivoire'] .addr .caps {
   font-family: var(--didone);
   font-size: 3.2cqw;
   letter-spacing: 0.45em;
@@ -370,7 +384,7 @@ html.invitation-locked body {
   display: block;
 }
 
-.invitation .lay {
+.invitation[data-theme='mariage-noir-ivoire'] .lay {
   position: absolute;
   width: 13%;
   left: 52%;
@@ -381,11 +395,11 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-.invitation .back {
+.invitation[data-theme='mariage-noir-ivoire'] .back {
   transform: scaleX(0);
 }
 
-.invitation .liner {
+.invitation[data-theme='mariage-noir-ivoire'] .liner {
   position: absolute;
   inset: 0;
   border-radius: 3px;
@@ -395,7 +409,7 @@ html.invitation-locked body {
   box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
 }
 
-.invitation .pocket {
+.invitation[data-theme='mariage-noir-ivoire'] .pocket {
   position: absolute;
   inset: 0;
   z-index: 4;
@@ -406,7 +420,7 @@ html.invitation-locked body {
     linear-gradient(20deg, rgb(0 0 0 / 28%), transparent 55%), var(--env);
 }
 
-.invitation .flap {
+.invitation[data-theme='mariage-noir-ivoire'] .flap {
   position: absolute;
   left: 0;
   top: 0;
@@ -418,7 +432,7 @@ html.invitation-locked body {
   transform-origin: 50% 0;
 }
 
-.invitation .seal {
+.invitation[data-theme='mariage-noir-ivoire'] .seal {
   position: absolute;
   left: 50%;
   top: 56%;
@@ -443,7 +457,7 @@ html.invitation-locked body {
   font-size: 6.5cqw;
 }
 
-.invitation .ticket {
+.invitation[data-theme='mariage-noir-ivoire'] .ticket {
   position: absolute;
   left: 10%;
   width: 80%;
@@ -457,7 +471,7 @@ html.invitation-locked body {
   box-shadow: 0 6px 18px -6px rgb(0 0 0 / 35%);
 }
 
-.invitation .stub {
+.invitation[data-theme='mariage-noir-ivoire'] .stub {
   border-right: 1.5px dashed rgb(0 0 0 / 28%);
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -469,7 +483,7 @@ html.invitation-locked body {
   text-transform: uppercase;
 }
 
-.invitation .tmain {
+.invitation[data-theme='mariage-noir-ivoire'] .tmain {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -477,7 +491,7 @@ html.invitation-locked body {
   text-align: center;
 }
 
-.invitation .t1 {
+.invitation[data-theme='mariage-noir-ivoire'] .t1 {
   font-family: var(--didone);
   text-transform: uppercase;
   letter-spacing: 0.3em;
@@ -485,7 +499,7 @@ html.invitation-locked body {
   margin: 0;
 }
 
-.invitation .t2 {
+.invitation[data-theme='mariage-noir-ivoire'] .t2 {
   font-family: var(--didone);
   font-size: 11.5cqw;
   line-height: 1.05;
@@ -493,7 +507,7 @@ html.invitation-locked body {
   margin: 0;
 }
 
-.invitation .t3 {
+.invitation[data-theme='mariage-noir-ivoire'] .t3 {
   font-family: var(--script);
   font-size: 7cqw;
   color: var(--accent);
@@ -501,48 +515,48 @@ html.invitation-locked body {
   margin: 0;
 }
 
-.invitation .env-wrap .pol {
+.invitation[data-theme='mariage-noir-ivoire'] .env-wrap .pol {
   position: absolute;
   bottom: 14%;
   width: 38%;
   z-index: 2;
 }
 
-.invitation .env-wrap .p1 {
+.invitation[data-theme='mariage-noir-ivoire'] .env-wrap .p1 {
   left: 7%;
 }
 
-.invitation .env-wrap .p2 {
+.invitation[data-theme='mariage-noir-ivoire'] .env-wrap .p2 {
   right: 7%;
 }
 
-.invitation .tuck {
+.invitation[data-theme='mariage-noir-ivoire'] .tuck {
   position: absolute;
   z-index: 5;
 }
 
-.invitation .tuck1 {
+.invitation[data-theme='mariage-noir-ivoire'] .tuck1 {
   right: -11%;
   top: -12%;
   width: 42%;
   transform-origin: 20% 90%;
 }
 
-.invitation .tuck2 {
+.invitation[data-theme='mariage-noir-ivoire'] .tuck2 {
   left: -9%;
   top: 18%;
   width: 28%;
   transform-origin: 80% 80%;
 }
 
-.invitation .tuck svg {
+.invitation[data-theme='mariage-noir-ivoire'] .tuck svg {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
 }
 
-.invitation .hint {
+.invitation[data-theme='mariage-noir-ivoire'] .hint {
   margin: 0;
   color: var(--muted);
   font-style: italic;
@@ -550,11 +564,11 @@ html.invitation-locked body {
   transition: opacity 0.4s;
 }
 
-.invitation .intro.opened .hint {
+.invitation[data-theme='mariage-noir-ivoire'] .intro.opened .hint {
   opacity: 0;
 }
 
-.invitation .cue {
+.invitation[data-theme='mariage-noir-ivoire'] .cue {
   position: absolute;
   bottom: calc(1.2rem + env(safe-area-inset-bottom, 0));
   left: 50%;
@@ -570,7 +584,7 @@ html.invitation-locked body {
   pointer-events: none;
 }
 
-.invitation .cue span {
+.invitation[data-theme='mariage-noir-ivoire'] .cue span {
   width: 1px;
   height: 38px;
   background: linear-gradient(var(--ink), transparent);
@@ -598,12 +612,12 @@ html.invitation-locked body {
   }
 }
 
-.invitation .intro.ready .cue {
+.invitation[data-theme='mariage-noir-ivoire'] .intro.ready .cue {
   opacity: 1;
 }
 
 /* "Open" escape hatch, always visible in the editor preview. */
-.invitation .skip {
+.invitation[data-theme='mariage-noir-ivoire'] .skip {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -622,12 +636,12 @@ html.invitation-locked body {
 /* Scrolling chapters                                               */
 /* ---------------------------------------------------------------- */
 
-.invitation .chapter {
+.invitation[data-theme='mariage-noir-ivoire'] .chapter {
   position: relative;
   height: var(--len, 380vh);
 }
 
-.invitation .sticky {
+.invitation[data-theme='mariage-noir-ivoire'] .sticky {
   position: sticky;
   top: 0;
   height: 100svh;
@@ -636,17 +650,17 @@ html.invitation-locked body {
   grid-template-rows: minmax(0, 1fr) auto;
 }
 
-.invitation .board {
+.invitation[data-theme='mariage-noir-ivoire'] .board {
   position: relative;
   margin: 3svh 4vw 0;
   container-type: size;
 }
 
-.invitation .text {
+.invitation[data-theme='mariage-noir-ivoire'] .text {
   padding: 1rem 7vw calc(2.2rem + env(safe-area-inset-bottom, 0));
 }
 
-.invitation .ch-title {
+.invitation[data-theme='mariage-noir-ivoire'] .ch-title {
   font-family: var(--script);
   font-weight: 400;
   font-size: clamp(40px, 11vw, 68px);
@@ -654,11 +668,11 @@ html.invitation-locked body {
   margin: 0 0 0.4rem;
 }
 
-.invitation .lines {
+.invitation[data-theme='mariage-noir-ivoire'] .lines {
   display: grid;
 }
 
-.invitation .line {
+.invitation[data-theme='mariage-noir-ivoire'] .line {
   grid-area: 1 / 1;
   margin: 0;
   font-size: clamp(21px, 5.4vw, 28px);
@@ -673,26 +687,26 @@ html.invitation-locked body {
     filter 0.6s;
 }
 
-.invitation .line.on {
+.invitation[data-theme='mariage-noir-ivoire'] .line.on {
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-.invitation .line.past {
+.invitation[data-theme='mariage-noir-ivoire'] .line.past {
   opacity: 0;
   transform: translateY(-14px);
   filter: blur(5px);
 }
 
 @media (min-width: 820px) {
-  .invitation .sticky {
+  .invitation[data-theme='mariage-noir-ivoire'] .sticky {
     grid-template-rows: 1fr;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
   }
 
-  .invitation .board {
+  .invitation[data-theme='mariage-noir-ivoire'] .board {
     height: 84svh;
     /*
      * The mock-up gives the board the whole 1.25fr column. On a 1440 px screen
@@ -706,13 +720,13 @@ html.invitation-locked body {
     margin: 0 0 0 4vw;
   }
 
-  .invitation .text {
+  .invitation[data-theme='mariage-noir-ivoire'] .text {
     padding: 0 6vw 0 4vw;
   }
 }
 
 /* A piece of the collage. `--from` is where it flies in from, `--to` its rest. */
-.invitation .it {
+.invitation[data-theme='mariage-noir-ivoire'] .it {
   position: absolute;
   opacity: 0;
   transform: var(--from, translateY(40px));
@@ -722,29 +736,29 @@ html.invitation-locked body {
   will-change: transform;
 }
 
-.invitation .it.on {
+.invitation[data-theme='mariage-noir-ivoire'] .it.on {
   opacity: 1;
   transform: var(--to, none);
 }
 
-.invitation .shadow {
+.invitation[data-theme='mariage-noir-ivoire'] .shadow {
   filter: drop-shadow(0 12px 18px rgb(0 0 0 / 28%));
 }
 
-.invitation .it svg {
+.invitation[data-theme='mariage-noir-ivoire'] .it svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.invitation .text .it {
+.invitation[data-theme='mariage-noir-ivoire'] .text .it {
   position: static;
 }
 
 /* ---- Chapter 1: the story ---- */
 
-.invitation .ticket-train {
+.invitation[data-theme='mariage-noir-ivoire'] .ticket-train {
   background: var(--card);
   color: var(--card-ink);
   padding: 5% 6%;
@@ -754,27 +768,27 @@ html.invitation-locked body {
   font-family: var(--didone);
 }
 
-.invitation .ticket-train .route {
+.invitation[data-theme='mariage-noir-ivoire'] .ticket-train .route {
   font-size: min(5.2cqw, 28px);
   letter-spacing: 0.02em;
   grid-column: 1 / -1;
   margin: 0;
 }
 
-.invitation .ticket-train small {
+.invitation[data-theme='mariage-noir-ivoire'] .ticket-train small {
   font-size: min(2.6cqw, 13px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #5c5a54;
 }
 
-.invitation .ticket-train b {
+.invitation[data-theme='mariage-noir-ivoire'] .ticket-train b {
   font-weight: 500;
   font-size: min(3.6cqw, 18px);
   display: block;
 }
 
-.invitation .note {
+.invitation[data-theme='mariage-noir-ivoire'] .note {
   background: var(--kraft);
   color: #2b2a26;
   padding: 8% 9%;
@@ -787,7 +801,7 @@ html.invitation-locked body {
 
 /* ---- Chapter 2: the date ---- */
 
-.invitation .scrap {
+.invitation[data-theme='mariage-noir-ivoire'] .scrap {
   display: grid;
   place-items: center;
   font-family: var(--didone);
@@ -795,38 +809,38 @@ html.invitation-locked body {
   padding: 8% 0;
 }
 
-.invitation .scrap.d1 {
+.invitation[data-theme='mariage-noir-ivoire'] .scrap.d1 {
   background: var(--env);
   color: #f3eee5;
 }
 
-.invitation .scrap.d2 {
+.invitation[data-theme='mariage-noir-ivoire'] .scrap.d2 {
   background: var(--card);
   color: var(--card-ink);
 }
 
-.invitation .scrap.d3 {
+.invitation[data-theme='mariage-noir-ivoire'] .scrap.d3 {
   background: var(--kraft);
   color: #2b2a26;
 }
 
-.invitation .scrap b {
+.invitation[data-theme='mariage-noir-ivoire'] .scrap b {
   font-weight: 400;
   font-size: min(24cqw, 24cqh);
 }
 
-.invitation .reveal {
+.invitation[data-theme='mariage-noir-ivoire'] .reveal {
   clip-path: inset(0 100% 0 0);
   transition:
     clip-path 1.4s cubic-bezier(0.6, 0, 0.2, 1),
     opacity 0.2s;
 }
 
-.invitation .reveal.on {
+.invitation[data-theme='mariage-noir-ivoire'] .reveal.on {
   clip-path: inset(0 -10% 0 0);
 }
 
-.invitation .bigscript {
+.invitation[data-theme='mariage-noir-ivoire'] .bigscript {
   font-family: var(--script);
   font-size: min(13cqw, 13cqh);
   line-height: 1;
@@ -835,13 +849,13 @@ html.invitation-locked body {
   text-align: center;
 }
 
-.invitation .count {
+.invitation[data-theme='mariage-noir-ivoire'] .count {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   text-align: center;
 }
 
-.invitation .count b {
+.invitation[data-theme='mariage-noir-ivoire'] .count b {
   display: block;
   font-family: var(--didone);
   font-weight: 400;
@@ -850,7 +864,7 @@ html.invitation-locked body {
   font-variant-numeric: tabular-nums;
 }
 
-.invitation .count small {
+.invitation[data-theme='mariage-noir-ivoire'] .count small {
   font-size: min(3.4cqw, 16px);
   color: var(--muted);
   font-style: italic;
@@ -858,20 +872,20 @@ html.invitation-locked body {
 
 /* ---- Chapter 3: the programme ---- */
 
-.invitation .prog {
+.invitation[data-theme='mariage-noir-ivoire'] .prog {
   background: var(--card);
   color: var(--card-ink);
   padding: 6% 8% 7%;
 }
 
-.invitation .prog time {
+.invitation[data-theme='mariage-noir-ivoire'] .prog time {
   font-family: var(--didone);
   font-size: min(7.5cqw, 44px);
   line-height: 1;
   display: block;
 }
 
-.invitation .prog strong {
+.invitation[data-theme='mariage-noir-ivoire'] .prog strong {
   display: block;
   font-weight: 500;
   font-size: min(4.8cqw, 26px);
@@ -879,7 +893,7 @@ html.invitation-locked body {
   margin-top: 3%;
 }
 
-.invitation .prog em {
+.invitation[data-theme='mariage-noir-ivoire'] .prog em {
   font-family: var(--script);
   font-style: normal;
   color: var(--accent);
@@ -887,44 +901,44 @@ html.invitation-locked body {
   line-height: 1;
 }
 
-.invitation .prog.dark {
+.invitation[data-theme='mariage-noir-ivoire'] .prog.dark {
   background: var(--env);
   color: #f3eee5;
 }
 
-.invitation .prog.dark em {
+.invitation[data-theme='mariage-noir-ivoire'] .prog.dark em {
   color: #c9d39a;
 }
 
-.invitation .prog.kraft {
+.invitation[data-theme='mariage-noir-ivoire'] .prog.kraft {
   background: var(--kraft);
   color: #2b2a26;
 }
 
 /* ---- Chapter 4: the venue ---- */
 
-.invitation .postcard {
+.invitation[data-theme='mariage-noir-ivoire'] .postcard {
   background: #fbfaf6;
   padding: 3.5%;
   box-shadow: 0 14px 28px -10px rgb(0 0 0 / 40%);
 }
 
-.invitation .postcard .img {
+.invitation[data-theme='mariage-noir-ivoire'] .postcard .img {
   position: relative;
   aspect-ratio: 3 / 2;
   filter: grayscale(1);
   overflow: hidden;
 }
 
-.invitation .postcard .img svg,
-.invitation .postcard .img img {
+.invitation[data-theme='mariage-noir-ivoire'] .postcard .img svg,
+.invitation[data-theme='mariage-noir-ivoire'] .postcard .img img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.invitation .postcard .img span {
+.invitation[data-theme='mariage-noir-ivoire'] .postcard .img span {
   position: absolute;
   left: 5%;
   bottom: 5%;
@@ -936,15 +950,15 @@ html.invitation-locked body {
   text-shadow: 0 1px 6px rgb(0 0 0 / 40%);
 }
 
-.invitation .big-stamp {
+.invitation[data-theme='mariage-noir-ivoire'] .big-stamp {
   width: 100%;
 }
 
-.invitation .inkmark {
+.invitation[data-theme='mariage-noir-ivoire'] .inkmark {
   color: rgb(28 28 26 / 60%);
 }
 
-.invitation .btn {
+.invitation[data-theme='mariage-noir-ivoire'] .btn {
   display: inline-block;
   margin-top: 1.1rem;
   background: var(--env);
@@ -959,11 +973,11 @@ html.invitation-locked body {
   letter-spacing: 0.04em;
 }
 
-.invitation .btn:hover {
+.invitation[data-theme='mariage-noir-ivoire'] .btn:hover {
   background: var(--env-2);
 }
 
-.invitation .btn[disabled] {
+.invitation[data-theme='mariage-noir-ivoire'] .btn[disabled] {
   opacity: 0.55;
   cursor: progress;
 }
@@ -972,13 +986,13 @@ html.invitation-locked body {
 /* Plain sections                                                   */
 /* ---------------------------------------------------------------- */
 
-.invitation .plain {
+.invitation[data-theme='mariage-noir-ivoire'] .plain {
   max-width: 640px;
   margin: 0 auto;
   padding: 18svh 7vw 6svh;
 }
 
-.invitation .plain h2 {
+.invitation[data-theme='mariage-noir-ivoire'] .plain h2 {
   font-family: var(--script);
   font-weight: 400;
   font-size: clamp(46px, 12vw, 72px);
@@ -987,12 +1001,12 @@ html.invitation-locked body {
   text-align: center;
 }
 
-.invitation .tags {
+.invitation[data-theme='mariage-noir-ivoire'] .tags {
   display: grid;
   gap: 1.6rem;
 }
 
-.invitation .tag {
+.invitation[data-theme='mariage-noir-ivoire'] .tag {
   background: var(--card);
   color: var(--card-ink);
   padding: 1.4rem 1.6rem 1.4rem 3.6rem;
@@ -1006,16 +1020,16 @@ html.invitation-locked body {
     transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
-.invitation .tag:nth-child(even) {
+.invitation[data-theme='mariage-noir-ivoire'] .tag:nth-child(even) {
   transform: translateX(30px) rotate(2deg);
 }
 
-.invitation .tag.on {
+.invitation[data-theme='mariage-noir-ivoire'] .tag.on {
   opacity: 1;
   transform: rotate(var(--r, 0deg));
 }
 
-.invitation .tag::before {
+.invitation[data-theme='mariage-noir-ivoire'] .tag::before {
   content: '';
   position: absolute;
   left: 1.1rem;
@@ -1028,21 +1042,21 @@ html.invitation-locked body {
   transform: translateY(-50%);
 }
 
-.invitation .tag h3 {
+.invitation[data-theme='mariage-noir-ivoire'] .tag h3 {
   font-family: var(--didone);
   font-weight: 400;
   font-size: 1.3rem;
   margin: 0 0 0.2rem;
 }
 
-.invitation .tag p {
+.invitation[data-theme='mariage-noir-ivoire'] .tag p {
   margin: 0;
   color: #4d4a44;
 }
 
 /* ---- RSVP ---- */
 
-.invitation .rsvp {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp {
   background: var(--card);
   color: var(--card-ink);
   padding: 2.4rem 1.6rem;
@@ -1050,20 +1064,20 @@ html.invitation-locked body {
   box-shadow: 0 18px 40px -20px rgb(0 0 0 / 45%);
 }
 
-.invitation .rsvp form {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp form {
   display: grid;
   gap: 1.1rem;
 }
 
-.invitation .rsvp label {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp label {
   display: grid;
   gap: 0.25rem;
   font-size: 1.05rem;
 }
 
-.invitation .rsvp input,
-.invitation .rsvp select,
-.invitation .rsvp textarea {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp input,
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp select,
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp textarea {
   width: 100%;
   border: 0;
   border-bottom: 1px solid rgb(0 0 0 / 30%);
@@ -1073,49 +1087,49 @@ html.invitation-locked body {
   border-radius: 0;
 }
 
-.invitation .rsvp input:focus,
-.invitation .rsvp select:focus,
-.invitation .rsvp textarea:focus {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp input:focus,
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp select:focus,
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp textarea:focus {
   outline: none;
   border-bottom-color: var(--accent);
 }
 
-.invitation .rsvp textarea {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp textarea {
   min-height: 4.5rem;
   resize: vertical;
 }
 
-.invitation .rsvp fieldset {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp fieldset {
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-.invitation .rsvp legend {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp legend {
   font-size: 1.05rem;
   margin-bottom: 0.5rem;
 }
 
-.invitation .choice {
+.invitation[data-theme='mariage-noir-ivoire'] .choice {
   display: flex;
   gap: 0.6rem;
 }
 
-.invitation .choice label {
+.invitation[data-theme='mariage-noir-ivoire'] .choice label {
   flex: 1;
   cursor: pointer;
   display: block;
   position: relative;
 }
 
-.invitation .choice input {
+.invitation[data-theme='mariage-noir-ivoire'] .choice input {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
 }
 
-.invitation .choice span {
+.invitation[data-theme='mariage-noir-ivoire'] .choice span {
   display: block;
   text-align: center;
   border: 1px solid rgb(0 0 0 / 35%);
@@ -1125,19 +1139,19 @@ html.invitation-locked body {
   line-height: 1.1;
 }
 
-.invitation .choice input:checked + span {
+.invitation[data-theme='mariage-noir-ivoire'] .choice input:checked + span {
   background: var(--env);
   color: #f3eee5;
   border-color: var(--env);
 }
 
-.invitation .choice input:focus-visible + span {
+.invitation[data-theme='mariage-noir-ivoire'] .choice input:focus-visible + span {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* Honeypot: off-screen, never announced, never tabbable. */
-.invitation .trap {
+.invitation[data-theme='mariage-noir-ivoire'] .trap {
   position: absolute;
   left: -9999px;
   width: 1px;
@@ -1145,32 +1159,32 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-.invitation .rsvp .btn {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp .btn {
   justify-self: center;
   margin-top: 0.6rem;
 }
 
-.invitation .notice {
+.invitation[data-theme='mariage-noir-ivoire'] .notice {
   margin: 1.4rem 0 0;
   font-size: 0.82rem;
   line-height: 1.45;
   color: #5c5a54;
 }
 
-.invitation .error {
+.invitation[data-theme='mariage-noir-ivoire'] .error {
   margin: 0;
   color: #96301f;
   font-style: italic;
 }
 
-.invitation .closed {
+.invitation[data-theme='mariage-noir-ivoire'] .closed {
   margin: 0;
   text-align: center;
   font-style: italic;
   font-size: 1.15rem;
 }
 
-.invitation .done-seal {
+.invitation[data-theme='mariage-noir-ivoire'] .done-seal {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1197,18 +1211,18 @@ html.invitation-locked body {
     opacity 0.3s;
 }
 
-.invitation .rsvp.sent .done-seal {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp.sent .done-seal {
   transform: translate(-50%, -80%) scale(1);
   opacity: 1;
 }
 
-.invitation .rsvp.sent form {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp.sent form {
   opacity: 0.12;
   pointer-events: none;
   transition: opacity 0.6s;
 }
 
-.invitation .thanks {
+.invitation[data-theme='mariage-noir-ivoire'] .thanks {
   position: absolute;
   left: 0;
   right: 0;
@@ -1220,24 +1234,24 @@ html.invitation-locked body {
   transition: opacity 0.6s 0.4s;
 }
 
-.invitation .rsvp.sent .thanks {
+.invitation[data-theme='mariage-noir-ivoire'] .rsvp.sent .thanks {
   opacity: 1;
 }
 
 /* ---- Signature ---- */
 
-.invitation .sign {
+.invitation[data-theme='mariage-noir-ivoire'] .sign {
   text-align: center;
   padding: 10svh 1rem 16svh;
 }
 
-.invitation .sign .script {
+.invitation[data-theme='mariage-noir-ivoire'] .sign .script {
   font-size: clamp(56px, 15vw, 96px);
   line-height: 1;
   display: block;
 }
 
-.invitation .sign p {
+.invitation[data-theme='mariage-noir-ivoire'] .sign p {
   margin: 0.6rem 0 0;
   color: var(--muted);
   font-style: italic;
@@ -1250,7 +1264,7 @@ html.invitation-locked body {
  * every heading of the invitation is centred, so a bar across the top would sit
  * on top of them.
  */
-.invitation .demo-banner {
+.invitation[data-theme='mariage-noir-ivoire'] .demo-banner {
   position: fixed;
   top: calc(0.6rem + env(safe-area-inset-top, 0));
   left: 0.6rem;
@@ -1276,11 +1290,11 @@ html.invitation-locked body {
  * block, every piece is simply there, and the sentences stack instead of
  * replacing one another. Nothing moves, nothing is hidden, nothing is locked.
  */
-.invitation[data-reduced='true'] .chapter {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .chapter {
   height: auto;
 }
 
-.invitation[data-reduced='true'] .sticky {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .sticky {
   position: static;
   height: auto;
   overflow: visible;
@@ -1293,40 +1307,40 @@ html.invitation-locked body {
 }
 
 @media (min-width: 820px) {
-  .invitation[data-reduced='true'] .sticky {
+  .invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .sticky {
     grid-template-rows: 1fr;
   }
 }
 
-.invitation[data-reduced='true'] .line {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .line {
   grid-area: auto;
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-.invitation[data-reduced='true'] .lines {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .lines {
   gap: 0.7rem;
 }
 
-.invitation[data-reduced='true'] .it,
-.invitation[data-reduced='true'] .tag {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .it,
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .tag {
   opacity: 1;
   transform: var(--to, none);
 }
 
-.invitation[data-reduced='true'] .reveal {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .reveal {
   clip-path: none;
 }
 
-.invitation[data-reduced='true'] .cue {
+.invitation[data-theme='mariage-noir-ivoire'][data-reduced='true'] .cue {
   display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .invitation *,
-  .invitation *::before,
-  .invitation *::after {
+  .invitation[data-theme='mariage-noir-ivoire'] *,
+  .invitation[data-theme='mariage-noir-ivoire'] *::before,
+  .invitation[data-theme='mariage-noir-ivoire'] *::after {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
     animation: none !important;

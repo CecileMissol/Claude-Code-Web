@@ -34,8 +34,8 @@ are confirmed.
 
 **Greet every household by name.**
 
-*INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
-already have a published invitation with us.*
+_INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
+already have a published invitation with us._
 
 Instead of one link for everyone, give each household its own: "The
 Andersons are invited" on the envelope, their own headcount pre-filled on
@@ -48,6 +48,7 @@ This digital download contains a short guide explaining how to unlock
 named links on your existing invitation at {{BRAND_URL}}/app.
 
 **What's included**
+
 - Personalized links, one per household, generated from your guest list
 - Each guest's name shown on their envelope and RSVP form
 - Per-household headcount limits on the RSVP form (e.g. "up to 2 guests")
@@ -57,11 +58,13 @@ named links on your existing invitation at {{BRAND_URL}}/app.
   Riviera Postcard
 
 **What's NOT included**
+
 - Sending invitations for you (SMS/email) — you still share each link
   yourself; see the "Send emails to guests" option if/when available
 - A change to your base invitation's design or content
 
 **How it works**
+
 1. Buy this listing.
 2. Open your instant download for the short guide.
 3. Go to {{BRAND_URL}}/app, sign in, and unlock named invitations with
@@ -70,11 +73,12 @@ named links on your existing invitation at {{BRAND_URL}}/app.
    personalized links.
 
 **FAQ**
-- *Can I still use one shared link too?* Yes — your original shared link
+
+- _Can I still use one shared link too?_ Yes — your original shared link
   keeps working alongside the personalized ones.
-- *What if I add guests later?* You can add households anytime; new links
+- _What if I add guests later?_ You can add households anytime; new links
   are generated instantly.
-- *Which themes does this work with?* Black & Ivory, Terracotta Bloom,
+- _Which themes does this work with?_ Black & Ivory, Terracotta Bloom,
   Riviera Postcard.
 
 **Refund policy**
@@ -83,6 +87,6 @@ Digital product, delivered instantly. Full refund within 24 hours of
 purchase if the feature hasn't been unlocked yet. Once unlocked, no refund
 for change of mind, but we fix any genuine technical issue for free.
 
-*This digital download contains the instructions to unlock named
+_This digital download contains the instructions to unlock named
 invitations — nothing is shipped, delivery is instant via Etsy's download
-system.*
+system._

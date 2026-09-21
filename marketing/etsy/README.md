@@ -8,15 +8,15 @@ placeholders `{{BRAND_NAME}}`, `{{BRAND_URL}}`, `{{SHOP_NAME}}` — voir
 
 ## 1. Contenu du dossier
 
-| Fichier / dossier | Contenu |
-|---|---|
-| `listings/<theme-slug>.md` | Fiche produit complète (EN) des 3 thèmes |
-| `listings/fr/<theme-slug>.md` | Version FR de la description, pour un futur canal francophone |
-| `listings/options/*.md` | Fiches courtes des options (upsells) |
+| Fichier / dossier                 | Contenu                                                                                                           |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `listings/<theme-slug>.md`        | Fiche produit complète (EN) des 3 thèmes                                                                          |
+| `listings/fr/<theme-slug>.md`     | Version FR de la description, pour un futur canal francophone                                                     |
+| `listings/options/*.md`           | Fiches courtes des options (upsells)                                                                              |
 | `delivery/<theme-slug>-guide.pdf` | Le fichier numérique à joindre à chaque fiche (généré par `pnpm etsy:pdf`, voir `scripts/build-delivery-pdf.mjs`) |
-| `messages.md` | Message auto post-achat, réponses types, relance J+7, demande d'avis |
-| `../launch-plan.md` | Calendrier de lancement sur 4 semaines |
-| `../brand-variables.md` | Placeholders et commande de remplacement |
+| `messages.md`                     | Message auto post-achat, réponses types, relance J+7, demande d'avis                                              |
+| `../launch-plan.md`               | Calendrier de lancement sur 4 semaines                                                                            |
+| `../brand-variables.md`           | Placeholders et commande de remplacement                                                                          |
 
 Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
 `mariage-noir-ivoire` (Black & ivory / Noir & ivoire),
@@ -35,6 +35,7 @@ Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
 ## 3. Checklist d'ouverture de boutique Etsy
 
 ### 3.1 Paramètres de boutique
+
 - [ ] Créer le compte vendeur, choisir `{{SHOP_NAME}}` comme nom de boutique
       (vérifier au préalable que le nom est libre sur `etsy.com/shop/...`).
 - [ ] Renseigner le pays de résidence (France) et la devise d'affichage
@@ -53,6 +54,7 @@ Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
       l'expérience acheteuse).
 
 ### 3.2 Politiques de boutique (obligatoires côté Etsy)
+
 - [ ] **Politique de retour/remboursement** : pour un téléchargement
       numérique, Etsy interdit les retours au sens physique mais autorise
       (et il est recommandé) de préciser une politique de remboursement
@@ -72,6 +74,7 @@ Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
       `listings/<theme-slug>.md`.
 
 ### 3.3 Mentions obligatoires pour un produit numérique
+
 - [ ] Dans chaque fiche : préciser clairement **« Digital download »** /
       **« INSTANT DOWNLOAD »** dans le titre ou en tout début de
       description, pour éviter toute confusion avec un produit physique
@@ -140,6 +143,7 @@ comptable avant le lancement.** Points à vérifier avec lui, dans l'ordre :
       d'ouvrir ce canal, pas après.
 
 ### 3.5 Prix
+
 - [ ] Fiche « Black & ivory » : prix de lancement **29 $ USD**, prix barré
       **49 $ USD** (voir `docs/strategie-produit.md` §5.4 et §6) ; prix
       cible après la phase de lancement (30-50 premières ventes) :

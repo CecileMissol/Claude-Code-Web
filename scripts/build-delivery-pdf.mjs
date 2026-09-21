@@ -75,7 +75,9 @@ async function findThemeManifests() {
     const slugMatch = source.match(/slug:\s*'([^']+)'/);
     const nameMatch = source.match(/name:\s*\{\s*en:\s*'([^']+)',\s*fr:\s*'([^']+)'\s*\}/);
     if (!slugMatch || !nameMatch) {
-      console.warn(`Skipping ${manifestPath}: could not find slug/name (unexpected manifest shape)`);
+      console.warn(
+        `Skipping ${manifestPath}: could not find slug/name (unexpected manifest shape)`,
+      );
       continue;
     }
     themes.push({
@@ -129,7 +131,18 @@ function makeDrawer(page, fonts) {
       });
       y -= 18;
     },
-    text(str, { size = 11, font = fonts.body, color = COLOR_INK, gap = 6, maxWidth = PAGE_WIDTH - MARGIN * 2, x = MARGIN, align = 'left' } = {}) {
+    text(
+      str,
+      {
+        size = 11,
+        font = fonts.body,
+        color = COLOR_INK,
+        gap = 6,
+        maxWidth = PAGE_WIDTH - MARGIN * 2,
+        x = MARGIN,
+        align = 'left',
+      } = {},
+    ) {
       const lines = wrapText(str, font, size, maxWidth);
       for (const line of lines) {
         let drawX = x;
@@ -197,7 +210,9 @@ async function buildPdfForTheme(theme) {
   d1.rule();
 
   d1.label('Step 1 — activate your account');
-  d1.text('Go to the link below and enter your Etsy order number and your email address.', { gap: 10 });
+  d1.text('Go to the link below and enter your Etsy order number and your email address.', {
+    gap: 10,
+  });
 
   // Big activation link, bold and centered.
   const linkSize = 18;
@@ -240,10 +255,16 @@ async function buildPdfForTheme(theme) {
 
   d1.rule();
   d1.label('Have ready');
-  d1.text('Your Etsy order number (find it under Etsy > Your account > Purchases and reviews) and the email you used at checkout.', { gap: 14 });
+  d1.text(
+    'Your Etsy order number (find it under Etsy > Your account > Purchases and reviews) and the email you used at checkout.',
+    { gap: 14 },
+  );
 
   d1.label('Validation delay');
-  d1.text(`We confirm activations within 24 hours of your request — often much faster. You'll get an email the moment your ${BRAND_NAME} account is ready, with a secure magic-link sign-in (no password to remember).`, { gap: 10 });
+  d1.text(
+    `We confirm activations within 24 hours of your request — often much faster. You'll get an email the moment your ${BRAND_NAME} account is ready, with a secure magic-link sign-in (no password to remember).`,
+    { gap: 10 },
+  );
 
   page1.drawText(`${BRAND_NAME} · page 1 / 2`, {
     x: MARGIN,
@@ -262,12 +283,27 @@ async function buildPdfForTheme(theme) {
   d2.heading('Your quick-start guide');
 
   const steps = [
-    ['Activate', 'Enter your Etsy order number and email at the activation link on page 1. Confirmation within 24 hours.'],
-    ['Sign in', 'Follow the magic-link email we send you — one click, no password to create or remember.'],
-    ['Start your invitation', `Your ${theme.nameEn} theme opens as a draft, already loaded with its palettes and scripts.`],
-    ['Customize', 'Fill in your names, date, story, photos, program and venue in the step-by-step editor. Watch the live preview update as you type.'],
+    [
+      'Activate',
+      'Enter your Etsy order number and email at the activation link on page 1. Confirmation within 24 hours.',
+    ],
+    [
+      'Sign in',
+      'Follow the magic-link email we send you — one click, no password to create or remember.',
+    ],
+    [
+      'Start your invitation',
+      `Your ${theme.nameEn} theme opens as a draft, already loaded with its palettes and scripts.`,
+    ],
+    [
+      'Customize',
+      'Fill in your names, date, story, photos, program and venue in the step-by-step editor. Watch the live preview update as you type.',
+    ],
     ['Choose your link', `Pick your address, e.g. ${BRAND_URL}/your-names, then publish.`],
-    ['Share & track', 'Download your QR code, send the ready-made messages to your guests, and follow RSVPs on your dashboard.'],
+    [
+      'Share & track',
+      'Download your QR code, send the ready-made messages to your guests, and follow RSVPs on your dashboard.',
+    ],
   ];
   steps.forEach(([title, body], index) => {
     d2.text(`${index + 1}. ${title}`, { size: 12.5, font: fonts.bold, gap: 3 });
@@ -277,9 +313,18 @@ async function buildPdfForTheme(theme) {
   d2.rule();
   d2.label('FAQ');
   const faqs = [
-    ['Can I edit after publishing?', 'Yes, anytime, unlimited edits — changes go live instantly on your existing link.'],
-    ['How long is my invitation hosted?', '18 months from publication, included in your purchase. Extensions available separately in our shop.'],
-    ['I bought more than one theme — do I activate twice?', 'Yes, one activation per order: each order number unlocks its own invitation and dashboard.'],
+    [
+      'Can I edit after publishing?',
+      'Yes, anytime, unlimited edits — changes go live instantly on your existing link.',
+    ],
+    [
+      'How long is my invitation hosted?',
+      '18 months from publication, included in your purchase. Extensions available separately in our shop.',
+    ],
+    [
+      'I bought more than one theme — do I activate twice?',
+      'Yes, one activation per order: each order number unlocks its own invitation and dashboard.',
+    ],
   ];
   faqs.forEach(([q, a]) => {
     d2.text(q, { size: 10.5, font: fonts.bold, gap: 2 });
@@ -288,7 +333,10 @@ async function buildPdfForTheme(theme) {
 
   d2.rule();
   d2.label('Need help?');
-  d2.text('Message us anytime through Etsy — we read every message and reply quickly with activation or customization help.', { gap: 4 });
+  d2.text(
+    'Message us anytime through Etsy — we read every message and reply quickly with activation or customization help.',
+    { gap: 4 },
+  );
 
   page2.drawText(`${BRAND_NAME} · page 2 / 2`, {
     x: MARGIN,

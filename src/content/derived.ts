@@ -12,10 +12,28 @@ export function initials(content: InvitationContent): string {
   return `${a}&${b}`;
 }
 
-/** "12.06.27" */
-export function shortDate(content: InvitationContent, separator = '.'): string {
+/**
+ * The three numbers of the short date, **in the reading order of the
+ * invitation's locale**: `[day, month, yy]` in French, `[month, day, yy]` in
+ * English.
+ *
+ * `12.06.27` reads as 12 June to a French guest and as 6 December to an
+ * American one — and the American market is the one the themes are sold on
+ * (BRIEF §2). The order is decided here, once, so the envelope, the "save the
+ * date" ticket and the three papers of the Date chapter can never disagree
+ * with each other.
+ *
+ * The year is always last: no locale puts it in the middle.
+ */
+export function shortDateParts(content: InvitationContent): [string, string, string] {
   const [year = '', month = '', day = ''] = content.event.date.split('-');
-  return [day, month, year.slice(2)].join(separator);
+  const yy = year.slice(2);
+  return content.locale === 'en' ? [month, day, yy] : [day, month, yy];
+}
+
+/** "12.06.27" (fr) · "06.12.27" (en) — see `shortDateParts`. */
+export function shortDate(content: InvitationContent, separator = '.'): string {
+  return shortDateParts(content).join(separator);
 }
 
 const ROMAN_MONTHS = [

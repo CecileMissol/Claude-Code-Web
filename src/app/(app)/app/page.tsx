@@ -11,7 +11,7 @@ import { requireUser } from '@/lib/auth';
 import { allowFreeDrafts } from '@/lib/env';
 import { getLocale } from 'next-intl/server';
 import { isLocale, DEFAULT_LOCALE } from '@/i18n/config';
-import { loadAllManifests } from '@/themes/registry';
+import { loadAllManifests } from '@/themes/manifests';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('dashboard');

@@ -48,8 +48,8 @@ selector.
 
 **Black & Ivory — An Animated Wedding Website That Opens Like a Real Letter**
 
-*INSTANT DOWNLOAD — a digital product from {{BRAND_NAME}}. This listing does
-not ship anything physical.*
+_INSTANT DOWNLOAD — a digital product from {{BRAND_NAME}}. This listing does
+not ship anything physical._
 
 No Canva account. No broken layouts on mobile. Just a beautiful, guided
 editor and a real RSVP dashboard.
@@ -127,24 +127,24 @@ seal and stamps — are genuinely customizable, not fixed images.
 
 **FAQ**
 
-- *Do I need a Canva account?* No — everything happens in our own editor,
+- _Do I need a Canva account?_ No — everything happens in our own editor,
   no third-party software or account required beyond your own login.
-- *Will it work on my guests' phones?* Yes — the experience is built
+- _Will it work on my guests' phones?_ Yes — the experience is built
   mobile-first and tested on iOS and Android.
-- *Can I edit after publishing?* Yes, anytime, unlimited edits, and changes
+- _Can I edit after publishing?_ Yes, anytime, unlimited edits, and changes
   go live immediately on your existing link.
-- *How long is my invitation hosted?* 18 months from publication, included
+- _How long is my invitation hosted?_ 18 months from publication, included
   in this listing. Extensions available separately.
-- *Can I add real photos?* Yes — upload your own engagement or couple
+- _Can I add real photos?_ Yes — upload your own engagement or couple
   photos; we handle the black-and-white treatment.
-- *Is there really an RSVP dashboard?* Yes — a real dashboard with guest
+- _Is there really an RSVP dashboard?_ Yes — a real dashboard with guest
   names, headcounts, dietary notes, CSV export, and email alerts, not a
   basic form.
-- *What if I need help?* Message us anytime through Etsy — we're happy to
+- _What if I need help?_ Message us anytime through Etsy — we're happy to
   help with activation or customization questions.
-- *How fast is activation?* Within 24 hours of submitting your order number
+- _How fast is activation?_ Within 24 hours of submitting your order number
   and email on the activation page (usually much faster).
-- *Can I send it in French too?* Yes — the guest-facing page can switch
+- _Can I send it in French too?_ Yes — the guest-facing page can switch
   between English and French.
 
 **Refund policy**
@@ -157,8 +157,8 @@ refunds for change of mind, but we will always fix a genuine technical
 issue free of charge — message us first before opening a return, we read
 every message.
 
-*This digital download contains your activation link — nothing is shipped,
-and delivery is instant via Etsy's download system.*
+_This digital download contains your activation link — nothing is shipped,
+and delivery is instant via Etsy's download system._
 
 ---
 
@@ -173,12 +173,12 @@ black or reverse, following the "Black & Ivory" palette
 1. **Cover — closed envelope, hero shot** (2000×2000). Black envelope,
    address side, wax seal, postage stamp and postmark, one white arum laid
    diagonally across it, on a warm ivory background with soft shadow.
-   Overlay text, top third: *"Black & Ivory"* in script font; bottom third:
-   *"An animated wedding website that opens like a real letter."*
+   Overlay text, top third: _"Black & Ivory"_ in script font; bottom third:
+   _"An animated wedding website that opens like a real letter."_
 2. **Envelope opening sequence** (3000×2250, landscape). 3-frame filmstrip
    composite: envelope closed → flipped with seal cracking → flap open with
-   ticket and polaroids sliding out. Overlay, bottom-left: *"Tap. It opens
-   like a real letter."*
+   ticket and polaroids sliding out. Overlay, bottom-left: _"Tap. It opens
+   like a real letter."_
 3. **Save-the-date ticket + polaroids close-up** (2000×2000). Macro shot of
    the perforated ticket and two black-and-white polaroids on black
    envelope liner paper, olive amaranth trailing across the corner. No
@@ -186,51 +186,51 @@ black or reverse, following the "Black & Ivory" palette
 4. **Mobile mockup — "Our story" chapter** (2000×2000). Phone in hand,
    vertical, showing the scrolling story section (torn train ticket,
    taped polaroid, phrase-by-phrase text animation frozen mid-reveal) on
-   an ivory desk backdrop. Overlay, top: *"Scroll through your story."*
+   an ivory desk backdrop. Overlay, top: _"Scroll through your story."_
 5. **Mobile mockup — "The date" countdown** (2000×2000). Phone showing the
    live countdown and date numerals on different collage papers. Overlay,
-   top: *"A countdown your guests will actually check."*
+   top: _"A countdown your guests will actually check."_
 6. **Mobile mockup — "Program" & "Venue" chapters** (2000×2000). Split
    screen, two phones side by side: stacked torn program notes on the
    left, venue postcard with wax-stamped pin on the right. Overlay,
-   bottom: *"Program, venue, all in the same story."*
+   bottom: _"Program, venue, all in the same story."_
 7. **RSVP dashboard screenshot** (2000×2000). Laptop mockup on the same
    ivory/black desk styling, showing the RSVP response table (names,
    yes/no, headcount, CSV export button visible). Overlay, top:
-   *"A real RSVP dashboard — not a Canva form."* Sub-line: *"Guest counts,
-   dietary notes, CSV export, instant email alerts."*
+   _"A real RSVP dashboard — not a Canva form."_ Sub-line: _"Guest counts,
+   dietary notes, CSV export, instant email alerts."_
 8. **"No Canva" comparison graphic** (2000×2000). Clean split-panel
    infographic (not a screenshot): left panel "Typical Canva template" with
    a small warning icon list (layout breaks on mobile, fixed graphic
    colors, no dashboard); right panel "{{BRAND_NAME}}" with checkmarks
    (guided editor, colorable illustrations, real dashboard). Overlay
-   title: *"Why couples switch from Canva."*
+   title: _"Why couples switch from Canva."_
 9. **Palette & script picker** (2000×2000). Editor screenshot or styled
    mockup showing the 3 palette swatches (Black & ivory / Olive / Blue ink)
    and 3 script previews (Pinyon Script, Mrs Saint Delafield, Allura) side
-   by side on the ivory UI. Overlay: *"3 palettes. 3 scripts. Your style."*
+   by side on the ivory UI. Overlay: _"3 palettes. 3 scripts. Your style."_
 10. **Lifestyle flatlay — phone on styled table** (3000×2250, landscape).
     Phone displaying the published invitation homepage, laid on a flatlay
     of black card stock, dried olive branches, a wax seal stamp and a
-    fountain pen. Overlay, centered: *"Yours in about 10 minutes. No
-    design skills needed."* Small corner badge: *"18 months hosting
-    included."*
+    fountain pen. Overlay, centered: _"Yours in about 10 minutes. No
+    design skills needed."_ Small corner badge: _"18 months hosting
+    included."_
 
 ## 15-second video script
 
 Format: vertical 9:16, captions burned in (most Etsy video views are
 silent-first), no voiceover required, soft instrumental/paper-rustle SFX.
 
-| Time | Visual | On-screen text |
-|---|---|---|
-| 0.0–2.5s | Black envelope on ivory table, a hand taps it | *"Watch what happens when you tap 'send'…"* |
-| 2.5–5.0s | Envelope flips, wax seal cracks, flap opens (real captured animation) | *"…on a Black & Ivory invitation."* |
-| 5.0–8.0s | Ticket and polaroids slide out, quick cut to scroll through "Our story" chapter | *"It opens like a real letter."* |
-| 8.0–10.5s | Quick scroll montage: date countdown → program → venue postcard | *"Then it tells your whole story."* |
-| 10.5–13.0s | Cut to RSVP dashboard on laptop, a new response animating in | *"With a real RSVP dashboard."* |
-| 13.0–15.0s | End card: product name, price badge "$29", CTA | *"{{BRAND_NAME}} — No Canva needed. Link in shop."* |
+| Time       | Visual                                                                          | On-screen text                                      |
+| ---------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
+| 0.0–2.5s   | Black envelope on ivory table, a hand taps it                                   | _"Watch what happens when you tap 'send'…"_         |
+| 2.5–5.0s   | Envelope flips, wax seal cracks, flap opens (real captured animation)           | _"…on a Black & Ivory invitation."_                 |
+| 5.0–8.0s   | Ticket and polaroids slide out, quick cut to scroll through "Our story" chapter | _"It opens like a real letter."_                    |
+| 8.0–10.5s  | Quick scroll montage: date countdown → program → venue postcard                 | _"Then it tells your whole story."_                 |
+| 10.5–13.0s | Cut to RSVP dashboard on laptop, a new response animating in                    | _"With a real RSVP dashboard."_                     |
+| 13.0–15.0s | End card: product name, price badge "$29", CTA                                  | _"{{BRAND_NAME}} — No Canva needed. Link in shop."_ |
 
 ---
 
-*Sources for the pricing and compliance framing: `docs/strategie-produit.md`
-§1, §5, §6.*
+_Sources for the pricing and compliance framing: `docs/strategie-produit.md`
+§1, §5, §6._

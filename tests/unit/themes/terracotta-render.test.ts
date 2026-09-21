@@ -118,7 +118,8 @@ describe('intro', () => {
 
   it('prints the couple, the short date and the initials', () => {
     expect(html).toContain('Willa &amp; Beau');
-    expect(html).toContain('09.10.27');
+    // `demo.json` is in English: the short date is month-day-year (§3).
+    expect(html).toContain('10.09.27');
     expect(html).toContain('W&amp;B');
   });
 

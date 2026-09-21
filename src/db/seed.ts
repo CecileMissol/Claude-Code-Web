@@ -53,7 +53,7 @@ export function themeSeedRow(manifest: ThemeManifest): ThemeSeedRow {
 
 /** Every registered theme, as rows. */
 export async function loadThemeSeedRows(): Promise<ThemeSeedRow[]> {
-  const { loadAllManifests } = await import('@/themes/registry');
+  const { loadAllManifests } = await import('@/themes/manifests');
   return (await loadAllManifests()).map(themeSeedRow);
 }
 

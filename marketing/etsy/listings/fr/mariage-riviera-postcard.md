@@ -12,8 +12,8 @@ Placeholders `{{BRAND_NAME}}`, `{{BRAND_URL}}`, `{{SHOP_NAME}}` — voir
 **Riviera Postcard — Un site de mariage côtier qui s'ouvre comme une vraie
 lettre**
 
-*TÉLÉCHARGEMENT IMMÉDIAT — un produit numérique {{BRAND_NAME}}. Cette fiche
-ne comprend aucun envoi physique.*
+_TÉLÉCHARGEMENT IMMÉDIAT — un produit numérique {{BRAND_NAME}}. Cette fiche
+ne comprend aucun envoi physique._
 
 Aucun compte Canva. Aucune mise en page qui se casse sur mobile. Juste un
 éditeur guidé et agréable, et un vrai tableau de bord RSVP.
@@ -87,19 +87,19 @@ cachet postal, timbres) réellement personnalisables.
 
 **FAQ**
 
-- *Ai-je besoin d'un compte Canva ?* Non.
-- *Ça marche sur le téléphone de mes invités ?* Oui, pensé mobile d'abord.
-- *Puis-je modifier après publication ?* Oui, à tout moment, changements
+- _Ai-je besoin d'un compte Canva ?_ Non.
+- _Ça marche sur le téléphone de mes invités ?_ Oui, pensé mobile d'abord.
+- _Puis-je modifier après publication ?_ Oui, à tout moment, changements
   immédiats.
-- *Durée d'hébergement ?* 18 mois inclus, prolongation séparée disponible.
-- *Puis-je ajouter de vraies photos ?* Oui, nous appliquons le traitement
+- _Durée d'hébergement ?_ 18 mois inclus, prolongation séparée disponible.
+- _Puis-je ajouter de vraies photos ?_ Oui, nous appliquons le traitement
   couleur ensoleillé.
-- *Vrai tableau de bord RSVP ?* Oui — noms, compteurs, régimes, export CSV,
+- _Vrai tableau de bord RSVP ?_ Oui — noms, compteurs, régimes, export CSV,
   alertes e-mail.
-- *Besoin d'aide ?* Messagerie Etsy, à tout moment.
-- *Activation rapide ?* Sous 24 h.
-- *Envoi en français possible ?* Oui, page invités bilingue.
-- *Adapté à un mariage à l'étranger ?* Oui, le style côtier et carte
+- _Besoin d'aide ?_ Messagerie Etsy, à tout moment.
+- _Activation rapide ?_ Sous 24 h.
+- _Envoi en français possible ?_ Oui, page invités bilingue.
+- _Adapté à un mariage à l'étranger ?_ Oui, le style côtier et carte
   postale est pensé pour les mariages de destination.
 
 **Politique de remboursement**
@@ -109,5 +109,5 @@ Remboursement intégral sous 24 h si non activé. Après activation, pas de
 remboursement pour changement d'avis, mais tout problème technique réel est
 corrigé gratuitement — écrivez-nous avant toute demande de retour.
 
-*Ce fichier téléchargé contient votre lien d'activation — rien n'est
-expédié, livraison instantanée via Etsy.*
+_Ce fichier téléchargé contient votre lien d'activation — rien n'est
+expédié, livraison instantanée via Etsy._

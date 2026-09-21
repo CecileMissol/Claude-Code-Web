@@ -1,22 +1,20 @@
 import type { Locale } from '@/i18n/config';
 import type { ThemeModule } from './types';
+import { isThemeSlug } from './manifests';
+import type { ThemeSlug } from './manifests';
 
 /**
  * Theme registry: slug → lazily imported theme module.
  * Nothing of a theme (component, CSS, assets) is bundled until it is requested.
+ *
+ * **Importing this module pulls the three themes' client trees into the
+ * importing page's chunk list** (see the note at the top of `./manifests.ts`).
+ * Only the routes that actually render an invitation may import it; everything
+ * that merely lists the themes imports `./manifests` instead.
  */
 
-export const THEME_SLUGS = [
-  'mariage-noir-ivoire',
-  'mariage-terracotta-bloom',
-  'mariage-riviera-postcard',
-] as const;
-
-export type ThemeSlug = (typeof THEME_SLUGS)[number];
-
-export function isThemeSlug(value: unknown): value is ThemeSlug {
-  return typeof value === 'string' && (THEME_SLUGS as readonly string[]).includes(value);
-}
+export { THEME_SLUGS, isThemeSlug, loadAllManifests, loadThemeManifest } from './manifests';
+export type { ThemeSlug } from './manifests';
 
 const LOADERS: Record<ThemeSlug, () => Promise<ThemeModule>> = {
   'mariage-noir-ivoire': () => import('./mariage-noir-ivoire'),
@@ -62,10 +60,4 @@ export async function loadThemeMessages(
 ): Promise<Record<string, unknown>> {
   if (!isThemeSlug(slug)) throw new Error(`Unknown theme: ${slug}`);
   return MESSAGE_LOADERS[slug][locale]();
-}
-
-/** Manifests of every registered theme, for the admin and the editor. */
-export async function loadAllManifests() {
-  const themes = await Promise.all(THEME_SLUGS.map((slug) => LOADERS[slug]()));
-  return themes.map((theme) => theme.manifest);
 }

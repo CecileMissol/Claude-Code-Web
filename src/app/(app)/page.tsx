@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { brand } from '@/brand';
-import { loadAllManifests } from '@/themes/registry';
+import { loadAllManifests } from '@/themes/manifests';
 import type { Locale } from '@/i18n/config';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -230,8 +230,18 @@ export default async function HomePage() {
 }
 
 /** Breaks a section out of the constrained `<main>` to span the full viewport width. */
-function FullBleed({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] ${className}`}>{children}</div>;
+function FullBleed({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] ${className}`}>
+      {children}
+    </div>
+  );
 }
 
 /**
@@ -250,7 +260,16 @@ function PhoneTeaser({ caption, ctaDemo }: { caption: string; ctaDemo: string })
       <div className="rounded-[2.2rem] border-8 border-brand-fg/90 bg-brand-fg p-1 shadow-xl transition-transform group-hover:-translate-y-1">
         <div className="flex aspect-[9/17.5] flex-col items-center justify-center gap-3 rounded-[1.7rem] bg-[#1D1D1B] px-6 text-center">
           <svg width="56" height="40" viewBox="0 0 56 40" aria-hidden>
-            <rect x="1" y="1" width="54" height="38" rx="3" fill="#DCD7CB" stroke="#6E8228" strokeWidth="1.5" />
+            <rect
+              x="1"
+              y="1"
+              width="54"
+              height="38"
+              rx="3"
+              fill="#DCD7CB"
+              stroke="#6E8228"
+              strokeWidth="1.5"
+            />
             <path d="M2 3 L28 22 L54 3" fill="none" stroke="#6E8228" strokeWidth="1.5" />
           </svg>
           <p className="text-xs text-[#DCD7CB]">{caption}</p>

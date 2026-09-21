@@ -30,8 +30,8 @@ Invitations** — digital download.
 
 **Turn your invitation into a full wedding website.**
 
-*INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
-already have a published invitation with us.*
+_INSTANT DOWNLOAD — a digital add-on from {{BRAND_NAME}}, for couples who
+already have a published invitation with us._
 
 Your invitation tells your story beautifully in one scroll. This add-on
 unlocks extra pages on the same link, matched to your theme's palette and
@@ -43,6 +43,7 @@ This digital download contains a short guide explaining how to unlock the
 extra pages on your existing invitation at {{BRAND_URL}}/app.
 
 **What's included**
+
 - Extended "Details" page: expanded schedule, dress code, registry links
 - "Accommodations & travel" page: hotel blocks, transport notes, map
 - Extended FAQ page for guests (parking, kids, plus-ones, weather plan)
@@ -51,11 +52,13 @@ extra pages on your existing invitation at {{BRAND_URL}}/app.
   Black & Ivory, Terracotta Bloom, or Riviera Postcard
 
 **What's NOT included**
+
 - A separate domain or link — this extends your existing invitation
 - New photo slots beyond what your theme already supports
 - Named invitations per household — see that option separately
 
 **How it works**
+
 1. Buy this listing.
 2. Open your instant download for the short guide.
 3. Go to {{BRAND_URL}}/app, sign in, and unlock the extra pages with your
@@ -63,11 +66,12 @@ extra pages on your existing invitation at {{BRAND_URL}}/app.
 4. Fill in the new sections in your editor — live preview as usual.
 
 **FAQ**
-- *Does this replace my invitation?* No — it adds pages to it, same link,
+
+- _Does this replace my invitation?_ No — it adds pages to it, same link,
   same story.
-- *Which themes does this work with?* Black & Ivory, Terracotta Bloom,
+- _Which themes does this work with?_ Black & Ivory, Terracotta Bloom,
   Riviera Postcard.
-- *Do I need to redo my palette or photos?* No — everything you've already
+- _Do I need to redo my palette or photos?_ No — everything you've already
   customized stays exactly as is.
 
 **Refund policy**
@@ -76,6 +80,6 @@ Digital product, delivered instantly. Full refund within 24 hours of
 purchase if the pages haven't been unlocked yet. Once unlocked, no refund
 for change of mind, but we fix any genuine technical issue for free.
 
-*This digital download contains the instructions to unlock your extra
+_This digital download contains the instructions to unlock your extra
 pages — nothing is shipped, delivery is instant via Etsy's download
-system.*
+system._

@@ -13,8 +13,8 @@ Placeholders `{{BRAND_NAME}}`, `{{BRAND_URL}}`, `{{SHOP_NAME}}` — voir
 **Noir & Ivoire — Un site de mariage animé qui s'ouvre comme une vraie
 lettre**
 
-*TÉLÉCHARGEMENT IMMÉDIAT — un produit numérique {{BRAND_NAME}}. Cette fiche
-ne comprend aucun envoi physique.*
+_TÉLÉCHARGEMENT IMMÉDIAT — un produit numérique {{BRAND_NAME}}. Cette fiche
+ne comprend aucun envoi physique._
 
 Aucun compte Canva. Aucune mise en page qui se casse sur mobile. Juste un
 éditeur guidé et agréable, et un vrai tableau de bord RSVP.
@@ -97,29 +97,29 @@ sont vraiment personnalisables, pas des images figées.
 
 **FAQ**
 
-- *Ai-je besoin d'un compte Canva ?* Non — tout se passe dans notre propre
+- _Ai-je besoin d'un compte Canva ?_ Non — tout se passe dans notre propre
   éditeur, aucun logiciel ni compte tiers requis en dehors de votre propre
   connexion.
-- *Est-ce que ça marchera sur le téléphone de mes invités ?* Oui —
+- _Est-ce que ça marchera sur le téléphone de mes invités ?_ Oui —
   l'expérience est pensée mobile d'abord, testée sur iOS et Android.
-- *Puis-je modifier après publication ?* Oui, à tout moment, modifications
+- _Puis-je modifier après publication ?_ Oui, à tout moment, modifications
   illimitées, les changements sont visibles immédiatement sur votre lien
   existant.
-- *Combien de temps mon invitation est-elle hébergée ?* 18 mois à compter
+- _Combien de temps mon invitation est-elle hébergée ?_ 18 mois à compter
   de la publication, inclus dans cette fiche. Prolongations disponibles
   séparément.
-- *Puis-je ajouter de vraies photos ?* Oui — importez vos propres photos de
+- _Puis-je ajouter de vraies photos ?_ Oui — importez vos propres photos de
   fiançailles ou de couple ; nous appliquons le traitement noir et blanc.
-- *Y a-t-il vraiment un tableau de bord RSVP ?* Oui — un vrai tableau de
+- _Y a-t-il vraiment un tableau de bord RSVP ?_ Oui — un vrai tableau de
   bord avec noms des invités, compteurs, régimes alimentaires, export CSV
   et alertes e-mail, pas un simple formulaire.
-- *Et si j'ai besoin d'aide ?* Écrivez-nous à tout moment via la messagerie
+- _Et si j'ai besoin d'aide ?_ Écrivez-nous à tout moment via la messagerie
   Etsy — nous répondons volontiers à vos questions d'activation ou de
   personnalisation.
-- *L'activation est-elle rapide ?* Sous 24 h après l'envoi de votre numéro
+- _L'activation est-elle rapide ?_ Sous 24 h après l'envoi de votre numéro
   de commande et de votre e-mail sur la page d'activation (souvent bien
   plus vite).
-- *Puis-je aussi l'envoyer en français ?* Oui — la page destinée aux
+- _Puis-je aussi l'envoyer en français ?_ Oui — la page destinée aux
   invités peut basculer entre français et anglais.
 
 **Politique de remboursement**
@@ -133,6 +133,6 @@ mais nous corrigeons toujours gratuitement un vrai problème technique —
 écrivez-nous avant d'ouvrir une demande de retour, nous lisons chaque
 message.
 
-*Ce fichier téléchargé contient votre lien d'activation — rien n'est
+_Ce fichier téléchargé contient votre lien d'activation — rien n'est
 expédié, la livraison est instantanée via le système de téléchargement
-d'Etsy.*
+d'Etsy._

@@ -3,12 +3,19 @@
  *
  * Three rules govern this file:
  *
- * 1. **Everything is scoped under `[data-theme='mariage-terracotta-bloom']`
- *    and every class carries the `tb-` prefix.** Two themes may have their
- *    stylesheets loaded on the same page (the dashboard, the editor's theme
- *    picker); neither may repaint the other. The root rule is written
- *    `.invitation[data-theme='…']` so it also outranks a generic `.invitation`
- *    rule coming from another theme.
+ * 1. **Every selector starts with
+ *    `.invitation[data-theme='mariage-terracotta-bloom']`**, and every class
+ *    carries the `tb-` prefix. Two themes may have their stylesheets loaded on
+ *    the same page (the dashboard, the editor's theme picker); neither may
+ *    repaint the other.
+ *
+ *    The class in front of the attribute is not decoration (phase 9, §3): an
+ *    attribute-only scope such as `[data-theme='…'] .tb-photo` weighs exactly
+ *    the same (0,2,0) as another theme's `.invitation .photo`, and at equal
+ *    specificity the bundler's source order decides. `.invitation` **plus** the
+ *    attribute puts every rule of this theme one notch above, whatever order
+ *    the bundler picks. The single exception is the scroll lock, which
+ *    addresses `<html>` and is written identically in all three themes.
  * 2. **Dark mode is deliberately absent.** The couple picks a palette and every
  *    guest must see exactly that palette (phase 1, §1.3.8). `prefers-color-scheme`
  *    is never consulted.
@@ -78,9 +85,9 @@
   --env-ink: #43301f;
 }
 
-[data-theme='mariage-terracotta-bloom'] *,
-[data-theme='mariage-terracotta-bloom'] *::before,
-[data-theme='mariage-terracotta-bloom'] *::after {
+.invitation[data-theme='mariage-terracotta-bloom'] *,
+.invitation[data-theme='mariage-terracotta-bloom'] *::before,
+.invitation[data-theme='mariage-terracotta-bloom'] *::after {
   box-sizing: inherit;
 }
 
@@ -96,25 +103,25 @@
   mix-blend-mode: multiply;
 }
 
-[data-theme='mariage-terracotta-bloom'] button,
-[data-theme='mariage-terracotta-bloom'] input,
-[data-theme='mariage-terracotta-bloom'] select,
-[data-theme='mariage-terracotta-bloom'] textarea {
+.invitation[data-theme='mariage-terracotta-bloom'] button,
+.invitation[data-theme='mariage-terracotta-bloom'] input,
+.invitation[data-theme='mariage-terracotta-bloom'] select,
+.invitation[data-theme='mariage-terracotta-bloom'] textarea {
   font: inherit;
   color: inherit;
 }
 
-[data-theme='mariage-terracotta-bloom'] :focus-visible {
+.invitation[data-theme='mariage-terracotta-bloom'] :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-script {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-script {
   font-family: var(--script);
   font-weight: 400;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-caps {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-caps {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 0.72em;
@@ -140,7 +147,7 @@ html.invitation-locked body {
 }
 
 /* Hidden <defs> holder. */
-[data-theme='mariage-terracotta-bloom'] .tb-defs {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-defs {
   position: absolute;
   width: 0;
   height: 0;
@@ -152,7 +159,7 @@ html.invitation-locked body {
 /* ---------------------------------------------------------------- */
 
 /* A photo mounted on sand paper, corners rounded — never a polaroid. */
-[data-theme='mariage-terracotta-bloom'] .tb-snap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-snap {
   background: linear-gradient(160deg, #fdf5e8, var(--sand));
   background-image: var(--fiber), linear-gradient(160deg, #fdf5e8, var(--sand));
   padding: 5% 5% 15%;
@@ -161,8 +168,8 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-snap .tb-cap,
-[data-theme='mariage-terracotta-bloom'] .tb-arch-photo .tb-cap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-snap .tb-cap,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-arch-photo .tb-cap {
   position: absolute;
   left: 0;
   right: 0;
@@ -175,7 +182,7 @@ html.invitation-locked body {
 }
 
 /* The arch: the shape that carries the theme. */
-[data-theme='mariage-terracotta-bloom'] .tb-arch-photo {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-arch-photo {
   background: linear-gradient(170deg, #fdf5e8, var(--sand));
   padding: 5% 5% 14%;
   border-radius: 50% 50% 14px 14px / 34% 34% 14px 14px;
@@ -183,19 +190,19 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-photo-wrap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-photo-wrap {
   position: relative;
   display: block;
   border-radius: 8px;
   overflow: hidden;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-photo-arch {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-photo-arch {
   border-radius: 50% 50% 6px 6px / 40% 40% 6px 6px;
 }
 
 /* Warm sepia, never black and white. */
-[data-theme='mariage-terracotta-bloom'] .tb-photo {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-photo {
   aspect-ratio: 1 / 1.05;
   position: relative;
   display: block;
@@ -205,8 +212,8 @@ html.invitation-locked body {
   background: #e0c7a8;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-photo-wrap::after,
-[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img::after {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-photo-wrap::after,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -218,7 +225,7 @@ html.invitation-locked body {
 }
 
 /* Washi tape: two-tone, slightly torn at both ends. */
-[data-theme='mariage-terracotta-bloom'] .tb-tape::before {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tape::before {
   content: '';
   position: absolute;
   top: -4%;
@@ -238,7 +245,7 @@ html.invitation-locked body {
 }
 
 /* Two hand-torn edges, used alternately so no two papers match. */
-[data-theme='mariage-terracotta-bloom'] .tb-torn {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-torn {
   clip-path: polygon(
     0 4%,
     9% 1%,
@@ -261,7 +268,7 @@ html.invitation-locked body {
   );
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-torn-b {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-torn-b {
   clip-path: polygon(
     0 2%,
     14% 0,
@@ -285,12 +292,12 @@ html.invitation-locked body {
 }
 
 /* Hand-cut paper: straight-ish, with nicked corners. */
-[data-theme='mariage-terracotta-bloom'] .tb-cut {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-cut {
   clip-path: polygon(0 5%, 5% 0, 97% 2%, 100% 9%, 99% 95%, 94% 100%, 4% 98%, 0 91%);
 }
 
 /* Perforated stamp: the perforation is a CSS mask, the motif is the SVG. */
-[data-theme='mariage-terracotta-bloom'] .tb-stamp {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp {
   display: block;
   background: #fbf3e4;
   padding: 4px;
@@ -302,7 +309,7 @@ html.invitation-locked body {
     radial-gradient(circle, #0000 2px, #000 2.5px) -4px -4px / 8px 8px;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-in {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-in {
   aspect-ratio: 0.8;
   background: var(--accent);
   display: grid;
@@ -311,12 +318,12 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-in svg {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-in svg {
   width: 62%;
   height: 84%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamp i {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp i {
   position: absolute;
   right: 8%;
   bottom: 4%;
@@ -326,18 +333,18 @@ html.invitation-locked body {
   color: rgb(255 248 236 / 90%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-eucalyptus .tb-stamp-in {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-eucalyptus .tb-stamp-in {
   background: #e3d3b6;
 }
 
 /* Pale sage, so the sage arch and the clay sun both read on it. */
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-sun .tb-stamp-in {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-sun .tb-stamp-in {
   background: color-mix(in srgb, var(--seal) 42%, #fff);
 }
 
 /* The two light stamps need a dark value, the clay one a light value. */
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-eucalyptus i,
-[data-theme='mariage-terracotta-bloom'] .tb-stamp-sun i {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-eucalyptus i,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamp-sun i {
   color: color-mix(in srgb, var(--ink) 80%, transparent);
 }
 
@@ -345,7 +352,7 @@ html.invitation-locked body {
 /* Intro — the envelope                                             */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-intro {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-intro {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -356,7 +363,7 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-kicker {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-kicker {
   font-family: var(--script);
   font-size: clamp(32px, 8.4vw, 50px);
   line-height: 1.15;
@@ -366,11 +373,11 @@ html.invitation-locked body {
   transition: opacity 0.5s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-opened .tb-kicker {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-opened .tb-kicker {
   opacity: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-env-wrap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-env-wrap {
   position: relative;
   width: min(82vw, 440px);
   aspect-ratio: 1.45;
@@ -380,13 +387,13 @@ html.invitation-locked body {
   -webkit-tap-highlight-color: transparent;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-face {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-face {
   position: absolute;
   inset: 0;
   border-radius: 4px;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-front {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-front {
   background: linear-gradient(
     165deg,
     color-mix(in srgb, var(--env) 88%, #fff) 0%,
@@ -397,7 +404,7 @@ html.invitation-locked body {
   box-shadow: 0 22px 40px -14px rgb(90 45 25 / 45%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-front::after {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-front::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -406,7 +413,7 @@ html.invitation-locked body {
   mix-blend-mode: multiply;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamps {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamps {
   position: absolute;
   right: 5%;
   top: 7%;
@@ -416,15 +423,15 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamps .tb-stamp {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamps .tb-stamp {
   flex: 1;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-stamps .tb-stamp-sun {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-stamps .tb-stamp-sun {
   transform: rotate(4deg) translateY(6%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-postmark {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postmark {
   position: absolute;
   right: 25%;
   top: 13%;
@@ -433,7 +440,7 @@ html.invitation-locked body {
   z-index: 2;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-addr {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-addr {
   position: absolute;
   left: 8%;
   bottom: 16%;
@@ -442,13 +449,13 @@ html.invitation-locked body {
   text-align: left;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-addr .tb-script {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-addr .tb-script {
   font-size: 13cqw;
   line-height: 1;
   display: block;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-addr .tb-caps {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-addr .tb-caps {
   font-family: var(--body);
   font-size: 3.1cqw;
   letter-spacing: 0.42em;
@@ -457,7 +464,7 @@ html.invitation-locked body {
   opacity: 0.85;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-lay {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-lay {
   position: absolute;
   width: 16%;
   left: 50%;
@@ -468,12 +475,12 @@ html.invitation-locked body {
   z-index: 1;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-back {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-back {
   transform: scaleX(0);
 }
 
 /* Patterned liner: arch dots and thin stripes on cream. */
-[data-theme='mariage-terracotta-bloom'] .tb-liner {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-liner {
   position: absolute;
   inset: 0;
   border-radius: 4px;
@@ -495,7 +502,7 @@ html.invitation-locked body {
   box-shadow: 0 22px 40px -14px rgb(90 45 25 / 45%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-pocket {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-pocket {
   position: absolute;
   inset: 0;
   z-index: 4;
@@ -506,7 +513,7 @@ html.invitation-locked body {
     linear-gradient(20deg, rgb(70 30 15 / 26%), transparent 55%), var(--env);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-flap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-flap {
   position: absolute;
   left: 0;
   top: 0;
@@ -519,7 +526,7 @@ html.invitation-locked body {
 }
 
 /* Sage wax seal with a pressed sun. */
-[data-theme='mariage-terracotta-bloom'] .tb-seal {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-seal {
   position: absolute;
   left: 50%;
   top: 56%;
@@ -545,7 +552,7 @@ html.invitation-locked body {
 }
 
 /* The arch card that rises out of the envelope. */
-[data-theme='mariage-terracotta-bloom'] .tb-card {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-card {
   position: absolute;
   left: 11%;
   width: 78%;
@@ -559,7 +566,7 @@ html.invitation-locked body {
   padding: 3.5%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-card-in {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-card-in {
   height: 100%;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
   border-radius: 50% 50% 4px 4px / 26% 26% 4px 4px;
@@ -572,7 +579,7 @@ html.invitation-locked body {
   gap: 0.4cqw;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-c1 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-c1 {
   font-family: var(--body);
   text-transform: uppercase;
   letter-spacing: 0.34em;
@@ -582,7 +589,7 @@ html.invitation-locked body {
   text-indent: 0.34em;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-c2 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-c2 {
   font-family: var(--display);
   font-weight: 500;
   font-size: 11cqw;
@@ -591,7 +598,7 @@ html.invitation-locked body {
   margin: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-c3 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-c3 {
   font-family: var(--script);
   font-size: 6.6cqw;
   color: var(--stem);
@@ -599,7 +606,7 @@ html.invitation-locked body {
   margin: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-snap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-snap {
   position: absolute;
   bottom: 14%;
   width: 38%;
@@ -607,41 +614,41 @@ html.invitation-locked body {
   padding: 5% 5% 13%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-p1 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-p1 {
   left: 6%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-p2 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-env-wrap .tb-p2 {
   right: 6%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tuck {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tuck {
   position: absolute;
   z-index: 5;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tuck1 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tuck1 {
   right: -12%;
   top: -16%;
   width: 34%;
   transform-origin: 20% 90%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tuck2 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tuck2 {
   left: -10%;
   top: 12%;
   width: 26%;
   transform-origin: 80% 80%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tuck svg {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tuck svg {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-hint {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-hint {
   margin: 0;
   color: var(--muted);
   text-align: center;
@@ -650,11 +657,11 @@ html.invitation-locked body {
   transition: opacity 0.4s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-opened .tb-hint {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-opened .tb-hint {
   opacity: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-cue {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-cue {
   position: absolute;
   bottom: calc(1.2rem + env(safe-area-inset-bottom, 0));
   left: 50%;
@@ -672,7 +679,7 @@ html.invitation-locked body {
   pointer-events: none;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-cue span {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-cue span {
   width: 1px;
   height: 38px;
   background: linear-gradient(var(--accent), transparent);
@@ -700,12 +707,12 @@ html.invitation-locked body {
   }
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-ready .tb-cue {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-intro.tb-ready .tb-cue {
   opacity: 1;
 }
 
 /* "Open" escape hatch, always visible in the editor preview. */
-[data-theme='mariage-terracotta-bloom'] .tb-skip {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-skip {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -724,12 +731,12 @@ html.invitation-locked body {
 /* Scrolling chapters                                               */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-chapter {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-chapter {
   position: relative;
   height: var(--len, 380vh);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-sticky {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-sticky {
   position: sticky;
   top: 0;
   height: 100svh;
@@ -738,17 +745,17 @@ html.invitation-locked body {
   grid-template-rows: minmax(0, 1fr) auto;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-board {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-board {
   position: relative;
   margin: 3svh 4vw 0;
   container-type: size;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-text {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-text {
   padding: 1rem 7vw calc(2.2rem + env(safe-area-inset-bottom, 0));
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-ch-title {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-ch-title {
   font-family: var(--script);
   font-weight: 400;
   color: var(--accent);
@@ -757,11 +764,11 @@ html.invitation-locked body {
   margin: 0 0 0.4rem;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-lines {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-lines {
   display: grid;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-line {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-line {
   grid-area: 1 / 1;
   margin: 0;
   font-size: clamp(19px, 4.9vw, 26px);
@@ -776,26 +783,26 @@ html.invitation-locked body {
     filter 0.6s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-line.on {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-line.on {
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-line.past {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-line.past {
   opacity: 0;
   transform: translateY(-14px);
   filter: blur(5px);
 }
 
 @media (min-width: 820px) {
-  [data-theme='mariage-terracotta-bloom'] .tb-sticky {
+  .invitation[data-theme='mariage-terracotta-bloom'] .tb-sticky {
     grid-template-rows: 1fr;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
   }
 
-  [data-theme='mariage-terracotta-bloom'] .tb-board {
+  .invitation[data-theme='mariage-terracotta-bloom'] .tb-board {
     height: 84svh;
     /*
      * Capping the width keeps the board's proportions close to the portrait
@@ -807,13 +814,13 @@ html.invitation-locked body {
     margin: 0 0 0 4vw;
   }
 
-  [data-theme='mariage-terracotta-bloom'] .tb-text {
+  .invitation[data-theme='mariage-terracotta-bloom'] .tb-text {
     padding: 0 6vw 0 4vw;
   }
 }
 
 /* A piece of the collage. `--from` is where it flies in from, `--to` its rest. */
-[data-theme='mariage-terracotta-bloom'] .tb-it {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-it {
   position: absolute;
   opacity: 0;
   transform: var(--from, translateY(40px));
@@ -823,30 +830,30 @@ html.invitation-locked body {
   will-change: transform;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-it.on {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-it.on {
   opacity: 1;
   transform: var(--to, none);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-shadow {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-shadow {
   filter: drop-shadow(0 12px 18px rgb(90 50 30 / 30%));
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-it svg {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-it svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-text .tb-it {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-text .tb-it {
   position: static;
 }
 
 /* ---- Chapter 1: the story ---- */
 
 /* The keepsake, printed as a bar/table card. */
-[data-theme='mariage-terracotta-bloom'] .tb-barcard {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard {
   background: linear-gradient(170deg, #fdf6ea, var(--paper));
   color: var(--paper-ink);
   border-radius: 10px;
@@ -856,7 +863,7 @@ html.invitation-locked body {
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard-rule {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard-rule {
   position: absolute;
   left: 6%;
   right: 6%;
@@ -869,7 +876,7 @@ html.invitation-locked body {
   );
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard-title {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard-title {
   font-family: var(--display);
   font-weight: 500;
   font-size: min(5.6cqw, 30px);
@@ -879,18 +886,18 @@ html.invitation-locked body {
   color: var(--accent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard-grid {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   gap: 5%;
   align-items: end;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard-grid div:last-child {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard-grid div:last-child {
   text-align: right;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard small {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard small {
   font-size: min(2.7cqw, 13px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -898,7 +905,7 @@ html.invitation-locked body {
   display: block;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-barcard b {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-barcard b {
   font-family: var(--display);
   font-weight: 500;
   font-size: min(3.2cqw, 17px);
@@ -906,7 +913,7 @@ html.invitation-locked body {
   line-height: 1.2;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-note {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-note {
   background: var(--kraft);
   background-image: var(--fiber), linear-gradient(165deg, #e0c197, var(--kraft));
   color: #4a3222;
@@ -922,7 +929,7 @@ html.invitation-locked body {
 /* ---- Chapter 2: the date ---- */
 
 /* The day, inside a terracotta arch. */
-[data-theme='mariage-terracotta-bloom'] .tb-arch-card {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-arch-card {
   display: grid;
   place-items: center;
   border-radius: 50% 50% 10px 10px / 40% 40% 10px 10px;
@@ -931,19 +938,19 @@ html.invitation-locked body {
   line-height: 1;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-arch-card.tb-d1 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-arch-card.tb-d1 {
   background: linear-gradient(170deg, color-mix(in srgb, var(--env) 88%, #fff), var(--env-2));
   color: var(--env-ink);
   box-shadow: inset 0 0 0 1.4cqw color-mix(in srgb, var(--env-2) 70%, transparent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-arch-card b {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-arch-card b {
   font-weight: 500;
   font-size: min(22cqw, 22cqh);
 }
 
 /* Month and year, on torn slips. */
-[data-theme='mariage-terracotta-bloom'] .tb-slip {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-slip {
   display: grid;
   place-items: center;
   font-family: var(--display);
@@ -951,34 +958,34 @@ html.invitation-locked body {
   padding: 9% 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-slip.tb-d2 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-slip.tb-d2 {
   background: linear-gradient(165deg, #fdf5e8, var(--sand));
   background-image: var(--fiber), linear-gradient(165deg, #fdf5e8, var(--sand));
   color: var(--paper-ink);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-slip.tb-d3 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-slip.tb-d3 {
   background: linear-gradient(165deg, #e6ebd8, var(--sage-paper));
   color: #3a4430;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-slip b {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-slip b {
   font-weight: 400;
   font-size: min(21cqw, 21cqh);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-reveal {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-reveal {
   clip-path: inset(0 100% 0 0);
   transition:
     clip-path 1.4s cubic-bezier(0.6, 0, 0.2, 1),
     opacity 0.2s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-reveal.on {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-reveal.on {
   clip-path: inset(0 -10% 0 0);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-bigscript {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-bigscript {
   font-family: var(--script);
   font-size: min(13cqw, 13cqh);
   line-height: 1.15;
@@ -988,14 +995,14 @@ html.invitation-locked body {
 }
 
 /* The countdown, on four arched tiles. */
-[data-theme='mariage-terracotta-bloom'] .tb-count {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-count {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 2cqw;
   text-align: center;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tile {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tile {
   min-width: 0;
   border-radius: 50% 50% 8px 8px / 30% 30% 8px 8px;
   padding: 4cqw 1cqw 2.6cqw;
@@ -1003,16 +1010,16 @@ html.invitation-locked body {
   box-shadow: 0 6px 14px -8px rgb(90 50 30 / 45%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tile:nth-child(2n) {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tile:nth-child(2n) {
   background: linear-gradient(170deg, #e8eddc, var(--sage-paper));
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tile:nth-child(3) {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tile:nth-child(3) {
   background: linear-gradient(170deg, color-mix(in srgb, var(--env) 78%, #fff), var(--env));
   color: var(--env-ink);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-count b {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-count b {
   display: block;
   font-family: var(--display);
   font-weight: 500;
@@ -1021,7 +1028,7 @@ html.invitation-locked body {
   font-variant-numeric: tabular-nums;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-count small {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-count small {
   font-size: min(3cqw, 15px);
   letter-spacing: 0.1em;
   text-transform: lowercase;
@@ -1030,7 +1037,7 @@ html.invitation-locked body {
 
 /* ---- Chapter 3: the programme ---- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog {
   background: linear-gradient(165deg, #fdf6ea, var(--paper));
   color: var(--paper-ink);
   padding: 5% 6%;
@@ -1040,7 +1047,7 @@ html.invitation-locked body {
   gap: 5%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog-hour {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog-hour {
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--env);
@@ -1051,18 +1058,18 @@ html.invitation-locked body {
   padding: 5%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog-hour time {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog-hour time {
   font-family: var(--display);
   font-weight: 500;
   font-size: min(3.8cqw, 19px);
   line-height: 1.05;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog-body {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog-body {
   display: block;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog strong {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog strong {
   display: block;
   font-family: var(--display);
   font-weight: 500;
@@ -1070,7 +1077,7 @@ html.invitation-locked body {
   line-height: 1.15;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog em {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog em {
   font-family: var(--script);
   font-style: normal;
   color: var(--accent);
@@ -1079,30 +1086,30 @@ html.invitation-locked body {
   display: block;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay {
   background: linear-gradient(165deg, color-mix(in srgb, var(--env) 88%, #fff), var(--env-2));
   color: var(--env-ink);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay .tb-prog-hour {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay .tb-prog-hour {
   background: color-mix(in srgb, var(--env-ink) 88%, transparent);
   color: var(--env-2);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay em {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-clay em {
   color: color-mix(in srgb, var(--env-ink) 88%, transparent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sand {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sand {
   background-image: var(--fiber), linear-gradient(165deg, #f6e7cf, var(--sand));
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sage {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sage {
   background: linear-gradient(165deg, #e7edda, var(--sage-paper));
   color: #33402c;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sage .tb-prog-hour {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-prog.tb-sage .tb-prog-hour {
   background: var(--stem);
   color: #fbf7ec;
 }
@@ -1110,7 +1117,7 @@ html.invitation-locked body {
 /* ---- Chapter 4: the venue ---- */
 
 /* Vintage souvenir card: wide sand border, double rule, letterpressed name. */
-[data-theme='mariage-terracotta-bloom'] .tb-postcard {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard {
   background: linear-gradient(170deg, #fdf6ea, var(--sand));
   background-image: var(--fiber), linear-gradient(170deg, #fdf6ea, var(--sand));
   padding: 4.5% 4.5% 2%;
@@ -1118,7 +1125,7 @@ html.invitation-locked body {
   box-shadow: 0 16px 30px -12px rgb(90 50 30 / 45%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img {
   position: relative;
   aspect-ratio: 3 / 2;
   overflow: hidden;
@@ -1128,15 +1135,15 @@ html.invitation-locked body {
   filter: sepia(0.45) saturate(1.15) brightness(1.03);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img svg,
-[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img img {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img svg,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img span {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard .tb-img span {
   position: absolute;
   left: 5%;
   bottom: 4%;
@@ -1148,7 +1155,7 @@ html.invitation-locked body {
   text-shadow: 0 2px 8px rgb(70 35 15 / 55%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-postcard-foot {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-postcard-foot {
   margin: 3% 0 1%;
   text-align: center;
   font-family: var(--body);
@@ -1159,15 +1166,15 @@ html.invitation-locked body {
   color: var(--accent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-big-stamp {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-big-stamp {
   width: 100%;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-inkmark {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-inkmark {
   color: color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-btn {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-btn {
   display: inline-block;
   margin-top: 1.1rem;
   background: var(--accent);
@@ -1183,11 +1190,11 @@ html.invitation-locked body {
   letter-spacing: 0.06em;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-btn:hover {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-btn:hover {
   background: color-mix(in srgb, var(--accent) 85%, #000);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-btn[disabled] {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-btn[disabled] {
   opacity: 0.55;
   cursor: progress;
 }
@@ -1196,13 +1203,13 @@ html.invitation-locked body {
 /* Plain sections                                                   */
 /* ---------------------------------------------------------------- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-plain {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-plain {
   max-width: 640px;
   margin: 0 auto;
   padding: 12svh 7vw 6svh;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-plain h2 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-plain h2 {
   font-family: var(--script);
   font-weight: 400;
   color: var(--accent);
@@ -1212,13 +1219,13 @@ html.invitation-locked body {
   text-align: center;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tags {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tags {
   display: grid;
   gap: 1.6rem;
 }
 
 /* Kraft luggage tags with a punched eyelet. */
-[data-theme='mariage-terracotta-bloom'] .tb-tag {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag {
   background: linear-gradient(165deg, #e6c9a3, var(--kraft));
   background-image: var(--fiber), linear-gradient(165deg, #e6c9a3, var(--kraft));
   color: #402c1e;
@@ -1234,16 +1241,16 @@ html.invitation-locked body {
     transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tag:nth-child(even) {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag:nth-child(even) {
   transform: translateX(30px) rotate(2deg);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tag.on {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag.on {
   opacity: 1;
   transform: rotate(var(--r, 0deg));
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tag::before {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag::before {
   content: '';
   position: absolute;
   left: 1.15rem;
@@ -1256,7 +1263,7 @@ html.invitation-locked body {
   transform: translateY(-50%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tag h3 {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag h3 {
   font-family: var(--display);
   font-weight: 500;
   font-size: 1.28rem;
@@ -1264,14 +1271,14 @@ html.invitation-locked body {
   color: #55371f;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-tag p {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-tag p {
   margin: 0;
   color: #4c3421;
 }
 
 /* ---- RSVP ---- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp {
   background: linear-gradient(175deg, #fdf6ea, var(--paper));
   color: var(--paper-ink);
   padding: 2.6rem 1.7rem 2.2rem;
@@ -1280,7 +1287,7 @@ html.invitation-locked body {
   box-shadow: 0 20px 44px -22px rgb(90 50 30 / 50%);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp::before {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp::before {
   content: '';
   position: absolute;
   inset: 10px;
@@ -1289,21 +1296,21 @@ html.invitation-locked body {
   pointer-events: none;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp form {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp form {
   display: grid;
   gap: 1.1rem;
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp label {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp label {
   display: grid;
   gap: 0.25rem;
   font-size: 1rem;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp input,
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp select,
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp input,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp select,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea {
   width: 100%;
   border: 0;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
@@ -1313,49 +1320,49 @@ html.invitation-locked body {
   border-radius: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp input:focus,
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp select:focus,
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea:focus {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp input:focus,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp select:focus,
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea:focus {
   outline: none;
   border-bottom-color: var(--accent);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp textarea {
   min-height: 4.5rem;
   resize: vertical;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp fieldset {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp fieldset {
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp legend {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp legend {
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice {
   display: flex;
   gap: 0.6rem;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice label {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice label {
   flex: 1;
   cursor: pointer;
   display: block;
   position: relative;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice input {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice input {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice span {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice span {
   display: block;
   text-align: center;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
@@ -1366,19 +1373,19 @@ html.invitation-locked body {
   line-height: 1.2;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice input:checked + span {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice input:checked + span {
   background: var(--env);
   color: var(--env-ink);
   border-color: var(--env);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-choice input:focus-visible + span {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-choice input:focus-visible + span {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* Honeypot: off-screen, never announced, never tabbable. */
-[data-theme='mariage-terracotta-bloom'] .tb-trap {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-trap {
   position: absolute;
   left: -9999px;
   width: 1px;
@@ -1386,31 +1393,31 @@ html.invitation-locked body {
   overflow: hidden;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp .tb-btn {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp .tb-btn {
   justify-self: center;
   margin-top: 0.6rem;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-notice {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-notice {
   margin: 1.4rem 0 0;
   font-size: 0.8rem;
   line-height: 1.5;
   color: var(--muted);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-error {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-error {
   margin: 0;
   color: #9a3320;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-closed {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-closed {
   margin: 0;
   text-align: center;
   font-size: 1.1rem;
   color: var(--muted);
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-done-seal {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-done-seal {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1437,18 +1444,18 @@ html.invitation-locked body {
     opacity 0.3s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent .tb-done-seal {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent .tb-done-seal {
   transform: translate(-50%, -80%) scale(1);
   opacity: 1;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent form {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent form {
   opacity: 0.12;
   pointer-events: none;
   transition: opacity 0.6s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-thanks {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-thanks {
   position: absolute;
   left: 0;
   right: 0;
@@ -1460,25 +1467,25 @@ html.invitation-locked body {
   transition: opacity 0.6s 0.4s;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent .tb-thanks {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-rsvp.tb-sent .tb-thanks {
   opacity: 1;
 }
 
 /* ---- Signature ---- */
 
-[data-theme='mariage-terracotta-bloom'] .tb-sign {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-sign {
   text-align: center;
   padding: 10svh 1rem 16svh;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-sign .tb-script {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-sign .tb-script {
   font-size: clamp(52px, 14vw, 92px);
   line-height: 1.2;
   color: var(--accent);
   display: block;
 }
 
-[data-theme='mariage-terracotta-bloom'] .tb-sign p {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-sign p {
   margin: 0.6rem 0 0;
   color: var(--muted);
   letter-spacing: 0.1em;
@@ -1491,7 +1498,7 @@ html.invitation-locked body {
  * every heading of the invitation is centred, so a bar across the top would sit
  * on top of them.
  */
-[data-theme='mariage-terracotta-bloom'] .tb-demo-banner {
+.invitation[data-theme='mariage-terracotta-bloom'] .tb-demo-banner {
   position: fixed;
   top: calc(0.6rem + env(safe-area-inset-top, 0));
   left: 0.6rem;
@@ -1517,11 +1524,11 @@ html.invitation-locked body {
  * block, every piece is simply there, and the sentences stack instead of
  * replacing one another. Nothing moves, nothing is hidden, nothing is locked.
  */
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-chapter {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-chapter {
   height: auto;
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-sticky {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-sticky {
   position: static;
   height: auto;
   overflow: visible;
@@ -1534,40 +1541,40 @@ html.invitation-locked body {
 }
 
 @media (min-width: 820px) {
-  [data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-sticky {
+  .invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-sticky {
     grid-template-rows: 1fr;
   }
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-line {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-line {
   grid-area: auto;
   opacity: 1;
   transform: none;
   filter: none;
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-lines {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-lines {
   gap: 0.7rem;
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-it,
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-tag {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-it,
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-tag {
   opacity: 1;
   transform: var(--to, none);
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-reveal {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-reveal {
   clip-path: none;
 }
 
-[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-cue {
+.invitation[data-theme='mariage-terracotta-bloom'][data-reduced='true'] .tb-cue {
   display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-theme='mariage-terracotta-bloom'] *,
-  [data-theme='mariage-terracotta-bloom'] *::before,
-  [data-theme='mariage-terracotta-bloom'] *::after {
+  .invitation[data-theme='mariage-terracotta-bloom'] *,
+  .invitation[data-theme='mariage-terracotta-bloom'] *::before,
+  .invitation[data-theme='mariage-terracotta-bloom'] *::after {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
     animation: none !important;

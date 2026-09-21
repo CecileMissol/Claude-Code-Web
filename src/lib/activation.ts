@@ -5,7 +5,7 @@ import { defaultContent } from '@/content/defaults';
 import { adminEmails } from '@/lib/env';
 import { sendMail } from '@/lib/mail';
 import { getThemeIdBySlug } from '@/db/seed';
-import { isThemeSlug, loadTheme } from '@/themes/registry';
+import { isThemeSlug, loadThemeManifest } from '@/themes/manifests';
 import {
   createActivation,
   createInvitation,
@@ -91,8 +91,8 @@ export async function submitActivationRequest(
     await createActivation(db, { etsyOrderId: input.etsyOrderId, email: input.email, themeId });
   }
 
-  const theme = await loadTheme(input.themeSlug);
-  const themeName = theme?.manifest.name.en ?? input.themeSlug;
+  const manifest = await loadThemeManifest(input.themeSlug);
+  const themeName = manifest?.name.en ?? input.themeSlug;
 
   await Promise.all([
     sendMail(activationReceivedEmail({ to: input.email, orderId: input.etsyOrderId, themeName })),
