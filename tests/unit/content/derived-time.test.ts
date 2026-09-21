@@ -113,18 +113,21 @@ describe('zonedTimeToUtc', () => {
 describe('eventInstant', () => {
   it('uses the zone stored in the content, not the runtime zone', () => {
     expect(
-      eventInstant(withEvent({ date: '2027-06-12', time: '14:30', timezone: 'Europe/Paris' }))
-        .toISOString(),
+      eventInstant(
+        withEvent({ date: '2027-06-12', time: '14:30', timezone: 'Europe/Paris' }),
+      ).toISOString(),
     ).toBe('2027-06-12T12:30:00.000Z');
 
     expect(
-      eventInstant(withEvent({ date: '2027-06-12', time: '14:30', timezone: 'America/New_York' }))
-        .toISOString(),
+      eventInstant(
+        withEvent({ date: '2027-06-12', time: '14:30', timezone: 'America/New_York' }),
+      ).toISOString(),
     ).toBe('2027-06-12T18:30:00.000Z');
 
     expect(
-      eventInstant(withEvent({ date: '2027-06-12', time: '14:30', timezone: 'Pacific/Auckland' }))
-        .toISOString(),
+      eventInstant(
+        withEvent({ date: '2027-06-12', time: '14:30', timezone: 'Pacific/Auckland' }),
+      ).toISOString(),
     ).toBe('2027-06-12T02:30:00.000Z');
   });
 

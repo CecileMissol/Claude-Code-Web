@@ -123,7 +123,9 @@ export function zonedTimeToUtc(date: string, time: string, timeZone: string): Da
   const [year, month, day] = date.split('-').map((part) => Number.parseInt(part, 10));
   const [hour, minute] = time.split(':').map((part) => Number.parseInt(part, 10));
 
-  if ([year, month, day, hour, minute].some((value) => value === undefined || Number.isNaN(value))) {
+  if (
+    [year, month, day, hour, minute].some((value) => value === undefined || Number.isNaN(value))
+  ) {
     return new Date(`${date}T${time}:00`);
   }
 

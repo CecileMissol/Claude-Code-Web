@@ -8,7 +8,8 @@ réponses de ses invités.
 Documentation du projet : [`BRIEF.md`](BRIEF.md),
 [`docs/phase-1-cadrage.md`](docs/phase-1-cadrage.md) (spécification),
 [`docs/phase-2-socle.md`](docs/phase-2-socle.md) (ce qui est réellement en
-place).
+place), [`docs/phase-8-reconciliation.md`](docs/phase-8-reconciliation.md)
+(doublons refermés, points encore ouverts).
 
 ---
 
@@ -40,11 +41,11 @@ pnpm dev               # http://localhost:3000
 | `pnpm lint` / `pnpm lint:fix`       | ESLint                                                                                |
 | `pnpm format` / `pnpm format:check` | Prettier                                                                              |
 | `pnpm test`                         | tests unitaires Vitest                                                                |
-| `pnpm test:e2e`                     | tests Playwright (migrations + seed, puis `next dev` sur `localhost:3110`)             |
+| `pnpm test:e2e`                     | tests Playwright (migrations + seed, puis `next dev` sur `localhost:3110`)            |
 | `pnpm cf-typegen`                   | régénère `cloudflare-env.d.ts`                                                        |
 | `pnpm db:generate`                  | génère une migration SQL dans `drizzle/`                                              |
 | `pnpm db:migrate:local` / `:remote` | applique les migrations à D1                                                          |
-| `pnpm db:seed:local`                | insère les thèmes du registre dans la base locale (idempotent)                         |
+| `pnpm db:seed:local`                | insère les thèmes du registre dans la base locale (idempotent)                        |
 
 ## 3. Variables d'environnement
 
@@ -52,19 +53,19 @@ Toutes les variables sont lues **au même endroit**, `src/lib/env.ts`, qui les
 valide avec Zod au premier accès (`getEnv()`). Aucun autre module ne lit
 `process.env`. Voir [`.env.example`](.env.example) pour la liste commentée.
 
-| Variable | Rôle | Où la mettre |
-| -------- | ---- | ------------ |
-| `APP_URL` | URL publique, utilisée par Better Auth et les liens magiques | `vars` de `wrangler.jsonc` |
-| `BETTER_AUTH_SECRET` | signature des sessions et des tickets d'upload R2 | **secret** (`wrangler secret put`) |
-| `MAIL_DRIVER` | `console` (dev) ou `resend` (prod) | `vars` |
-| `MAIL_FROM` | expéditeur des e-mails | `vars` |
-| `RESEND_API_KEY` | clé Resend | **secret** |
-| `R2_PUBLIC_BASE_URL` | domaine ou route servant les photos | `vars` |
-| `ADMIN_EMAILS` | e-mails autorisés sur `/admin`, séparés par des virgules | `vars` |
-| `RSVP_IP_SALT` | sel de hachage des IP des invités ; à défaut, `BETTER_AUTH_SECRET` | **secret**, facultatif |
-| `CRON_SECRET` | protège `POST /api/cron/retention` ; moins de 16 caractères = non configuré, la route refuse tout | **secret** |
-| `ALLOW_FREE_DRAFTS` | `true` autorise tout compte connecté à créer un brouillon depuis `/app` (dev). Faux par défaut : un acheteur reçoit son brouillon par l'activation, un administrateur peut toujours en créer un | `vars`, facultatif |
-| `LEGAL_*` | identité de l'éditeur affichée sur `/legal/*` (8 variables) ; une variable absente laisse son placeholder `[[…]]` visible | `vars`, facultatif |
+| Variable             | Rôle                                                                                                                                                                                            | Où la mettre                       |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `APP_URL`            | URL publique, utilisée par Better Auth et les liens magiques                                                                                                                                    | `vars` de `wrangler.jsonc`         |
+| `BETTER_AUTH_SECRET` | signature des sessions et des tickets d'upload R2                                                                                                                                               | **secret** (`wrangler secret put`) |
+| `MAIL_DRIVER`        | `console` (dev) ou `resend` (prod)                                                                                                                                                              | `vars`                             |
+| `MAIL_FROM`          | expéditeur des e-mails                                                                                                                                                                          | `vars`                             |
+| `RESEND_API_KEY`     | clé Resend                                                                                                                                                                                      | **secret**                         |
+| `R2_PUBLIC_BASE_URL` | domaine ou route servant les photos                                                                                                                                                             | `vars`                             |
+| `ADMIN_EMAILS`       | e-mails autorisés sur `/admin`, séparés par des virgules                                                                                                                                        | `vars`                             |
+| `RSVP_IP_SALT`       | sel de hachage des IP des invités ; à défaut, `BETTER_AUTH_SECRET`                                                                                                                              | **secret**, facultatif             |
+| `CRON_SECRET`        | protège `POST /api/cron/retention` ; moins de 16 caractères = non configuré, la route refuse tout                                                                                               | **secret**                         |
+| `ALLOW_FREE_DRAFTS`  | `true` autorise tout compte connecté à créer un brouillon depuis `/app` (dev). Faux par défaut : un acheteur reçoit son brouillon par l'activation, un administrateur peut toujours en créer un | `vars`, facultatif                 |
+| `LEGAL_*`            | identité de l'éditeur affichée sur `/legal/*` (8 variables) ; une variable absente laisse son placeholder `[[…]]` visible                                                                       | `vars`, facultatif                 |
 
 Les _bindings_ (D1 `DB`, R2 `PHOTOS`, KV `CACHE` et `NEXT_INC_CACHE_KV`, rate
 limiter `RATE_LIMITER`) ne sont pas des variables d'environnement : ils sont

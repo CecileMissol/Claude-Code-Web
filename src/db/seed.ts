@@ -144,7 +144,11 @@ export async function getThemeIdBySlug(db: Database, slug: string): Promise<stri
   const { eq } = await import('drizzle-orm');
   const { themes } = await import('./schema');
 
-  const found = await db.select({ id: themes.id }).from(themes).where(eq(themes.slug, slug)).limit(1);
+  const found = await db
+    .select({ id: themes.id })
+    .from(themes)
+    .where(eq(themes.slug, slug))
+    .limit(1);
   if (found[0]) return found[0].id;
 
   const seeded = await seedThemes(db);
