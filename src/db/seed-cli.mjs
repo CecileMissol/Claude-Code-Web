@@ -5,8 +5,8 @@
  * Plain JavaScript on purpose: it runs with bare `node`, which strips the types
  * of the `.ts` files it imports (Node >= 22.18) but resolves neither the `@/`
  * alias nor extension-less specifiers. Only modules whose runtime imports are
- * absent or explicit are loaded here: `registry.ts` (its theme imports are lazy
- * arrow functions) and each `manifest.ts` (pure data).
+ * absent or explicit are loaded here: `manifests.ts` (its only import is a type
+ * import) and each `manifest.ts` (pure data).
  *
  * The rows are written through `wrangler d1 execute --local`, the same tool
  * that applies the migrations.
@@ -18,7 +18,7 @@ import path from 'node:path';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
-const { THEME_SLUGS } = await import(path.join(here, '../themes/registry.ts'));
+const { THEME_SLUGS } = await import(path.join(here, '../themes/manifests.ts'));
 const { themeSeedRow, themeSeedSql } = await import(path.join(here, './seed.ts'));
 
 const rows = [];
