@@ -8,8 +8,23 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/fraunces':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource-variable/jost':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource-variable/outfit':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/alex-brush':
+        specifier: 5.3.0
+        version: 5.3.0
       '@fontsource/allura':
         specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/beau-rivage':
+        specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/bodoni-moda':
         specifier: 5.3.0
@@ -17,10 +32,22 @@ importers:
       '@fontsource/cormorant-garamond':
         specifier: 5.3.0
         version: 5.3.0
+      '@fontsource/miss-fajardose':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@fontsource/mrs-saint-delafield':
         specifier: 5.3.0
         version: 5.3.0
       '@fontsource/pinyon-script':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/playball':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/windsong':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/yellowtail':
         specifier: 5.3.0
         version: 5.3.0
       '@opennextjs/cloudflare':
@@ -1379,8 +1406,23 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@fontsource-variable/fraunces@5.3.0':
+    resolution: {integrity: sha512-9BYGySn4AHEJdgp9Z28tQ3X+laJMEOITXkQarZXeloWQZDq5oOvXJ3kDA8c7MGIfpogIaZfjrQBqmda8POOCKA==}
+
+  '@fontsource-variable/jost@5.3.0':
+    resolution: {integrity: sha512-9FS8iBMJnfyPqQOi9dfMjSwYBIWd0kBD3/jl8VvtbIMY2pK+CSp3oAaTLS1V60rDoM7AfyPvuT+IUfJfGeCTKg==}
+
+  '@fontsource-variable/outfit@5.3.0':
+    resolution: {integrity: sha512-fPb5XnYK0k7SbR++HEmm4+ZqDszmLKQ+sPRUr8oQ/KNC0vy6r6hazJFe8iYozv4cqlHbvJ/JECkJWrfDodUMVQ==}
+
+  '@fontsource/alex-brush@5.3.0':
+    resolution: {integrity: sha512-n3m2aZxsc8r748fBiYqfiVJ5l5iJe7ui5KPh2oBz07jsbr7zKynZ6F5MgXbR1iV8J0hPetmp6g5OwKYRZCDUcw==}
+
   '@fontsource/allura@5.3.0':
     resolution: {integrity: sha512-UqloNNVxl03+psvtIXCYuo7/v2mD9XmX2HGiczhK6NmDDwbFJJDjrbHZ5tpNuVXKsMEQPc46tZu3hewYN82/YA==}
+
+  '@fontsource/beau-rivage@5.3.0':
+    resolution: {integrity: sha512-Sn0mZLAfDsc1xXZvqu4+RhlmqzTwOKTdsvpz5eL3eqZMIwBMA7DHvJiaInv3JzVPRTtg1KROpnbomIMri9ptSQ==}
 
   '@fontsource/bodoni-moda@5.3.0':
     resolution: {integrity: sha512-Wt2XBCHivYxkTP3ydq/Ax+7VshwsOh/6ayA5om2t+yClCkGwLPj2Mi6OnyMANjyLcqDUWs4rlOHnc8SBLf6/pA==}
@@ -1388,11 +1430,23 @@ packages:
   '@fontsource/cormorant-garamond@5.3.0':
     resolution: {integrity: sha512-weuGsCirGVWBWqpt6YUp0yLThTe4G8YO45noq8wxeJCRvEpq5lFrxNMFSTxcyOyV5k5otzJ8guDzYegdYlcLMQ==}
 
+  '@fontsource/miss-fajardose@5.3.0':
+    resolution: {integrity: sha512-vC8reTJAxJ8KUB2zK5qVWU7R3bOc2XlEjUt7wVCt20+bhLU25LEmj9rcdHxQKNxjgfoR7xo2plulpsArjcWJcA==}
+
   '@fontsource/mrs-saint-delafield@5.3.0':
     resolution: {integrity: sha512-OH6pmSgyh8CqpiFmAxthdrlhreJj2jt49kk+NpEZ4UMRrSOcF7qxF1AT0QNxuVVCQWy4h5TOIvep7Hglenrtig==}
 
   '@fontsource/pinyon-script@5.3.0':
     resolution: {integrity: sha512-ilhy4l5apzyDkfuKb7PZBUT5Sf6nfxucdXT5TQ0wQDyWtDPlouLy1lQq3lMEPk1lPsHHVrd11EkPnEG8FqDgUA==}
+
+  '@fontsource/playball@5.3.0':
+    resolution: {integrity: sha512-NDRkbShTDmtNyOwVfMFoVWFha9rzm62vlqaPUzJSS0S++nF1Ih/X55CR/8nxrgvcswOYAJBSMvRVpgPiEbd6wg==}
+
+  '@fontsource/windsong@5.3.0':
+    resolution: {integrity: sha512-hp9NnGFIFQzMHTId0PIsYoTWqrlPiH3n2GNXUdvwV7D3sczT92zHNJt57o3/8RBxybU+vdHADNnO/iMuEs9BjA==}
+
+  '@fontsource/yellowtail@5.3.0':
+    resolution: {integrity: sha512-atz4CIdbP7otppxRaObJiygnkyJzIuLFpPRjWspXvXhBWLB0sk35cCu5r6gSkDomRtEWakJ8//bWbyBjJbilGg==}
 
   '@formatjs/fast-memoize@3.1.7':
     resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
@@ -6210,15 +6264,33 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
+  '@fontsource-variable/fraunces@5.3.0': {}
+
+  '@fontsource-variable/jost@5.3.0': {}
+
+  '@fontsource-variable/outfit@5.3.0': {}
+
+  '@fontsource/alex-brush@5.3.0': {}
+
   '@fontsource/allura@5.3.0': {}
+
+  '@fontsource/beau-rivage@5.3.0': {}
 
   '@fontsource/bodoni-moda@5.3.0': {}
 
   '@fontsource/cormorant-garamond@5.3.0': {}
 
+  '@fontsource/miss-fajardose@5.3.0': {}
+
   '@fontsource/mrs-saint-delafield@5.3.0': {}
 
   '@fontsource/pinyon-script@5.3.0': {}
+
+  '@fontsource/playball@5.3.0': {}
+
+  '@fontsource/windsong@5.3.0': {}
+
+  '@fontsource/yellowtail@5.3.0': {}
 
   '@formatjs/fast-memoize@3.1.7': {}
 

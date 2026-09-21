@@ -1,83 +1,21 @@
-import { eventInstant } from '@/content/derived';
+import { eventInstant, zoneOffsetMs } from '@/content/derived';
 import type { InvitationContent } from '@/content/schema';
 
 /**
- * Time-zone aware instant of the event.
+ * Time helpers for the countdown and the RSVP deadline.
  *
- * `eventInstant()` (src/content/derived.ts) builds `new Date('YYYY-MM-DDTHH:MM')`,
- * which JavaScript reads in the *visitor's* zone: a guest in Montréal would see
- * a countdown six hours off. Phase 1 §1.3.2 flags this. The countdown must be
- * anchored on `content.event.timezone`, so this module re-projects that naive
- * wall-clock time into the event's zone, and falls back on `eventInstant()` when
- * the zone is unknown to the platform.
- *
- * `src/content/derived.ts` belongs to the shared layer, so the correction lives
- * here in the theme rather than being patched in place.
+ * The wall-clock date + time stored in the content is turned into an absolute
+ * instant by `eventInstant()` (`src/content/derived.ts`), which reads it in
+ * `content.event.timezone`: the ceremony starts at 14:30 *where it happens*,
+ * whatever zone the guest is in. This module only re-exports that shared
+ * conversion so the theme keeps a single, stable entry point.
  */
 
-/**
- * Offset, in milliseconds, between UTC and `timeZone` at the given instant.
- * Positive east of Greenwich (Europe/Paris in summer → +7 200 000).
- */
-export function zoneOffsetMs(instant: Date, timeZone: string): number {
-  const format = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    hour12: false,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
+export { zoneOffsetMs };
 
-  const parts: Record<string, number> = {};
-  for (const part of format.formatToParts(instant)) {
-    if (part.type !== 'literal') parts[part.type] = Number(part.value);
-  }
-
-  // `hour` can come back as 24 for midnight with hour12:false on some engines.
-  const hour = (parts.hour ?? 0) % 24;
-
-  const asUtc = Date.UTC(
-    parts.year ?? 1970,
-    (parts.month ?? 1) - 1,
-    parts.day ?? 1,
-    hour,
-    parts.minute ?? 0,
-    parts.second ?? 0,
-  );
-
-  return asUtc - instant.getTime();
-}
-
-/**
- * The instant the event starts, read in the event's own time zone.
- *
- * Two passes are enough to land on the right side of a DST change: the first
- * guess uses the offset at the naive instant, the second uses the offset that
- * actually applies at the guessed instant.
- */
+/** The instant the event starts, read in the event's own time zone. */
 export function zonedEventInstant(content: InvitationContent): Date {
-  const [year, month, day] = content.event.date.split('-').map(Number);
-  const [hour, minute] = content.event.time.split(':').map(Number);
-
-  if (
-    [year, month, day, hour, minute].some((value) => value === undefined || Number.isNaN(value))
-  ) {
-    return eventInstant(content);
-  }
-
-  const wallClockUtc = Date.UTC(year as number, (month as number) - 1, day as number, hour, minute);
-
-  try {
-    let instant = wallClockUtc - zoneOffsetMs(new Date(wallClockUtc), content.event.timezone);
-    instant = wallClockUtc - zoneOffsetMs(new Date(instant), content.event.timezone);
-    return new Date(instant);
-  } catch {
-    // Unknown IANA zone: fall back on the shared helper rather than crash.
-    return eventInstant(content);
-  }
+  return eventInstant(content);
 }
 
 /** Milliseconds left before the event, floored at zero. */

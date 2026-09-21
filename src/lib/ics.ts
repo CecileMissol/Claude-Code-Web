@@ -1,5 +1,5 @@
 import type { InvitationContent } from '@/content/schema';
-import { longDate } from '@/content/derived';
+import { longDate, zoneOffsetMs, zonedTimeToUtc } from '@/content/derived';
 
 /**
  * iCalendar (RFC 5545) generation, written by hand: the format we need is a
@@ -18,51 +18,13 @@ export const DEFAULT_EVENT_HOURS = 8;
 /* Time zones                                                                 */
 /* -------------------------------------------------------------------------- */
 
-/** Offset of `instant` in `timeZone`, in milliseconds (positive east of UTC). */
-export function timeZoneOffsetMs(instant: Date, timeZone: string): number {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    hourCycle: 'h23',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  }).formatToParts(instant);
-
-  const read = (type: Intl.DateTimeFormatPartTypes): number => {
-    const part = parts.find((candidate) => candidate.type === type);
-    return part ? Number.parseInt(part.value, 10) : 0;
-  };
-
-  const asIfUtc = Date.UTC(
-    read('year'),
-    read('month') - 1,
-    read('day'),
-    read('hour') % 24,
-    read('minute'),
-    read('second'),
-  );
-
-  return asIfUtc - instant.getTime();
-}
-
 /**
- * Turns a wall-clock date/time in a given IANA zone into an absolute instant.
- * Two passes are enough to settle on the right side of a DST transition.
+ * Both helpers live in `src/content/derived.ts`, the shared layer: the theme's
+ * countdown and this export must agree on what instant the event starts at.
+ * They are re-exported here so the .ics module keeps its own entry point.
  */
-export function zonedTimeToUtc(date: string, time: string, timeZone: string): Date {
-  const [year = 0, month = 1, day = 1] = date.split('-').map((part) => Number.parseInt(part, 10));
-  const [hour = 0, minute = 0] = time.split(':').map((part) => Number.parseInt(part, 10));
-
-  const naive = Date.UTC(year, month - 1, day, hour, minute, 0);
-
-  let guess = naive - timeZoneOffsetMs(new Date(naive), timeZone);
-  guess = naive - timeZoneOffsetMs(new Date(guess), timeZone);
-
-  return new Date(guess);
-}
+export { zonedTimeToUtc };
+export const timeZoneOffsetMs = zoneOffsetMs;
 
 /* -------------------------------------------------------------------------- */
 /* Formatting                                                                 */
