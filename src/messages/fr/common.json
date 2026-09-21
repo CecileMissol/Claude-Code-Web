@@ -13,12 +13,21 @@
     "login": "Se connecter",
     "activate": "Activer un achat",
     "admin": "Admin",
-    "legal": "Mentions"
+    "legal": "Mentions",
+    "legalNotice": "Mentions légales",
+    "legalPrivacy": "Politique de confidentialité",
+    "legalTerms": "Conditions générales de vente"
   },
   "errors": {
     "notFound": "Page introuvable",
     "notFoundBody": "Ce lien ne mène nulle part.",
     "unexpected": "Une erreur est survenue.",
     "rateLimited": "Trop de tentatives. Réessayez dans un instant."
+  },
+  "consent": {
+    "title": "À propos de vos données personnelles",
+    "body": "Ce site utilise uniquement des cookies techniques (connexion, langue) et aucun traceur publicitaire.",
+    "link": "En savoir plus",
+    "dismiss": "Compris"
   }
 }

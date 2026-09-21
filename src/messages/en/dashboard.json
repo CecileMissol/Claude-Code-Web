@@ -4,6 +4,10 @@
   "empty": "You do not have any invitation yet.",
   "emptyCta": "Activate a purchase to create your first one.",
   "createdAt": "Created on {date}",
+  "updatedAt": "Edited on {date}",
+  "untitled": "Invitation without names",
+  "theme": "Theme",
+  "coupleNames": "{partner1} & {partner2}",
   "status": {
     "draft": "Draft",
     "published": "Published",
@@ -13,8 +17,13 @@
   "actions": {
     "edit": "Edit",
     "responses": "Responses",
-    "view": "Open the invitation"
+    "share": "Share",
+    "view": "Open the invitation",
+    "create": "Create an invitation",
+    "creating": "Creating…"
   },
+  "createHint": "While the Etsy activation is being finished, this button creates a draft on the “Black & ivory” theme.",
+  "unreadable": "This invitation could not be read.",
   "responses": {
     "title": "Responses",
     "intro": "Who is coming, and who sends their regrets."

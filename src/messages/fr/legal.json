@@ -1,6 +1,186 @@
 {
-  "notice": { "title": "Mentions légales" },
-  "privacy": { "title": "Politique de confidentialité" },
-  "terms": { "title": "Conditions générales de vente" },
-  "dataNotice": "Les informations saisies servent uniquement à afficher et gérer cette invitation."
+  "notice": {
+    "title": "Mentions légales",
+    "sections": [
+      {
+        "heading": "Éditeur",
+        "paragraphs": [
+          "Le présent site est édité par [[COMPANY_NAME]] ([[LEGAL_FORM]]), immatriculée sous le numéro SIREN [[SIREN]], dont le siège social est situé [[COMPANY_ADDRESS]].",
+          "Numéro de TVA intracommunautaire : [[VAT_NUMBER]].",
+          "Directeur de la publication : [[PUBLICATION_DIRECTOR]].",
+          "Contact : [[CONTACT_EMAIL]]."
+        ]
+      },
+      {
+        "heading": "Hébergement",
+        "paragraphs": [
+          "Le site et les invitations publiées sont hébergés par Cloudflare, Inc. (application exécutée sur Cloudflare Workers). Les données sont stockées dans une base de données Cloudflare D1 (paramétrée avec une préférence de localisation « Europe de l'Ouest », qui reste, en dehors d'une offre Entreprise dédiée, une indication technique et non une garantie contractuelle de résidence) et les photos dans un espace de stockage Cloudflare R2 dont la juridiction est fixée à l'Union européenne, garantie contractuellement par Cloudflare une fois le bucket créé.",
+          "Cloudflare, Inc. : 101 Townsend St, San Francisco, CA 94107, États-Unis. Voir la politique de confidentialité de Cloudflare : www.cloudflare.com/fr-fr/privacypolicy/."
+        ]
+      },
+      {
+        "heading": "Propriété intellectuelle",
+        "paragraphs": [
+          "La structure du site, son code, ses gabarits d'invitation, ses illustrations et sa charte graphique sont la propriété de [[COMPANY_NAME]] ou de ses partenaires, et protégés à ce titre par le droit de la propriété intellectuelle. Toute reproduction non autorisée, en dehors de l'usage strictement personnel des invitations publiées par les couples clients, est interdite.",
+          "Les textes, photographies et contenus que chaque couple saisit dans son invitation restent sa propriété ou celle des tiers qui les lui ont cédés ; il garantit disposer des droits nécessaires pour les publier et les partager avec ses invités."
+        ]
+      },
+      {
+        "heading": "Liens externes et vente sur Etsy",
+        "paragraphs": [
+          "L'accès au service se fait après l'achat, sur la boutique Etsy, d'un téléchargement numérique donnant le lien d'activation. Etsy Inc. est un site tiers indépendant, dont l'utilisation relève de ses propres conditions générales ; [[COMPANY_NAME]] n'est pas responsable du fonctionnement de la plateforme Etsy elle-même."
+        ]
+      },
+      {
+        "heading": "Droit applicable",
+        "paragraphs": [
+          "Le présent site est soumis au droit français. En cas de litige et à défaut de résolution amiable, les tribunaux français compétents seront seuls saisis."
+        ]
+      }
+    ]
+  },
+
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "sections": [
+      {
+        "heading": "Responsable de traitement",
+        "paragraphs": [
+          "Le responsable du traitement des données collectées via ce site est [[COMPANY_NAME]], [[COMPANY_ADDRESS]], joignable à [[CONTACT_EMAIL]] (délégué à la protection des données : [[DPO_EMAIL]]).",
+          "Pour les réponses de leurs invités (RSVP), les couples utilisateurs du service sont eux-mêmes responsables du traitement de ces données vis-à-vis de leurs invités : [[COMPANY_NAME]] agit alors en qualité de sous-traitant, pour le compte du couple, afin de collecter, afficher et exporter ces réponses."
+        ]
+      },
+      {
+        "heading": "Données collectées",
+        "paragraphs": [
+          "Activation de l'achat : numéro de commande Etsy et adresse e-mail saisis sur la page d'activation, afin de vérifier l'achat et de créer l'accès.",
+          "Compte et connexion : adresse e-mail (aucun mot de passe n'est utilisé ; la connexion se fait par lien magique à usage unique envoyé par e-mail).",
+          "Contenu de l'invitation : textes, dates, lieux et photographies que le couple saisit ou importe volontairement pour composer son invitation.",
+          "Réponses des invités (RSVP) : nom, adresse e-mail (facultative selon le paramétrage choisi par le couple), présence, nombre de personnes, régime alimentaire et message, ainsi qu'une empreinte technique non réversible de l'adresse IP utilisée pour limiter les envois abusifs (l'adresse IP en clair n'est jamais conservée).",
+          "Aucune donnée bancaire ou de paiement n'est jamais collectée sur ce site : le paiement de l'achat initial a lieu intégralement sur Etsy."
+        ]
+      },
+      {
+        "heading": "Finalités et bases légales",
+        "paragraphs": [
+          "Exécution du contrat conclu avec l'acheteur : vérification de l'achat, création et hébergement de l'invitation, envoi des liens de connexion et des notifications de service (article 6.1.b du RGPD).",
+          "Gestion des réponses RSVP pour le compte du couple, sur la base de l'exécution du service qu'il a lui-même mis en place pour ses invités (article 6.1.b et, pour la relation entre le couple et ses invités, intérêt légitime du couple à organiser son événement).",
+          "Sécurité et prévention des abus (limitation du nombre de tentatives par adresse IP, détection des demandes d'activation frauduleuses) : intérêt légitime (article 6.1.f)."
+        ]
+      },
+      {
+        "heading": "Destinataires des données",
+        "paragraphs": [
+          "Les données sont traitées par [[COMPANY_NAME]] et par les prestataires techniques suivants, en qualité de sous-traitants : Cloudflare, Inc. (hébergement de l'application, base de données D1 et stockage des photos R2) et Resend (Resend, Inc., envoi des e-mails transactionnels : lien de connexion, confirmations d'activation, notifications de réponse RSVP).",
+          "Ces données ne sont ni vendues, ni louées, ni utilisées à des fins publicitaires, et ne sont partagées avec aucun autre tiers en dehors des cas prévus par la loi."
+        ]
+      },
+      {
+        "heading": "Hébergement et transferts",
+        "paragraphs": [
+          "L'hébergement applicatif et le stockage des photographies (Cloudflare R2, juridiction Union européenne) sont assurés au sein de l'Union européenne. La base de données (Cloudflare D1) est configurée avec une préférence de localisation en Europe de l'Ouest ; il ne s'agit toutefois, à ce jour, que d'une indication technique et non d'une garantie contractuelle de résidence stricte hors offre Cloudflare Entreprise — cette nuance est indiquée ici en toute transparence.",
+          "Resend, prestataire d'envoi d'e-mails transactionnels, peut être amené à traiter les adresses e-mail des destinataires dans le cadre de l'acheminement des messages ; consultez sa politique de confidentialité pour le détail des garanties applicables aux transferts hors UE le cas échéant."
+        ]
+      },
+      {
+        "heading": "Durées de conservation",
+        "paragraphs": [
+          "Demandes d'activation refusées ou non confirmées : conservées 12 mois maximum, à des fins de preuve et de lutte contre les demandes abusives, puis supprimées.",
+          "Compte et invitation : conservés pendant la durée d'hébergement incluse dans l'achat (18 mois à compter de la publication), puis supprimés sauf renouvellement souscrit séparément par le couple.",
+          "Réponses des invités (RSVP) : conservées 6 mois après la date de l'événement renseignée par le couple, puis supprimées automatiquement, sauf suppression anticipée demandée par le couple.",
+          "Journal d'audit administrateur (validations et refus d'activation) : conservé 3 ans, à des fins de preuve et de sécurité du service."
+        ]
+      },
+      {
+        "heading": "Sécurité",
+        "paragraphs": [
+          "L'accès sans mot de passe (lien magique à usage unique et durée de vie limitée), le chiffrement des échanges (HTTPS), le hachage salé des adresses IP conservées à des fins anti-abus et le contrôle d'accès du back-office administrateur limitent les risques d'accès non autorisé. Aucun système n'étant infaillible, toute violation de données significative sera notifiée conformément aux articles 33 et 34 du RGPD."
+        ]
+      },
+      {
+        "heading": "Cookies et traceurs",
+        "paragraphs": [
+          "Ce site ne dépose aucun cookie publicitaire ni traceur de mesure d'audience tiers. Seuls des cookies strictement nécessaires au fonctionnement du service sont utilisés : cookie de session de connexion (Better Auth), cookie de préférence de langue, et cookie technique mémorisant que le bandeau d'information relatif aux données personnelles a été lu. Ces cookies ne nécessitent pas de consentement préalable au sens de l'article 82 de la loi Informatique et Libertés, et ne servent en aucun cas à vous suivre sur d'autres sites."
+        ]
+      },
+      {
+        "heading": "Vos droits",
+        "paragraphs": [
+          "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et de limitation du traitement de vos données, ainsi que d'un droit à la portabilité et d'un droit d'opposition pour motif légitime. Pour l'exercer, écrivez à [[CONTACT_EMAIL]] ou à [[DPO_EMAIL]] en précisant votre demande ; une réponse vous sera apportée dans un délai d'un mois.",
+          "Vous disposez également du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente, la CNIL (www.cnil.fr), si vous estimez que vos droits ne sont pas respectés.",
+          "Si vous êtes un invité et souhaitez faire valoir vos droits sur une réponse RSVP que vous avez transmise, vous pouvez vous adresser directement au couple qui a créé l'invitation, ou à [[CONTACT_EMAIL]] qui relaiera votre demande."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": ["Pour toute question relative à vos données personnelles : [[CONTACT_EMAIL]] ou [[DPO_EMAIL]]."]
+      }
+    ]
+  },
+
+  "terms": {
+    "title": "Conditions générales de vente",
+    "sections": [
+      {
+        "heading": "Objet",
+        "paragraphs": [
+          "Les présentes conditions générales encadrent l'accès au service d'édition et d'hébergement d'invitations en ligne fourni par [[COMPANY_NAME]], à la suite de l'achat, sur la boutique Etsy de [[COMPANY_NAME]], d'un téléchargement numérique donnant droit à l'activation de ce service. Elles s'appliquent à toute activation réalisée sur ce site."
+        ]
+      },
+      {
+        "heading": "Prix et paiement",
+        "paragraphs": [
+          "Le prix du produit de base est intégralement réglé sur Etsy au moment de l'achat, selon les conditions et moyens de paiement proposés par Etsy. Aucun paiement supplémentaire n'est requis sur ce site pour bénéficier du service correspondant à cet achat.",
+          "D'éventuelles options ou renouvellements ultérieurs (par exemple une prolongation d'hébergement) constituent des achats distincts et facultatifs, proposés séparément et postérieurement à l'achat initial ; ils ne conditionnent jamais l'accès au produit de base déjà réglé."
+        ]
+      },
+      {
+        "heading": "Activation",
+        "paragraphs": [
+          "L'activation s'effectue en saisissant, sur la page « Activer votre achat », le numéro de commande Etsy et l'adresse e-mail utilisée lors de l'achat. La demande est examinée manuellement ; une réponse (validation ou refus motivé) est envoyée sous 24 heures ouvrées. Une fois validée, un lien de connexion est envoyé par e-mail à l'adresse indiquée.",
+          "Une commande Etsy donne droit à l'activation d'une invitation par thème acheté. Toute tentative d'activer plusieurs fois la même commande pour le même thème sera refusée."
+        ]
+      },
+      {
+        "heading": "Durée d'hébergement",
+        "paragraphs": [
+          "L'hébergement de l'invitation publiée est inclus pour une durée de 18 mois à compter de sa date de publication. À l'issue de cette période, l'invitation devient inaccessible au public, sauf souscription préalable d'une prolongation, vendue séparément.",
+          "[[COMPANY_NAME]] informera le couple par e-mail avant l'expiration de son invitation, dans la mesure du possible."
+        ]
+      },
+      {
+        "heading": "Droit de rétractation",
+        "paragraphs": [
+          "Le service consistant en la fourniture d'un contenu numérique non fourni sur un support matériel et en l'exécution d'un service pleinement exécuté avant la fin du délai de rétractation, à la demande expresse du consommateur (activation immédiate de l'éditeur dès validation de la commande), le client reconnaît, en cochant la case de consentement lors de l'activation, renoncer à son droit de rétractation dès le début de l'exécution du service, conformément à l'article L221-28 du Code de la consommation."
+        ]
+      },
+      {
+        "heading": "Obligations du client",
+        "paragraphs": [
+          "Le client s'engage à fournir des informations exactes lors de l'activation, à ne publier que des contenus (textes, photographies) sur lesquels il détient les droits nécessaires, et à ne déposer aucun contenu illicite, injurieux ou portant atteinte aux droits de tiers.",
+          "Le client demeure seul responsable des données personnelles de ses invités qu'il collecte via le formulaire RSVP et de l'information qu'il leur doit à ce titre."
+        ]
+      },
+      {
+        "heading": "Disponibilité et responsabilité",
+        "paragraphs": [
+          "[[COMPANY_NAME]] met en œuvre des moyens raisonnables pour assurer la disponibilité et la sécurité du service, sans garantir une disponibilité ininterrompue. [[COMPANY_NAME]] ne saurait être tenue responsable des dommages indirects résultant de l'utilisation du service, ni d'une interruption imputable à un prestataire tiers (hébergement, envoi d'e-mails) ou à un cas de force majeure."
+        ]
+      },
+      {
+        "heading": "Suspension et résiliation",
+        "paragraphs": [
+          "En cas de manquement grave aux présentes conditions (contenu illicite, usage frauduleux, non-respect des droits de tiers), [[COMPANY_NAME]] peut suspendre ou désactiver l'invitation concernée, après notification par e-mail lorsque les circonstances le permettent."
+        ]
+      },
+      {
+        "heading": "Droit applicable et litiges",
+        "paragraphs": [
+          "Les présentes conditions sont soumises au droit français. En cas de litige, le client peut recourir à une solution de médiation de la consommation avant toute action judiciaire. À défaut de résolution amiable, les tribunaux français compétents seront seuls saisis."
+        ]
+      }
+    ]
+  },
+
+  "dataNotice": "Les informations que vous saisissez (nom, e-mail, présence, régime, message) sont transmises au couple pour gérer sa liste d'invités et sont conservées 6 mois après la date de l'événement. En savoir plus dans notre politique de confidentialité."
 }

@@ -127,3 +127,44 @@ export async function getPublishedInvitationWithTheme(
 
   return rows[0] ?? null;
 }
+
+export interface OwnedInvitation {
+  invitation: Invitation;
+  /** Folder name of the theme, as registered in `src/themes/registry.ts`. */
+  themeSlug: string;
+}
+
+/**
+ * One invitation *and* its theme slug, but only if the user owns it.
+ *
+ * The editor needs the slug to load the theme manifest (which fields to show)
+ * and the theme's `Extras` schema (how to validate its decorative blocks), so
+ * fetching both in one round trip keeps the D1 budget low.
+ */
+export async function getInvitationWithThemeForOwner(
+  db: Database,
+  id: string,
+  ownerId: string,
+): Promise<OwnedInvitation | null> {
+  const rows = await db
+    .select({ invitation: invitations, themeSlug: themes.slug })
+    .from(invitations)
+    .innerJoin(themes, eq(themes.id, invitations.themeId))
+    .where(and(eq(invitations.id, id), eq(invitations.ownerId, ownerId)))
+    .limit(1);
+
+  return rows[0] ?? null;
+}
+
+/** Every invitation of a user with its theme slug, most recently updated first. */
+export async function listInvitationsWithThemeByOwner(
+  db: Database,
+  ownerId: string,
+): Promise<OwnedInvitation[]> {
+  return db
+    .select({ invitation: invitations, themeSlug: themes.slug })
+    .from(invitations)
+    .innerJoin(themes, eq(themes.id, invitations.themeId))
+    .where(eq(invitations.ownerId, ownerId))
+    .orderBy(desc(invitations.updatedAt));
+}

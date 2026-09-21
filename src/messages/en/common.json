@@ -13,12 +13,21 @@
     "login": "Sign in",
     "activate": "Activate a purchase",
     "admin": "Admin",
-    "legal": "Legal"
+    "legal": "Legal",
+    "legalNotice": "Legal notice",
+    "legalPrivacy": "Privacy policy",
+    "legalTerms": "Terms of sale"
   },
   "errors": {
     "notFound": "Page not found",
     "notFoundBody": "This link does not lead anywhere.",
     "unexpected": "Something went wrong.",
     "rateLimited": "Too many attempts. Please try again in a moment."
+  },
+  "consent": {
+    "title": "About your personal data",
+    "body": "This site uses only technical cookies (sign-in, language) and no advertising tracker.",
+    "link": "Learn more",
+    "dismiss": "Got it"
   }
 }

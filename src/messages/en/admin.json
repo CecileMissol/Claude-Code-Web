@@ -6,5 +6,31 @@
     "activations": "Activations",
     "invitations": "Invitations",
     "audit": "Audit log"
+  },
+  "activations": {
+    "empty": "No activation request is waiting for review.",
+    "localeLabel": "Invitation language",
+    "approve": "Approve",
+    "reject": "Refuse",
+    "reasonPlaceholder": "Reason (optional)"
+  },
+  "invitationsTab": {
+    "empty": "No invitation yet.",
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "expired": "Expired",
+      "disabled": "Disabled"
+    },
+    "publishedAt": "Published on {date}",
+    "notPublished": "Not published",
+    "expiresAt": "Expires on {date}",
+    "extend": "Extend 12 months",
+    "enable": "Reactivate",
+    "disable": "Disable",
+    "open": "Open"
+  },
+  "auditTab": {
+    "empty": "The audit log is empty."
   }
 }

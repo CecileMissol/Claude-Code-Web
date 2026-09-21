@@ -1,1 +1,87 @@
-{}
+{
+  "title": "Link and sharing",
+  "intro": "Choose your link, publish the invitation, and send it to your guests.",
+  "status": {
+    "label": "Status",
+    "draft": "Draft",
+    "published": "Online",
+    "expired": "Expired",
+    "disabled": "Offline"
+  },
+  "hosting": {
+    "publishedOn": "Published on {date}",
+    "expiresOn": "Online until {date}",
+    "notice": "Hosting is included for {months} months from the day you publish. You can extend it later.",
+    "expiredNotice": "The hosting window has closed. Guests now see a short message instead of the invitation."
+  },
+  "link": {
+    "title": "Your link",
+    "help": "Lower-case letters, digits and dashes. Between {min} and {max} characters.",
+    "label": "Address of the invitation",
+    "placeholder": "alex-and-sam",
+    "suggest": "Suggest a link",
+    "save": "Save the link",
+    "saved": "Link saved.",
+    "checking": "Checking…",
+    "available": "This link is free.",
+    "locked": "The link can no longer be changed once the invitation is online. Take it offline first.",
+    "problems": {
+      "empty": "Type a link.",
+      "too_short": "Too short: at least {min} characters.",
+      "too_long": "Too long: at most {max} characters.",
+      "invalid_characters": "Only lower-case letters, digits and single dashes.",
+      "reserved": "This link is reserved by the application.",
+      "taken": "This link is already taken.",
+      "missing_slug": "Choose a link before publishing.",
+      "invalid_slug": "This link is not valid.",
+      "not_found": "Invitation not found.",
+      "server": "Something went wrong. Please try again."
+    }
+  },
+  "publish": {
+    "title": "Publication",
+    "intro": "Once published, your invitation is live at the link above. Every change you make in the editor shows up straight away.",
+    "cta": "Publish",
+    "republish": "Put back online",
+    "unpublish": "Take offline",
+    "unpublishHelp": "Guests will see a short message. Your content and your replies are kept.",
+    "openInvitation": "Open the invitation",
+    "draftNotice": "This invitation is not published yet.",
+    "liveNotice": "This invitation is online.",
+    "confirm": "Take this invitation offline? Guests will no longer see it."
+  },
+  "qr": {
+    "title": "QR code",
+    "intro": "For a printed save-the-date, a welcome sign or a table card.",
+    "alt": "QR code pointing to the invitation",
+    "downloadSvg": "Download the SVG",
+    "downloadPng": "Download the PNG",
+    "pngSize": "PNG, {size} px"
+  },
+  "messages": {
+    "title": "Ready-to-send messages",
+    "intro": "Copy the text, or open your app with the message already written.",
+    "language": "Message language",
+    "channels": {
+      "sms": "Text message",
+      "email": "Email",
+      "whatsapp": "WhatsApp"
+    },
+    "subject": "Subject",
+    "copy": "Copy",
+    "copied": "Copied",
+    "open": {
+      "sms": "Open Messages",
+      "email": "Open your mail app",
+      "whatsapp": "Open WhatsApp"
+    }
+  },
+  "calendar": {
+    "title": "Calendar file",
+    "intro": "Guests can add the date to their calendar from the invitation. Here is the same file, if you want to send it yourself.",
+    "download": "Download the .ics file"
+  },
+  "copyLink": "Copy the link",
+  "copied": "Copied",
+  "publishFirst": "Publish the invitation to get your QR code, your messages and the calendar file."
+}

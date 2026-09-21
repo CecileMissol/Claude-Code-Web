@@ -24,6 +24,7 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply invitations-db --local",
+    "db:seed:local": "node --disable-warning=ExperimentalWarning src/db/seed-cli.mjs",
     "db:migrate:remote": "wrangler d1 migrations apply invitations-db --remote"
   },
   "dependencies": {

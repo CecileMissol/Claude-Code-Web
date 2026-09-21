@@ -1,1 +1,57 @@
-{}
+{
+  "title": "Réponses",
+  "intro": "Qui vient, et qui décline.",
+  "counters": {
+    "yes": "Présents",
+    "no": "Absents",
+    "people": "Personnes attendues",
+    "replies": "Réponses"
+  },
+  "empty": "Aucune réponse pour l'instant. Partagez votre lien, elles apparaîtront ici.",
+  "emptySearch": "Aucune réponse ne correspond à cette recherche.",
+  "notPublished": "Cette invitation n'est pas encore en ligne : personne ne peut répondre.",
+  "rsvpDisabled": "Le formulaire de réponse est désactivé dans l'éditeur.",
+  "deadline": "Les réponses se ferment le {date}.",
+  "deadlinePassed": "Les réponses sont closes depuis le {date}.",
+  "table": {
+    "name": "Nom",
+    "attending": "Réponse",
+    "guests": "Personnes",
+    "diet": "Régime alimentaire",
+    "message": "Message",
+    "date": "Reçue le",
+    "actions": "Actions"
+  },
+  "attending": { "yes": "Présent(e)", "no": "Absent(e)" },
+  "search": {
+    "label": "Rechercher",
+    "placeholder": "Un nom, un e-mail, un mot…",
+    "submit": "Rechercher",
+    "clear": "Effacer",
+    "results": "{count} réponses sur {total}"
+  },
+  "sort": {
+    "label": "Trier par",
+    "recent": "Plus récentes d'abord",
+    "oldest": "Plus anciennes d'abord",
+    "name": "Nom (A–Z)",
+    "attending": "Présents d'abord"
+  },
+  "export": {
+    "csv": "Exporter en CSV",
+    "help": "S'ouvre dans Excel, Numbers ou Google Sheets."
+  },
+  "delete": {
+    "action": "Supprimer",
+    "confirm": "Supprimer cette réponse ? C'est définitif.",
+    "done": "Réponse supprimée."
+  },
+  "notify": {
+    "title": "Notification par e-mail",
+    "on": "Vous recevez un e-mail à chaque nouvelle réponse.",
+    "off": "Vous ne recevez aucun e-mail quand un invité répond.",
+    "enable": "Activer",
+    "disable": "Désactiver"
+  },
+  "privacy": "Les réponses sont supprimées automatiquement {months} mois après la date de l'événement."
+}

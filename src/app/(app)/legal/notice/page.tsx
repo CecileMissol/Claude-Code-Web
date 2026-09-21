@@ -1,8 +1,15 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { Stub } from '@/components/Stub';
+import { LegalDocument, type LegalSection } from '../LegalDocument';
 
-/** `/legal/notice` — legal page, written in phase 8. */
-export default async function LegalPage() {
+export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('legal');
-  return <Stub title={t('notice.title')} />;
+  return { title: t('notice.title') };
+}
+
+/** `/legal/notice` — legal notice (publisher, hosting, IP, governing law). */
+export default async function LegalNoticePage() {
+  const t = await getTranslations('legal');
+  const sections = t.raw('notice.sections') as LegalSection[];
+  return <LegalDocument title={t('notice.title')} sections={sections} />;
 }

@@ -1,6 +1,186 @@
 {
-  "notice": { "title": "Legal notice" },
-  "privacy": { "title": "Privacy policy" },
-  "terms": { "title": "Terms of sale" },
-  "dataNotice": "The information you enter is used only to display and manage this invitation."
+  "notice": {
+    "title": "Legal notice",
+    "sections": [
+      {
+        "heading": "Publisher",
+        "paragraphs": [
+          "This site is published by [[COMPANY_NAME]] ([[LEGAL_FORM]]), registered under SIREN number [[SIREN]], with its registered office at [[COMPANY_ADDRESS]].",
+          "Intra-Community VAT number: [[VAT_NUMBER]].",
+          "Publication director: [[PUBLICATION_DIRECTOR]].",
+          "Contact: [[CONTACT_EMAIL]]."
+        ]
+      },
+      {
+        "heading": "Hosting",
+        "paragraphs": [
+          "The site and published invitations are hosted by Cloudflare, Inc. (the application runs on Cloudflare Workers). Data is stored in a Cloudflare D1 database (configured with a Western Europe location hint, which — outside a dedicated Enterprise plan — remains a technical indication rather than a contractual residency guarantee) and photos in a Cloudflare R2 storage bucket whose jurisdiction is fixed to the European Union, contractually guaranteed by Cloudflare once the bucket is created.",
+          "Cloudflare, Inc.: 101 Townsend St, San Francisco, CA 94107, USA. See Cloudflare's privacy policy: www.cloudflare.com/privacypolicy/."
+        ]
+      },
+      {
+        "heading": "Intellectual property",
+        "paragraphs": [
+          "The site's structure, code, invitation templates, illustrations and visual identity belong to [[COMPANY_NAME]] or its partners and are protected under intellectual property law. Any unauthorised reproduction, beyond the strictly personal use of the invitations published by our couple customers, is prohibited.",
+          "Text, photographs and other content that a couple enters into their invitation remain their property, or that of the third parties who granted them the rights; the couple warrants that they hold the necessary rights to publish and share this content with their guests."
+        ]
+      },
+      {
+        "heading": "External links and sale on Etsy",
+        "paragraphs": [
+          "Access to the service follows the purchase, on Etsy, of a digital download containing the activation link. Etsy Inc. is an independent third-party site, governed by its own terms of use; [[COMPANY_NAME]] is not responsible for the operation of the Etsy platform itself."
+        ]
+      },
+      {
+        "heading": "Governing law",
+        "paragraphs": [
+          "This site is governed by French law. In the event of a dispute, and failing an amicable resolution, the competent French courts shall have sole jurisdiction."
+        ]
+      }
+    ]
+  },
+
+  "privacy": {
+    "title": "Privacy policy",
+    "sections": [
+      {
+        "heading": "Data controller",
+        "paragraphs": [
+          "The controller for data collected through this site is [[COMPANY_NAME]], [[COMPANY_ADDRESS]], reachable at [[CONTACT_EMAIL]] (data protection contact: [[DPO_EMAIL]]).",
+          "For their guests' RSVP replies, the couples using the service are themselves the controller of that data towards their guests: [[COMPANY_NAME]] then acts as a processor, on the couple's behalf, to collect, display and export those replies."
+        ]
+      },
+      {
+        "heading": "Data we collect",
+        "paragraphs": [
+          "Purchase activation: the Etsy order number and email address entered on the activation page, to verify the purchase and create access.",
+          "Account and sign-in: an email address (there is no password; sign-in uses a single-use magic link emailed to you).",
+          "Invitation content: text, dates, venue details and photographs the couple enters or uploads themselves to build their invitation.",
+          "Guest replies (RSVP): name, email address (optional, depending on the couple's settings), attendance, number of guests, dietary needs and a message, plus a non-reversible hash of the replying IP address used to throttle abuse (the raw IP address is never stored).",
+          "No payment or banking data is ever collected on this site: payment for the initial purchase happens entirely on Etsy."
+        ]
+      },
+      {
+        "heading": "Purposes and legal bases",
+        "paragraphs": [
+          "Performance of the contract with the buyer: verifying the purchase, creating and hosting the invitation, sending sign-in links and service notifications (GDPR Article 6.1.b).",
+          "Managing RSVP replies on the couple's behalf, based on performing the service the couple set up for their own guests (Article 6.1.b and, for the relationship between the couple and their guests, the couple's legitimate interest in organising their event).",
+          "Security and abuse prevention (per-IP rate limiting, detecting fraudulent activation requests): legitimate interest (Article 6.1.f)."
+        ]
+      },
+      {
+        "heading": "Who receives this data",
+        "paragraphs": [
+          "Data is processed by [[COMPANY_NAME]] and by the following technical processors: Cloudflare, Inc. (application hosting, the D1 database and R2 photo storage) and Resend (Resend, Inc., transactional email delivery: sign-in links, activation confirmations, RSVP notifications).",
+          "This data is never sold, rented, used for advertising, or shared with any other third party beyond what the law requires."
+        ]
+      },
+      {
+        "heading": "Hosting and transfers",
+        "paragraphs": [
+          "Application hosting and photo storage (Cloudflare R2, EU jurisdiction) are provided within the European Union. The database (Cloudflare D1) is configured with a Western Europe location hint; as of today this remains a technical indication rather than a strict contractual residency guarantee outside a Cloudflare Enterprise plan — this nuance is stated here in full transparency.",
+          "Resend, our transactional email provider, may process recipient email addresses to deliver messages; consult its privacy policy for the safeguards that apply to any transfer outside the EU."
+        ]
+      },
+      {
+        "heading": "Retention periods",
+        "paragraphs": [
+          "Rejected or unconfirmed activation requests: kept for up to 12 months for evidence and anti-abuse purposes, then deleted.",
+          "Account and invitation: kept for the hosting period included with the purchase (18 months from publication), then deleted unless the couple separately purchases a renewal.",
+          "Guest replies (RSVP): kept for 6 months after the event date entered by the couple, then automatically deleted, unless the couple requests earlier deletion.",
+          "Admin audit log (activation approvals and refusals): kept for 3 years, for evidence and service security."
+        ]
+      },
+      {
+        "heading": "Security",
+        "paragraphs": [
+          "Passwordless sign-in (a single-use, short-lived magic link), encryption in transit (HTTPS), salted hashing of IP addresses kept for anti-abuse purposes, and access control on the admin back office all reduce the risk of unauthorised access. No system is infallible; any significant data breach will be notified in accordance with GDPR Articles 33 and 34."
+        ]
+      },
+      {
+        "heading": "Cookies and trackers",
+        "paragraphs": [
+          "This site sets no advertising cookie and no third-party audience-measurement tracker. Only cookies strictly necessary for the service are used: a sign-in session cookie (Better Auth), a language-preference cookie, and a technical cookie remembering that the personal-data information banner has been read. These cookies do not require prior consent and never track you across other sites."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "paragraphs": [
+          "Under the GDPR, you have the right to access, rectify, erase and restrict the processing of your data, as well as a right to data portability and a right to object on legitimate grounds. To exercise these rights, write to [[CONTACT_EMAIL]] or [[DPO_EMAIL]] describing your request; you will receive a reply within one month.",
+          "You also have the right to lodge a complaint with the competent supervisory authority — in France, the CNIL (www.cnil.fr) — if you believe your rights are not being respected.",
+          "If you are a guest and wish to exercise your rights over an RSVP reply you submitted, you may contact the couple who created the invitation directly, or write to [[CONTACT_EMAIL]], who will forward your request."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": ["For any question about your personal data: [[CONTACT_EMAIL]] or [[DPO_EMAIL]]."]
+      }
+    ]
+  },
+
+  "terms": {
+    "title": "Terms of sale",
+    "sections": [
+      {
+        "heading": "Purpose",
+        "paragraphs": [
+          "These terms govern access to the invitation editing and hosting service provided by [[COMPANY_NAME]], following the purchase, on the [[COMPANY_NAME]] Etsy shop, of a digital download granting activation of this service. They apply to every activation carried out on this site."
+        ]
+      },
+      {
+        "heading": "Price and payment",
+        "paragraphs": [
+          "The price of the base product is paid in full on Etsy at the time of purchase, under Etsy's own terms and payment methods. No additional payment is required on this site to receive the service that purchase entitles you to.",
+          "Any later options or renewals (for example a hosting extension) are separate, optional purchases, offered independently and after the initial purchase; they never gate access to the base product already paid for."
+        ]
+      },
+      {
+        "heading": "Activation",
+        "paragraphs": [
+          "Activation is done by entering, on the \"Activate your purchase\" page, the Etsy order number and the email address used for the purchase. The request is reviewed manually; a response (approval or a reasoned refusal) is sent within 24 business hours. Once approved, a sign-in link is emailed to the address provided.",
+          "One Etsy order entitles the buyer to activate one invitation per purchased theme. Any attempt to activate the same order for the same theme more than once will be refused."
+        ]
+      },
+      {
+        "heading": "Hosting period",
+        "paragraphs": [
+          "Hosting of the published invitation is included for 18 months from its publication date. After that period, the invitation becomes inaccessible to the public unless an extension has been purchased beforehand, sold separately.",
+          "[[COMPANY_NAME]] will, where possible, notify the couple by email before their invitation expires."
+        ]
+      },
+      {
+        "heading": "Right of withdrawal",
+        "paragraphs": [
+          "As the service consists of digital content not supplied on a tangible medium, and of a service fully performed before the end of the withdrawal period, at the consumer's express request (the editor is activated immediately once the order is approved), the customer acknowledges, by ticking the consent checkbox during activation, that they waive their right of withdrawal once performance of the service begins, in accordance with Article L221-28 of the French Consumer Code."
+        ]
+      },
+      {
+        "heading": "Customer obligations",
+        "paragraphs": [
+          "The customer agrees to provide accurate information when activating, to publish only content (text, photographs) they hold the necessary rights to, and to upload no unlawful, abusive content or content infringing third-party rights.",
+          "The customer remains solely responsible for their guests' personal data collected through the RSVP form and for the information they owe their guests in that respect."
+        ]
+      },
+      {
+        "heading": "Availability and liability",
+        "paragraphs": [
+          "[[COMPANY_NAME]] uses reasonable means to keep the service available and secure, without guaranteeing uninterrupted availability. [[COMPANY_NAME]] cannot be held liable for indirect damages arising from use of the service, nor for an interruption attributable to a third-party provider (hosting, email delivery) or to a case of force majeure."
+        ]
+      },
+      {
+        "heading": "Suspension and termination",
+        "paragraphs": [
+          "In the event of a serious breach of these terms (unlawful content, fraudulent use, infringement of third-party rights), [[COMPANY_NAME]] may suspend or disable the invitation concerned, after email notice where circumstances allow."
+        ]
+      },
+      {
+        "heading": "Governing law and disputes",
+        "paragraphs": [
+          "These terms are governed by French law. In the event of a dispute, the customer may use a consumer mediation service before any legal action. Failing an amicable resolution, the competent French courts shall have sole jurisdiction."
+        ]
+      }
+    ]
+  },
+
+  "dataNotice": "The information you enter (name, email, attendance, dietary needs, message) is passed on to the couple to manage their guest list, and is kept for 6 months after the event date. Read more in our privacy policy."
 }

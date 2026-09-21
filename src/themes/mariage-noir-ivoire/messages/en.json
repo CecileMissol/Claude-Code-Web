@@ -2,6 +2,7 @@
   "intro": {
     "kicker": "A letter for you",
     "openLabel": "Open the envelope",
+    "openButton": "Open",
     "hint": "Tap the envelope to open it",
     "scrollCue": "Scroll",
     "saveTheDate": "Save the date",
@@ -13,7 +14,11 @@
     "program": "The programme",
     "place": "The venue"
   },
+  "story": {
+    "mementoDate": "Date"
+  },
   "countdown": {
+    "label": "Countdown to the wedding",
     "days": "days",
     "hours": "hours",
     "minutes": "minutes",
@@ -36,12 +41,20 @@
     "diet": "Allergies or special diet",
     "message": "A word for the couple",
     "submit": "Send my reply",
+    "sending": "Sending…",
     "thanks": "Thank you, your reply has arrived.",
     "closed": "Replies are closed.",
-    "dataNotice": "Your reply is shared with the couple only and deleted six months after the event.",
+    "honeypot": "Leave this field empty",
+    "errors": {
+      "invalid": "Please check the form: something is missing.",
+      "rateLimited": "Too many attempts. Please try again in a few minutes.",
+      "server": "Sending failed. Please try again in a moment."
+    },
+    "dataNotice": "Your reply (name, email, attendance, number of guests, diet and message) is shared with the couple only, to plan the day. It is hosted in the European Union and deleted six months after the event. To access, correct or erase it, write to the couple.",
     "addToCalendar": "Add to my calendar"
   },
   "signature": {
+    "label": "Signature",
     "farewell": "See you very soon"
   },
   "demoBanner": "Demo"

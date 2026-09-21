@@ -1,17 +1,22 @@
 /*
- * "Noir & ivoire" theme stylesheet.
+ * "Noir & ivoire" — theme stylesheet.
  *
- * Everything is scoped under `.invitation` so the theme never leaks into the
- * Tailwind-styled application shell, and so the application shell never leaks
- * into the invitation.
+ * Direct port of the validated mock-up (`reference/invitation-mariage-demo.html`),
+ * scoped under `.invitation` so the theme never leaks into the Tailwind-styled
+ * application shell and the shell never leaks into the invitation.
  *
- * Dark mode is deliberately NOT supported here: the couple picks a palette and
- * every guest must see exactly that palette (decision of phase 1, §1.3.8).
+ * Two rules govern this file:
  *
- * The six palette variables (--env, --env-2, --seal, --accent, --stem,
- * --liner) and --script are injected inline by `Invitation.tsx` from
- * `manifest.ts`, which is the single source of truth. The values below are
- * fallbacks only, so the stylesheet still renders on its own.
+ * 1. **Dark mode is deliberately absent.** The couple picks a palette and every
+ *    guest must see exactly that palette (phase 1, §1.3.8). `prefers-color-scheme`
+ *    is never consulted.
+ * 2. **The board is a size container.** Every piece of a chapter is sized in
+ *    `cqw`/`cqh` and positioned in `%`, which is what keeps the collage intact
+ *    from 320 px to 1440 px without a single breakpoint per element.
+ *
+ * The six palette variables (--env, --env-2, --seal, --accent, --stem, --liner)
+ * and --script are injected inline by `Invitation.tsx` from `manifest.ts`. The
+ * values below are fallbacks, so the sheet still renders on its own.
  */
 
 .invitation {
@@ -42,15 +47,35 @@
   font-size: 20px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  min-height: 100svh;
-  overflow-x: hidden;
   position: relative;
+  overflow-x: clip;
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 .invitation *,
 .invitation *::before,
 .invitation *::after {
   box-sizing: inherit;
+}
+
+/* Paper grain over the whole invitation. */
+.invitation::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.09;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: multiply;
+}
+
+.invitation button,
+.invitation input,
+.invitation select,
+.invitation textarea {
+  font: inherit;
+  color: inherit;
 }
 
 .invitation :focus-visible {
@@ -69,87 +94,275 @@
   font-size: 0.72em;
 }
 
-/* ---------- Layout of the static (non-animated) rendering ---------- */
-
-.invitation__section {
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 3rem 7vw;
-}
-
-.invitation__kicker {
-  font-family: var(--script);
-  font-size: clamp(34px, 9vw, 52px);
-  margin: 0 0 1.5rem;
-  text-align: center;
-}
-
-.invitation__title {
-  font-family: var(--script);
-  font-weight: 400;
-  font-size: clamp(40px, 11vw, 68px);
-  line-height: 1;
-  margin: 0 0 1rem;
-}
-
-.invitation__lines {
-  display: grid;
-  gap: 0.6rem;
-  margin: 0;
+.invitation .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  list-style: none;
-  max-width: 28ch;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
-.invitation__lines li {
-  font-size: clamp(19px, 4.6vw, 24px);
-  line-height: 1.35;
+/*
+ * Scroll lock, held while the envelope is still sealed.
+ *
+ * The class is put on <html> by `useInvitationMotion` and taken off on the last
+ * beat of the opening timeline. This is the one rule of the theme that is not
+ * scoped under `.invitation`: the element that scrolls is the document, not the
+ * invitation. `overflow: hidden` stops wheel and touch scrolling; `touch-action`
+ * and `overscroll-behavior` stop iOS Safari's rubber-banding and its
+ * pull-to-refresh, which `overflow` alone does not.
+ */
+html.invitation-locked,
+html.invitation-locked body {
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
-.invitation__hint {
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* ---------- Envelope (static preview of the animated intro) ---------- */
-
-.invitation__envelope {
-  position: relative;
-  width: min(82vw, 440px);
-  aspect-ratio: 1.45;
-  margin: 0 auto;
-  container-type: inline-size;
-  background: var(--env);
-  border-radius: 3px;
-  box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
+/* Hidden <defs> holder. */
+.invitation .ni-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
   overflow: hidden;
 }
 
-.invitation__envelope::after {
+/* ---------------------------------------------------------------- */
+/* Shared pieces                                                    */
+/* ---------------------------------------------------------------- */
+
+.invitation .pol {
+  background: #fbfaf6;
+  padding: 6% 6% 24%;
+  box-shadow: 0 12px 26px -8px rgb(0 0 0 / 35%);
+  position: relative;
+}
+
+.invitation .pol .cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4%;
+  text-align: center;
+  font-family: var(--script);
+  color: #3a3a36;
+  font-size: clamp(12px, 4.6cqw, 30px);
+  line-height: 1;
+}
+
+.invitation .photo {
+  aspect-ratio: 1 / 1.05;
+  position: relative;
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  box-shadow: inset 0 0 30px rgb(0 0 0 / 35%);
+  background: #d8d6d1;
+}
+
+.invitation .photo-wrap {
+  position: relative;
+  display: block;
+}
+
+.invitation .photo-wrap::after,
+.invitation .postcard .img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.invitation .tape::before {
+  content: '';
+  position: absolute;
+  top: -4%;
+  left: 50%;
+  width: 38%;
+  height: 9%;
+  min-height: 14px;
+  background: rgb(236 230 212 / 78%);
+  transform: translateX(-50%) rotate(-3deg);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+  z-index: 2;
+}
+
+.invitation .torn {
+  clip-path: polygon(
+    0 3%,
+    7% 0,
+    16% 2.5%,
+    27% 0.5%,
+    39% 3%,
+    51% 0,
+    63% 2%,
+    75% 0,
+    87% 3%,
+    100% 1%,
+    100% 97%,
+    92% 100%,
+    80% 97.5%,
+    69% 100%,
+    56% 97%,
+    44% 100%,
+    31% 98%,
+    19% 100%,
+    8% 97%,
+    0 100%
+  );
+}
+
+/* Perforated stamp: the dentelure is a CSS mask, the motif is the SVG. */
+.invitation .stamp {
+  display: block;
+  background: #f7f3ea;
+  padding: 4px;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle, #0000 2px, #000 2.5px) -4px -4px / 8px 8px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle, #0000 2px, #000 2.5px) -4px -4px / 8px 8px;
+}
+
+.invitation .stamp .in {
+  aspect-ratio: 0.8;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.invitation .stamp .in svg {
+  width: 46%;
+  height: 82%;
+}
+
+.invitation .stamp i {
+  position: absolute;
+  right: 8%;
+  bottom: 4%;
+  font-style: normal;
+  font-family: var(--didone);
+  font-size: clamp(6px, 2.2cqw, 12px);
+  color: #fff;
+}
+
+.invitation .stamp.s2 .in {
+  background: #b9b39f;
+}
+
+/* ---------------------------------------------------------------- */
+/* Intro — the envelope                                             */
+/* ---------------------------------------------------------------- */
+
+.invitation .intro {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 5rem;
+  gap: 1.4rem;
+  position: relative;
+}
+
+.invitation .kicker {
+  font-family: var(--script);
+  font-size: clamp(34px, 9vw, 52px);
+  margin: 0;
+  text-align: center;
+  transition: opacity 0.5s;
+}
+
+.invitation .intro.opened .kicker {
+  opacity: 0;
+}
+
+.invitation .env-wrap {
+  position: relative;
+  width: min(82vw, 440px);
+  aspect-ratio: 1.45;
+  container-type: inline-size;
+  cursor: pointer;
+  margin-top: min(26vw, 150px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.invitation .face {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+}
+
+.invitation .front {
+  background: var(--env);
+  overflow: hidden;
+  box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
+}
+
+.invitation .front::after {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--grain);
   opacity: 0.35;
   mix-blend-mode: screen;
-  pointer-events: none;
 }
 
-.invitation__address {
+.invitation .stamps {
+  position: absolute;
+  right: 5%;
+  top: 8%;
+  width: 33%;
+  display: flex;
+  gap: 4%;
+  z-index: 1;
+}
+
+.invitation .stamps .stamp {
+  flex: 1;
+}
+
+.invitation .stamps .s2 {
+  transform: rotate(4deg) translateY(6%);
+}
+
+.invitation .postmark {
+  position: absolute;
+  right: 24%;
+  top: 12%;
+  width: 30%;
+  color: rgb(255 255 255 / 55%);
+  z-index: 2;
+}
+
+.invitation .addr {
   position: absolute;
   left: 8%;
   bottom: 17%;
   color: #f3eee5;
   z-index: 1;
+  text-align: left;
 }
 
-.invitation__address .script {
+.invitation .addr .script {
   font-size: 12cqw;
   line-height: 1;
   display: block;
 }
 
-.invitation__address .caps {
+.invitation .addr .caps {
   font-family: var(--didone);
   font-size: 3.2cqw;
   letter-spacing: 0.45em;
@@ -157,31 +370,65 @@
   display: block;
 }
 
-.invitation__postmark {
+.invitation .lay {
   position: absolute;
-  right: 6%;
-  top: 8%;
-  z-index: 2;
-  font-family: var(--didone);
-  font-size: 3.2cqw;
-  letter-spacing: 0.2em;
-  color: rgb(255 255 255 / 55%);
-  border: 1.3px solid currentcolor;
-  border-radius: 999px;
-  padding: 0.6em 1em;
+  width: 13%;
+  left: 52%;
+  bottom: -8%;
+  display: block;
+  transform: rotate(58deg);
+  transform-origin: 50% 100%;
+  z-index: 1;
 }
 
-.invitation__seal {
+.invitation .back {
+  transform: scaleX(0);
+}
+
+.invitation .liner {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 55%) 0 1.4px, transparent 2px) 0 0 / 18px 18px,
+    var(--liner);
+  box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
+}
+
+.invitation .pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 0 0 3px 3px;
+  clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(160deg, rgb(255 255 255 / 6%), transparent 45%),
+    linear-gradient(20deg, rgb(0 0 0 / 28%), transparent 55%), var(--env);
+}
+
+.invitation .flap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 56%;
+  z-index: 6;
+  background: var(--env-2);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+}
+
+.invitation .seal {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 56%;
   width: 19%;
   aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  z-index: 7;
+  margin: -9.5% 0 0 -9.5%;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  z-index: 3;
   background: radial-gradient(
     circle at 35% 30%,
     color-mix(in srgb, var(--seal) 65%, #fff) 0,
@@ -196,287 +443,501 @@
   font-size: 6.5cqw;
 }
 
-/* ---------- Save the date ticket ---------- */
-
-.invitation__ticket {
+.invitation .ticket {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  bottom: 7%;
+  height: 60%;
+  z-index: 3;
   background: var(--card);
   color: var(--card-ink);
-  container-type: inline-size;
-  max-width: 440px;
-  margin: 2rem auto 0;
-  padding: 1.4rem 1rem;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 15% 1fr;
   box-shadow: 0 6px 18px -6px rgb(0 0 0 / 35%);
 }
 
-.invitation__ticket .t1 {
+.invitation .stub {
+  border-right: 1.5px dashed rgb(0 0 0 / 28%);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: grid;
+  place-items: center;
+  font-family: var(--didone);
+  font-size: 2.4cqw;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.invitation .tmain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.invitation .t1 {
   font-family: var(--didone);
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 3.3cqw;
+  margin: 0;
 }
 
-.invitation__ticket .t2 {
+.invitation .t2 {
   font-family: var(--didone);
   font-size: 11.5cqw;
   line-height: 1.05;
   letter-spacing: 0.04em;
+  margin: 0;
 }
 
-.invitation__ticket .t3 {
+.invitation .t3 {
   font-family: var(--script);
   font-size: 7cqw;
   color: var(--accent);
   line-height: 1;
+  margin: 0;
 }
 
-/* ---------- Photo placeholders ---------- */
-
-.invitation__polaroid {
-  background: #fbfaf6;
-  padding: 6% 6% 22%;
-  box-shadow: 0 12px 26px -8px rgb(0 0 0 / 35%);
-  position: relative;
-  container-type: inline-size;
+.invitation .env-wrap .pol {
+  position: absolute;
+  bottom: 14%;
+  width: 38%;
+  z-index: 2;
 }
 
-.invitation__photo {
-  aspect-ratio: 1 / 1.05;
+.invitation .env-wrap .p1 {
+  left: 7%;
+}
+
+.invitation .env-wrap .p2 {
+  right: 7%;
+}
+
+.invitation .tuck {
+  position: absolute;
+  z-index: 5;
+}
+
+.invitation .tuck1 {
+  right: -11%;
+  top: -12%;
+  width: 42%;
+  transform-origin: 20% 90%;
+}
+
+.invitation .tuck2 {
+  left: -9%;
+  top: 18%;
+  width: 28%;
+  transform-origin: 80% 80%;
+}
+
+.invitation .tuck svg {
   display: block;
   width: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.05);
-  background: linear-gradient(#dcdcdc, #b3b3b3);
-  box-shadow: inset 0 0 30px rgb(0 0 0 / 35%);
+  height: auto;
+  overflow: visible;
 }
 
-.invitation__caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4%;
+.invitation .hint {
+  margin: 0;
+  color: var(--muted);
+  font-style: italic;
   text-align: center;
+  transition: opacity 0.4s;
+}
+
+.invitation .intro.opened .hint {
+  opacity: 0;
+}
+
+.invitation .cue {
+  position: absolute;
+  bottom: calc(1.2rem + env(safe-area-inset-bottom, 0));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+
+.invitation .cue span {
+  width: 1px;
+  height: 38px;
+  background: linear-gradient(var(--ink), transparent);
+  animation: ni-drop 1.8s ease-in-out infinite;
+}
+
+@keyframes ni-drop {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+
+  51% {
+    transform-origin: bottom;
+  }
+
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.invitation .intro.ready .cue {
+  opacity: 1;
+}
+
+/* "Open" escape hatch, always visible in the editor preview. */
+.invitation .skip {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  background: var(--ink);
+  color: var(--bg);
+  border: 0;
+  border-radius: 40px;
+  padding: 0.5em 1.2em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* Scrolling chapters                                               */
+/* ---------------------------------------------------------------- */
+
+.invitation .chapter {
+  position: relative;
+  height: var(--len, 380vh);
+}
+
+.invitation .sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.invitation .board {
+  position: relative;
+  margin: 3svh 4vw 0;
+  container-type: size;
+}
+
+.invitation .text {
+  padding: 1rem 7vw calc(2.2rem + env(safe-area-inset-bottom, 0));
+}
+
+.invitation .ch-title {
   font-family: var(--script);
-  color: #3a3a36;
-  font-size: clamp(12px, 4.6cqw, 30px);
+  font-weight: 400;
+  font-size: clamp(40px, 11vw, 68px);
   line-height: 1;
+  margin: 0 0 0.4rem;
 }
 
-.invitation__gallery {
+.invitation .lines {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
 }
 
-/* ---------- Date ---------- */
+.invitation .line {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-size: clamp(21px, 5.4vw, 28px);
+  line-height: 1.35;
+  max-width: 24ch;
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(5px);
+  transition:
+    opacity 0.6s,
+    transform 0.6s,
+    filter 0.6s;
+}
 
-.invitation__scraps {
+.invitation .line.on {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.invitation .line.past {
+  opacity: 0;
+  transform: translateY(-14px);
+  filter: blur(5px);
+}
+
+@media (min-width: 820px) {
+  .invitation .sticky {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .invitation .board {
+    height: 84svh;
+    margin: 0 0 0 4vw;
+  }
+
+  .invitation .text {
+    padding: 0 6vw 0 4vw;
+  }
+}
+
+/* A piece of the collage. `--from` is where it flies in from, `--to` its rest. */
+.invitation .it {
+  position: absolute;
+  opacity: 0;
+  transform: var(--from, translateY(40px));
+  transition:
+    transform 1.15s cubic-bezier(0.16, 0.84, 0.24, 1),
+    opacity 0.6s;
+  will-change: transform;
+}
+
+.invitation .it.on {
+  opacity: 1;
+  transform: var(--to, none);
+}
+
+.invitation .shadow {
+  filter: drop-shadow(0 12px 18px rgb(0 0 0 / 28%));
+}
+
+.invitation .it svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.invitation .text .it {
+  position: static;
+}
+
+/* ---- Chapter 1: the story ---- */
+
+.invitation .ticket-train {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 5% 6%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 2rem 0;
-  container-type: inline-size;
+  grid-template-columns: 1fr auto;
+  gap: 2%;
+  font-family: var(--didone);
 }
 
-.invitation__scrap {
+.invitation .ticket-train .route {
+  font-size: min(5.2cqw, 28px);
+  letter-spacing: 0.02em;
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.invitation .ticket-train small {
+  font-size: min(2.6cqw, 13px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5c5a54;
+}
+
+.invitation .ticket-train b {
+  font-weight: 500;
+  font-size: min(3.6cqw, 18px);
+  display: block;
+}
+
+.invitation .note {
+  background: var(--kraft);
+  color: #2b2a26;
+  padding: 8% 9%;
+  font-family: var(--script);
+  font-size: min(6.4cqw, 36px);
+  line-height: 1.1;
+  text-align: center;
+  margin: 0;
+}
+
+/* ---- Chapter 2: the date ---- */
+
+.invitation .scrap {
   display: grid;
   place-items: center;
   font-family: var(--didone);
-  font-size: min(14cqw, 72px);
   line-height: 1;
   padding: 8% 0;
 }
 
-.invitation__scrap:nth-child(1) {
+.invitation .scrap.d1 {
   background: var(--env);
   color: #f3eee5;
 }
 
-.invitation__scrap:nth-child(2) {
+.invitation .scrap.d2 {
   background: var(--card);
   color: var(--card-ink);
 }
 
-.invitation__scrap:nth-child(3) {
+.invitation .scrap.d3 {
   background: var(--kraft);
   color: #2b2a26;
 }
 
-.invitation__highlight {
+.invitation .scrap b {
+  font-weight: 400;
+  font-size: min(24cqw, 24cqh);
+}
+
+.invitation .reveal {
+  clip-path: inset(0 100% 0 0);
+  transition:
+    clip-path 1.4s cubic-bezier(0.6, 0, 0.2, 1),
+    opacity 0.2s;
+}
+
+.invitation .reveal.on {
+  clip-path: inset(0 -10% 0 0);
+}
+
+.invitation .bigscript {
   font-family: var(--script);
-  font-size: clamp(38px, 12vw, 72px);
+  font-size: min(13cqw, 13cqh);
   line-height: 1;
+  white-space: nowrap;
+  color: var(--ink);
   text-align: center;
-  margin: 1rem 0;
 }
 
-/* ---------- Programme ---------- */
-
-.invitation__program {
+.invitation .count {
   display: grid;
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-  margin: 2rem 0 0;
-  container-type: inline-size;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
 }
 
-.invitation__program li {
+.invitation .count b {
+  display: block;
+  font-family: var(--didone);
+  font-weight: 400;
+  font-size: min(10cqw, 9cqh);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.invitation .count small {
+  font-size: min(3.4cqw, 16px);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---- Chapter 3: the programme ---- */
+
+.invitation .prog {
   background: var(--card);
   color: var(--card-ink);
-  padding: 1.2rem 1.4rem;
-  box-shadow: 0 10px 22px -12px rgb(0 0 0 / 35%);
+  padding: 6% 8% 7%;
 }
 
-.invitation__program li:nth-child(even) {
-  background: var(--env);
-  color: #f3eee5;
-}
-
-.invitation__program time {
+.invitation .prog time {
   font-family: var(--didone);
-  font-size: clamp(28px, 7vw, 44px);
+  font-size: min(7.5cqw, 44px);
   line-height: 1;
   display: block;
 }
 
-.invitation__program strong {
+.invitation .prog strong {
   display: block;
   font-weight: 500;
-  font-size: clamp(18px, 4.6vw, 26px);
-  margin-top: 0.3rem;
+  font-size: min(4.8cqw, 26px);
+  line-height: 1.2;
+  margin-top: 3%;
 }
 
-.invitation__program em {
+.invitation .prog em {
   font-family: var(--script);
   font-style: normal;
   color: var(--accent);
-  font-size: clamp(20px, 5vw, 30px);
+  font-size: min(5.6cqw, 30px);
   line-height: 1;
 }
 
-.invitation__program li:nth-child(even) em {
+.invitation .prog.dark {
+  background: var(--env);
+  color: #f3eee5;
+}
+
+.invitation .prog.dark em {
   color: #c9d39a;
 }
 
-/* ---------- Memento & note ---------- */
-
-.invitation__memento {
-  background: var(--card);
-  color: var(--card-ink);
-  padding: 1.2rem 1.4rem;
-  font-family: var(--didone);
-  display: grid;
-  gap: 0.4rem;
-  margin-top: 2rem;
-}
-
-.invitation__memento .route {
-  font-size: clamp(20px, 5vw, 28px);
-}
-
-.invitation__memento small {
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #5c5a54;
-  font-size: 0.7rem;
-}
-
-.invitation__note {
+.invitation .prog.kraft {
   background: var(--kraft);
   color: #2b2a26;
-  padding: 1.6rem;
-  font-family: var(--script);
-  font-size: clamp(26px, 7vw, 36px);
-  line-height: 1.1;
-  text-align: center;
-  margin-top: 1.5rem;
 }
 
-/* ---------- Info tags ---------- */
+/* ---- Chapter 4: the venue ---- */
 
-.invitation__tags {
-  display: grid;
-  gap: 1.6rem;
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
+.invitation .postcard {
+  background: #fbfaf6;
+  padding: 3.5%;
+  box-shadow: 0 14px 28px -10px rgb(0 0 0 / 40%);
 }
 
-.invitation__tags li {
-  background: var(--card);
-  color: var(--card-ink);
-  padding: 1.4rem 1.6rem;
-  box-shadow: 0 10px 22px -12px rgb(0 0 0 / 35%);
+.invitation .postcard .img {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  filter: grayscale(1);
+  overflow: hidden;
 }
 
-.invitation__tags h3 {
-  font-family: var(--didone);
-  font-weight: 400;
-  font-size: 1.3rem;
-  margin: 0 0 0.2rem;
-}
-
-.invitation__tags p {
-  margin: 0;
-  color: #4d4a44;
-}
-
-/* ---------- RSVP ---------- */
-
-.invitation__rsvp {
-  background: var(--card);
-  color: var(--card-ink);
-  padding: 2rem 1.6rem;
-  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 45%);
-  margin-top: 2rem;
-}
-
-.invitation__rsvp form {
-  display: grid;
-  gap: 1.1rem;
-}
-
-.invitation__rsvp label {
-  display: grid;
-  gap: 0.25rem;
-  font-size: 1.05rem;
-}
-
-.invitation__rsvp input,
-.invitation__rsvp select,
-.invitation__rsvp textarea {
+.invitation .postcard .img svg,
+.invitation .postcard .img img {
+  display: block;
   width: 100%;
-  border: 0;
-  border-bottom: 1px solid rgb(0 0 0 / 30%);
-  background: transparent;
-  padding: 0.45em 0;
-  font: inherit;
-  font-size: 1.1rem;
-  border-radius: 0;
-  color: inherit;
+  height: 100%;
+  object-fit: cover;
 }
 
-.invitation__rsvp textarea {
-  min-height: 4.5rem;
-  resize: vertical;
+.invitation .postcard .img span {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  font-family: var(--script);
+  color: #fff;
+  font-size: min(9cqw, 54px);
+  line-height: 1;
+  z-index: 1;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 40%);
 }
 
-.invitation__rsvp fieldset {
-  border: 0;
-  padding: 0;
-  margin: 0;
+.invitation .big-stamp {
+  width: 100%;
 }
 
-.invitation__notice {
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: var(--muted);
+.invitation .inkmark {
+  color: rgb(28 28 26 / 60%);
 }
 
-.invitation__btn {
+.invitation .btn {
   display: inline-block;
+  margin-top: 1.1rem;
   background: var(--env);
   color: #f3eee5;
   text-decoration: none;
@@ -489,45 +950,370 @@
   letter-spacing: 0.04em;
 }
 
-.invitation__btn:hover {
+.invitation .btn:hover {
   background: var(--env-2);
 }
 
-/* ---------- Signature ---------- */
-
-.invitation__signature {
-  text-align: center;
-  padding: 4rem 1rem 6rem;
+.invitation .btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
 }
 
-.invitation__signature .script {
+/* ---------------------------------------------------------------- */
+/* Plain sections                                                   */
+/* ---------------------------------------------------------------- */
+
+.invitation .plain {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 18svh 7vw 6svh;
+}
+
+.invitation .plain h2 {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(46px, 12vw, 72px);
+  line-height: 1;
+  margin: 0 0 2rem;
+  text-align: center;
+}
+
+.invitation .tags {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.invitation .tag {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 1.4rem 1.6rem 1.4rem 3.6rem;
+  position: relative;
+  box-shadow: 0 10px 22px -12px rgb(0 0 0 / 35%);
+  clip-path: polygon(
+    2.2rem 0,
+    100% 0,
+    100% 100%,
+    2.2rem 100%,
+    0 calc(100% - 1.6rem),
+    0 1.6rem
+  );
+  opacity: 0;
+  transform: translateX(-30px) rotate(-2deg);
+  transition:
+    opacity 0.7s,
+    transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+.invitation .tag:nth-child(even) {
+  transform: translateX(30px) rotate(2deg);
+}
+
+.invitation .tag.on {
+  opacity: 1;
+  transform: rotate(var(--r, 0deg));
+}
+
+.invitation .tag::before {
+  content: '';
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 30%);
+  transform: translateY(-50%);
+}
+
+.invitation .tag h3 {
+  font-family: var(--didone);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 0 0 0.2rem;
+}
+
+.invitation .tag p {
+  margin: 0;
+  color: #4d4a44;
+}
+
+/* ---- RSVP ---- */
+
+.invitation .rsvp {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 2.4rem 1.6rem;
+  position: relative;
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 45%);
+}
+
+.invitation .rsvp form {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.invitation .rsvp label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 1.05rem;
+}
+
+.invitation .rsvp input,
+.invitation .rsvp select,
+.invitation .rsvp textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 30%);
+  background: transparent;
+  padding: 0.45em 0;
+  font-size: 1.1rem;
+  border-radius: 0;
+}
+
+.invitation .rsvp input:focus,
+.invitation .rsvp select:focus,
+.invitation .rsvp textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.invitation .rsvp textarea {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.invitation .rsvp fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.invitation .rsvp legend {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.invitation .choice {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.invitation .choice label {
+  flex: 1;
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.invitation .choice input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.invitation .choice span {
+  display: block;
+  text-align: center;
+  border: 1px solid rgb(0 0 0 / 35%);
+  padding: 0.55em;
+  font-family: var(--script);
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.invitation .choice input:checked + span {
+  background: var(--env);
+  color: #f3eee5;
+  border-color: var(--env);
+}
+
+.invitation .choice input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Honeypot: off-screen, never announced, never tabbable. */
+.invitation .trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.invitation .rsvp .btn {
+  justify-self: center;
+  margin-top: 0.6rem;
+}
+
+.invitation .notice {
+  margin: 1.4rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #5c5a54;
+}
+
+.invitation .error {
+  margin: 0;
+  color: #96301f;
+  font-style: italic;
+}
+
+.invitation .closed {
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+.invitation .done-seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--seal) 65%, #fff) 0,
+    var(--seal) 45%,
+    color-mix(in srgb, var(--seal) 60%, #000) 100%
+  );
+  color: rgb(255 255 255 / 90%);
+  font-family: var(--script);
+  font-size: 2.6rem;
+  box-shadow: 0 8px 16px rgb(0 0 0 / 35%);
+  transform: translate(-50%, -50%) scale(2.4);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.5s cubic-bezier(0.5, 0, 0.3, 1.4),
+    opacity 0.3s;
+}
+
+.invitation .rsvp.sent .done-seal {
+  transform: translate(-50%, -80%) scale(1);
+  opacity: 1;
+}
+
+.invitation .rsvp.sent form {
+  opacity: 0.12;
+  pointer-events: none;
+  transition: opacity 0.6s;
+}
+
+.invitation .thanks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58%;
+  text-align: center;
+  font-size: 1.3rem;
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.6s 0.4s;
+}
+
+.invitation .rsvp.sent .thanks {
+  opacity: 1;
+}
+
+/* ---- Signature ---- */
+
+.invitation .sign {
+  text-align: center;
+  padding: 10svh 1rem 16svh;
+}
+
+.invitation .sign .script {
   font-size: clamp(56px, 15vw, 96px);
   line-height: 1;
   display: block;
 }
 
-.invitation__signature p {
+.invitation .sign p {
   margin: 0.6rem 0 0;
   color: var(--muted);
   font-style: italic;
 }
 
-/* ---------- Demo-mode banner ---------- */
+/* ---- Demo banner ---- */
 
-.invitation__demo-banner {
+.invitation .demo-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
   background: var(--env);
   color: #f3eee5;
   text-align: center;
-  padding: 0.6rem 1rem;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
+  padding: 0.35rem 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* Reduced motion                                                   */
+/* ---------------------------------------------------------------- */
+
+/*
+ * The chapters stop being scroll-driven: the sticky scene becomes an ordinary
+ * block, every piece is simply there, and the sentences stack instead of
+ * replacing one another. Nothing moves, nothing is hidden, nothing is locked.
+ */
+.invitation[data-reduced='true'] .chapter {
+  height: auto;
+}
+
+.invitation[data-reduced='true'] .sticky {
+  position: static;
+  height: auto;
+  overflow: visible;
+  /*
+   * `.board` is a `size` container, so it needs a definite height: an `auto`
+   * row would collapse it to nothing. A fixed first row keeps the collage
+   * visible while the sentences below grow to whatever they need.
+   */
+  grid-template-rows: 70svh auto;
 }
 
 @media (min-width: 820px) {
-  .invitation__section {
-    padding: 4rem 2rem;
+  .invitation[data-reduced='true'] .sticky {
+    grid-template-rows: 1fr;
   }
+}
+
+.invitation[data-reduced='true'] .line {
+  grid-area: auto;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.invitation[data-reduced='true'] .lines {
+  gap: 0.7rem;
+}
+
+.invitation[data-reduced='true'] .it,
+.invitation[data-reduced='true'] .tag {
+  opacity: 1;
+  transform: var(--to, none);
+}
+
+.invitation[data-reduced='true'] .reveal {
+  clip-path: none;
+}
+
+.invitation[data-reduced='true'] .cue {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -535,6 +1321,7 @@
   .invitation *::before,
   .invitation *::after {
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     animation: none !important;
   }
 }

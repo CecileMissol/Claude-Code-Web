@@ -1,9 +1,13 @@
 {
   "title": "Mes invitations",
   "intro": "Toutes les invitations liées à votre compte.",
-  "empty": "Vous n'avez pas encore d'invitation.",
+  "empty": "Vous n’avez pas encore d’invitation.",
   "emptyCta": "Activez un achat pour créer la première.",
   "createdAt": "Créée le {date}",
+  "updatedAt": "Modifiée le {date}",
+  "untitled": "Invitation sans prénoms",
+  "theme": "Thème",
+  "coupleNames": "{partner1} & {partner2}",
   "status": {
     "draft": "Brouillon",
     "published": "Publiée",
@@ -13,8 +17,13 @@
   "actions": {
     "edit": "Modifier",
     "responses": "Réponses",
-    "view": "Ouvrir l'invitation"
+    "share": "Partager",
+    "view": "Ouvrir l’invitation",
+    "create": "Créer une invitation",
+    "creating": "Création…"
   },
+  "createHint": "En attendant l’activation Etsy, ce bouton crée un brouillon sur le thème « Noir & ivoire ».",
+  "unreadable": "Cette invitation n’a pas pu être lue.",
   "responses": {
     "title": "Réponses",
     "intro": "Qui vient, et qui décline."

@@ -62,6 +62,18 @@
     },
   ],
 
+  // --------------------------------------------------------------------------
+  // Scheduled jobs (phase 6, GDPR retention).
+  // Daily at 03:15 UTC: deletes RSVPs more than RSVP_RETENTION_MONTHS after the
+  // event, and expires publications whose hosting window has closed.
+  // NOTE: @opennextjs/cloudflare generates a worker that exports `fetch` only,
+  // so this trigger has nothing to call until the entry point is wrapped — see
+  // docs/phase-5-6-publication-rsvp.md §6. Until then the same job is reachable
+  // at POST /api/cron/retention, protected by the CRON_SECRET secret.
+  "triggers": {
+    "crons": ["15 3 * * *"],
+  },
+
   "vars": {
     "APP_URL": "http://localhost:3000",
     "MAIL_FROM": "Invitations <no-reply@example.com>",
