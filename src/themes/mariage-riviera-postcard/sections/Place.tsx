@@ -92,7 +92,7 @@ export function Place({
           <Piece
             at={at.shell}
             style={pieceStyle(
-              { left: '-2%', bottom: '14%', width: '22%', transformOrigin: '20% 80%' },
+              { left: '3%', bottom: '3%', width: '20%', transformOrigin: '20% 80%' },
               { from: 'scale(0) rotate(-40deg)', to: 'rotate(-12deg)' },
             )}
           >
@@ -103,7 +103,7 @@ export function Place({
             at={at.waves}
             className="sea"
             style={pieceStyle(
-              { right: '2%', bottom: '4%', width: '54%' },
+              { right: '4%', bottom: '6%', width: '48%' },
               { from: 'translateX(70vw)', to: 'none' },
             )}
           >

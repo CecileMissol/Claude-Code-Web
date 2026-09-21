@@ -84,23 +84,24 @@ interface Wedge {
 }
 
 /**
- * The beach parasol is a half-disc cut into wedges that alternate between the
- * palette ink and the white of the canvas. Generated rather than hand-drawn so
- * the scallop of the hem lands exactly on each seam.
+ * The beach parasol is a shallow elliptical dome cut into wedges that alternate
+ * between the palette ink and the white of the canvas. Wide and low, not a half
+ * disc: a semicircle on a pole reads as a folding fan, which is what the first
+ * pass of this illustration looked like.
  */
-function buildParasol(segments = 8, radius = 74, cx = 80, cy = 96): Wedge[] {
+function buildParasol(segments = 8, rx = 82, ry = 46, cx = 85, cy = 76): Wedge[] {
   const wedges: Wedge[] = [];
   for (let i = 0; i < segments; i += 1) {
     const a0 = Math.PI + (i / segments) * Math.PI;
     const a1 = Math.PI + ((i + 1) / segments) * Math.PI;
-    const x0 = cx + Math.cos(a0) * radius;
-    const y0 = cy + Math.sin(a0) * radius;
-    const x1 = cx + Math.cos(a1) * radius;
-    const y1 = cy + Math.sin(a1) * radius;
-    // The hem dips between two seams: a quadratic sag on the way back.
+    const x0 = cx + Math.cos(a0) * rx;
+    const y0 = cy + Math.sin(a0) * ry;
+    const x1 = cx + Math.cos(a1) * rx;
+    const y1 = cy + Math.sin(a1) * ry;
+    // The hem sags a little between two seams: a shallow scallop, not a spike.
     const mid = (a0 + a1) / 2;
-    const mx = cx + Math.cos(mid) * (radius + 9);
-    const my = cy + Math.sin(mid) * (radius + 9);
+    const mx = cx + Math.cos(mid) * (rx + 3);
+    const my = cy + Math.sin(mid) * (ry + 7);
     wedges.push({
       d: `M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)} Z`,
       striped: i % 2 === 0,
@@ -241,7 +242,7 @@ export function IllustrationDefs() {
               <path
                 key={angle}
                 transform={`rotate(${angle})`}
-                d={`M0 0 L${(bract.r * 0.78).toFixed(1)} ${(-bract.r * 0.62).toFixed(1)} Q${bract.r.toFixed(1)} ${(-bract.r * 1.5).toFixed(1)} 0 ${(-bract.r * 1.35).toFixed(1)} Q${(-bract.r).toFixed(1)} ${(-bract.r * 1.5).toFixed(1)} ${(-bract.r * 0.78).toFixed(1)} ${(-bract.r * 0.62).toFixed(1)} Z`}
+                d={`M0 0 L${(bract.r * 0.9).toFixed(1)} ${(-bract.r * 0.75).toFixed(1)} L${(bract.r * 0.42).toFixed(1)} ${(-bract.r * 1.62).toFixed(1)} L0 ${(-bract.r * 1.2).toFixed(1)} L${(-bract.r * 0.42).toFixed(1)} ${(-bract.r * 1.62).toFixed(1)} L${(-bract.r * 0.9).toFixed(1)} ${(-bract.r * 0.75).toFixed(1)} Z`}
                 style={{ fill: BRACT_TONES[bract.tone] }}
               />
             ))}
@@ -251,9 +252,9 @@ export function IllustrationDefs() {
       </symbol>
 
       {/* ---- Beach parasol ---- */}
-      <symbol id={PARASOL_ID} viewBox="0 0 160 190">
+      <symbol id={PARASOL_ID} viewBox="0 0 170 150">
         <path
-          d="M79 94 L79 188"
+          d="M84 76 L84 146"
           style={{ stroke: 'var(--stem)' }}
           strokeWidth="4"
           strokeLinecap="round"
@@ -263,18 +264,18 @@ export function IllustrationDefs() {
             key={index}
             d={wedge.d}
             style={{ fill: wedge.striped ? 'var(--seal)' : '#FFFBF1' }}
-            stroke="rgba(30,58,95,.18)"
+            stroke="rgba(30,58,95,.16)"
             strokeWidth="0.8"
           />
         ))}
-        <circle cx="80" cy="96" r="5" style={{ fill: 'var(--accent)' }} />
+        <path d="M3 76 L167 76" stroke="rgba(30,58,95,.2)" strokeWidth="1.2" fill="none" />
         <path
-          d="M80 22 L80 6"
+          d="M85 28 L85 14"
           style={{ stroke: 'var(--stem)' }}
           strokeWidth="3.4"
           strokeLinecap="round"
         />
-        <circle cx="80" cy="4" r="4" style={{ fill: 'var(--accent)' }} />
+        <circle cx="85" cy="12" r="4.5" style={{ fill: 'var(--accent)' }} />
       </symbol>
 
       {/* ---- Scallop shell ---- */}
@@ -420,7 +421,7 @@ export function Parasol({ className, rotate }: IllustrationProps) {
   return (
     <svg
       className={className}
-      viewBox="0 0 160 190"
+      viewBox="0 0 170 150"
       aria-hidden="true"
       focusable="false"
       style={rotateStyle(rotate)}
