@@ -1,0 +1,22 @@
+{
+  "title": "My invitations",
+  "intro": "Every invitation linked to your account.",
+  "empty": "You do not have any invitation yet.",
+  "emptyCta": "Activate a purchase to create your first one.",
+  "createdAt": "Created on {date}",
+  "status": {
+    "draft": "Draft",
+    "published": "Published",
+    "expired": "Expired",
+    "disabled": "Disabled"
+  },
+  "actions": {
+    "edit": "Edit",
+    "responses": "Responses",
+    "view": "Open the invitation"
+  },
+  "responses": {
+    "title": "Responses",
+    "intro": "Who is coming, and who sends their regrets."
+  }
+}

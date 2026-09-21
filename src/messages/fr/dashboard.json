@@ -1,0 +1,22 @@
+{
+  "title": "Mes invitations",
+  "intro": "Toutes les invitations liées à votre compte.",
+  "empty": "Vous n'avez pas encore d'invitation.",
+  "emptyCta": "Activez un achat pour créer la première.",
+  "createdAt": "Créée le {date}",
+  "status": {
+    "draft": "Brouillon",
+    "published": "Publiée",
+    "expired": "Expirée",
+    "disabled": "Désactivée"
+  },
+  "actions": {
+    "edit": "Modifier",
+    "responses": "Réponses",
+    "view": "Ouvrir l'invitation"
+  },
+  "responses": {
+    "title": "Réponses",
+    "intro": "Qui vient, et qui décline."
+  }
+}

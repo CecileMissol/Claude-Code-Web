@@ -1,0 +1,10 @@
+{
+  "title": "Administration",
+  "intro": "Activations, invitations et erreurs.",
+  "forbidden": "Cet espace est réservé.",
+  "sections": {
+    "activations": "Activations",
+    "invitations": "Invitations",
+    "audit": "Journal d'audit"
+  }
+}

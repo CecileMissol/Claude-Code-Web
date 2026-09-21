@@ -1,0 +1,18 @@
+{
+  "title": "Modifier votre invitation",
+  "intro": "Remplissez les étapes à gauche, l'invitation se met à jour à droite.",
+  "steps": {
+    "couple": "Vous deux",
+    "event": "Date et lieu",
+    "story": "Votre histoire",
+    "photos": "Photos",
+    "program": "Programme",
+    "info": "Infos pratiques",
+    "rsvp": "RSVP",
+    "style": "Style",
+    "publish": "Lien et publication"
+  },
+  "save": "Enregistrer",
+  "saved": "Enregistré",
+  "preview": "Aperçu en direct"
+}

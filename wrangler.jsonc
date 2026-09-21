@@ -1,0 +1,88 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "invitations-web",
+  "main": ".open-next/worker.js",
+  // Must stay >= 2024-09-23 for @opennextjs/cloudflare.
+  "compatibility_date": "2025-09-23",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+
+  // --------------------------------------------------------------------------
+  // Bindings.
+  // Every *_id / bucket name below is a PLACEHOLDER: replace it with the real
+  // identifier printed by the `wrangler ... create` commands documented in
+  // docs/phase-2-socle.md before the first `pnpm deploy`.
+  // --------------------------------------------------------------------------
+
+  // D1 — created with: wrangler d1 create invitations-db --location-hint weur
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "invitations-db",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle"
+    }
+  ],
+
+  // R2 — created with: wrangler r2 bucket create invitations-photos --jurisdiction eu
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "invitations-photos",
+      "jurisdiction": "eu"
+    }
+  ],
+
+  // KV — created with: wrangler kv namespace create NEXT_INC_CACHE_KV
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "00000000000000000000000000000000"
+    },
+    // Published-invitation cache, invalidated on publish.
+    {
+      "binding": "CACHE",
+      "id": "11111111111111111111111111111111"
+    }
+  ],
+
+  // Workers native rate limiting. `namespace_id` is a free integer, unique per
+  // limiter inside this Worker; nothing has to be created in the dashboard.
+  "ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 20, "period": 60 }
+    }
+  ],
+
+  "vars": {
+    "APP_URL": "http://localhost:3000",
+    "MAIL_FROM": "Invitations <no-reply@example.com>",
+    "MAIL_DRIVER": "console",
+    "R2_PUBLIC_BASE_URL": "http://localhost:3000/api/photos",
+    "ADMIN_EMAILS": ""
+  },
+
+  // Secrets (never stored here): BETTER_AUTH_SECRET, RESEND_API_KEY.
+  // Set them with `wrangler secret put <NAME>`; locally, put them in .dev.vars.
+
+  "env": {
+    "preview": {
+      "name": "invitations-web-preview",
+      "vars": {
+        "APP_URL": "https://invitations-web-preview.workers.dev",
+        "MAIL_FROM": "Invitations <no-reply@example.com>",
+        "MAIL_DRIVER": "console",
+        "R2_PUBLIC_BASE_URL": "https://invitations-web-preview.workers.dev/api/photos",
+        "ADMIN_EMAILS": ""
+      }
+    }
+  }
+}

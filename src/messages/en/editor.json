@@ -1,0 +1,18 @@
+{
+  "title": "Edit your invitation",
+  "intro": "Fill in the steps on the left, watch the invitation change on the right.",
+  "steps": {
+    "couple": "The two of you",
+    "event": "Date and venue",
+    "story": "Your story",
+    "photos": "Photos",
+    "program": "Programme",
+    "info": "Good to know",
+    "rsvp": "RSVP",
+    "style": "Style",
+    "publish": "Link and publishing"
+  },
+  "save": "Save",
+  "saved": "Saved",
+  "preview": "Live preview"
+}
