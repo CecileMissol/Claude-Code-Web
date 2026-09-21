@@ -89,7 +89,7 @@ export function Story({
           <Piece
             at={at.parasol}
             style={pieceStyle(
-              { left: '-6%', bottom: '-4%', width: '46%', transformOrigin: '50% 100%' },
+              { left: '1%', bottom: '1%', width: '42%', transformOrigin: '50% 100%' },
               { from: 'translateY(60vh) rotate(-38deg)', to: 'rotate(-6deg)' },
             )}
           >

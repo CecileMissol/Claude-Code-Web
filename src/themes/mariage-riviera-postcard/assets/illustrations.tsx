@@ -83,14 +83,22 @@ interface Wedge {
   striped: boolean;
 }
 
+interface ParasolShape {
+  wedges: Wedge[];
+  /** The scalloped hem, as one path, so the canopy has a drawn edge. */
+  hem: string;
+}
+
 /**
  * The beach parasol is a shallow elliptical dome cut into wedges that alternate
  * between the palette ink and the white of the canvas. Wide and low, not a half
  * disc: a semicircle on a pole reads as a folding fan, which is what the first
  * pass of this illustration looked like.
  */
-function buildParasol(segments = 8, rx = 82, ry = 46, cx = 85, cy = 76): Wedge[] {
+function buildParasol(segments = 8, rx = 82, ry = 46, cx = 85, cy = 76): ParasolShape {
   const wedges: Wedge[] = [];
+  let hem = '';
+
   for (let i = 0; i < segments; i += 1) {
     const a0 = Math.PI + (i / segments) * Math.PI;
     const a1 = Math.PI + ((i + 1) / segments) * Math.PI;
@@ -102,15 +110,20 @@ function buildParasol(segments = 8, rx = 82, ry = 46, cx = 85, cy = 76): Wedge[]
     const mid = (a0 + a1) / 2;
     const mx = cx + Math.cos(mid) * (rx + 3);
     const my = cy + Math.sin(mid) * (ry + 7);
+    const arc = `Q${mx.toFixed(1)} ${my.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+
     wedges.push({
-      d: `M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)} Z`,
+      d: `M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} ${arc} Z`,
       striped: i % 2 === 0,
     });
+    if (i === 0) hem += `M${x0.toFixed(1)} ${y0.toFixed(1)} `;
+    hem += `${arc} `;
   }
-  return wedges;
+
+  return { wedges, hem: hem.trim() };
 }
 
-const PARASOL_WEDGES = buildParasol();
+const PARASOL = buildParasol();
 
 /* -------------------------------------------------------------------------- */
 /* Shared <defs> block                                                        */
@@ -252,22 +265,31 @@ export function IllustrationDefs() {
       </symbol>
 
       {/* ---- Beach parasol ---- */}
-      <symbol id={PARASOL_ID} viewBox="0 0 170 150">
+      <symbol id={PARASOL_ID} viewBox="0 0 170 132">
         <path
-          d="M84 76 L84 146"
+          d="M84 76 L84 128"
           style={{ stroke: 'var(--stem)' }}
           strokeWidth="4"
           strokeLinecap="round"
         />
-        {PARASOL_WEDGES.map((wedge, index) => (
+        {PARASOL.wedges.map((wedge, index) => (
           <path
             key={index}
             d={wedge.d}
-            style={{ fill: wedge.striped ? 'var(--seal)' : '#FFFBF1' }}
-            stroke="rgba(30,58,95,.16)"
-            strokeWidth="0.8"
+            style={{ fill: wedge.striped ? 'var(--seal)' : '#FFFFFF' }}
+            stroke="rgba(30,58,95,.28)"
+            strokeWidth="1"
           />
         ))}
+        {/* A drawn hem, so the white panels read as canvas and not as background. */}
+        <path
+          d={PARASOL.hem}
+          fill="none"
+          style={{ stroke: 'var(--seal)' }}
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          opacity=".55"
+        />
         <path d="M3 76 L167 76" stroke="rgba(30,58,95,.2)" strokeWidth="1.2" fill="none" />
         <path
           d="M85 28 L85 14"
@@ -421,7 +443,7 @@ export function Parasol({ className, rotate }: IllustrationProps) {
   return (
     <svg
       className={className}
-      viewBox="0 0 170 150"
+      viewBox="0 0 170 132"
       aria-hidden="true"
       focusable="false"
       style={rotateStyle(rotate)}
@@ -650,8 +672,12 @@ export function PhotoPlaceholder({
       )}
       {variant === 'terrace' && (
         <>
-          <rect width="300" height="315" fill="#F4EDE0" />
-          <rect y="206" width="300" height="109" fill="#E3D6C0" />
+          <rect width="300" height="315" fill="#F6EFE2" />
+          <rect y="112" width="300" height="94" fill="#EFE3CE" />
+          <rect y="206" width="300" height="109" fill="#D9C7A6" />
+          <g stroke="#C9B48F" strokeWidth="2">
+            <path d="M0 240 H300 M0 274 H300 M60 206 V315 M150 206 V315 M240 206 V315" />
+          </g>
           {/* Striped awning hanging from the top, with a scalloped hem. */}
           <rect width="300" height="112" fill="#FBF6EA" />
           <g fill="#1E3A5F">

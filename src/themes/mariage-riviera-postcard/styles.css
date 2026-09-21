@@ -483,9 +483,15 @@ html.invitation-locked body {
 
 .invitation[data-theme='mariage-riviera-postcard'] .postmark {
   position: absolute;
-  right: 22%;
-  top: 13%;
-  width: 32%;
+  /*
+   * The cancellation waves trail to the right of the ring, so the ring goes to
+   * the left of the stamps: pushed any further right and the waves run straight
+   * across the two illustrated stamps and make them unreadable — and the
+   * colourable stamps are half the argument of this theme.
+   */
+  right: 32%;
+  top: 23%;
+  width: 26%;
   color: color-mix(in srgb, var(--seal) 72%, transparent);
   z-index: 2;
 }
@@ -499,8 +505,8 @@ html.invitation-locked body {
   color: #fff;
   font-family: var(--sans);
   font-weight: 600;
-  font-size: 2.3cqw;
-  letter-spacing: 0.22em;
+  font-size: 2.2cqw;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 0.7cqw 1.8cqw;
   border-radius: 2px;
@@ -533,9 +539,9 @@ html.invitation-locked body {
 
 .invitation[data-theme='mariage-riviera-postcard'] .lay {
   position: absolute;
-  width: 17%;
-  left: 58%;
-  bottom: -6%;
+  width: 14%;
+  left: 60%;
+  bottom: 4%;
   display: block;
   transform: rotate(48deg);
   transform-origin: 50% 100%;
@@ -1394,14 +1400,19 @@ html.invitation-locked body {
   gap: 1.7rem;
 }
 
-/* Practical notes, written on luggage tags. */
+/*
+ * Practical notes, written on luggage tags: pointed at the left, punched with
+ * an eyelet, in the same warm card stock as the keepsake of chapter 1.
+ */
 .invitation[data-theme='mariage-riviera-postcard'] .tag {
-  background: var(--card);
+  background: linear-gradient(170deg, #fdf5e4, #f7ead0);
   color: var(--card-ink);
-  padding: 1.35rem 1.6rem 1.35rem 4rem;
+  padding: 1.4rem 1.6rem 1.4rem 3.6rem;
   position: relative;
-  box-shadow: 0 12px 24px -14px rgb(27 42 58 / 40%);
-  clip-path: polygon(2.6rem 0, 100% 0, 100% 100%, 2.6rem 100%, 0 50%);
+  box-shadow:
+    0 12px 24px -14px rgb(27 42 58 / 45%),
+    inset 0 0 0 1px rgb(30 58 95 / 10%);
+  clip-path: polygon(2.4rem 0, 100% 0, 100% 100%, 2.4rem 100%, 0.2rem 50%);
   opacity: 0;
   transform: translateX(-30px) rotate(-2deg);
   transition:
@@ -1418,28 +1429,30 @@ html.invitation-locked body {
   transform: rotate(var(--r, 0deg));
 }
 
+/* The punched eyelet, inside the pointed end. */
 .invitation[data-theme='mariage-riviera-postcard'] .tag::before {
   content: '';
   position: absolute;
-  left: 2rem;
+  left: 1rem;
   top: 50%;
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.8rem;
+  height: 0.8rem;
   border-radius: 50%;
   background: var(--bg);
   box-shadow: inset 0 0 0 2px var(--seal);
   transform: translateY(-50%);
 }
 
+/* The stitched fold the writing starts after. */
 .invitation[data-theme='mariage-riviera-postcard'] .tag::after {
   content: '';
   position: absolute;
-  left: 2.6rem;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: repeating-linear-gradient(180deg, var(--accent) 0 8px, transparent 8px 16px);
-  opacity: 0.8;
+  left: 2.4rem;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 2px;
+  background: repeating-linear-gradient(180deg, var(--seal) 0 5px, transparent 5px 10px);
+  opacity: 0.45;
 }
 
 .invitation[data-theme='mariage-riviera-postcard'] .tag h3 {
@@ -1680,7 +1693,7 @@ html.invitation-locked body {
   width: min(220px, 52vw);
   margin: 0 auto 1.4rem;
   color: var(--seal);
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 .invitation[data-theme='mariage-riviera-postcard'] .sign .script {

@@ -74,8 +74,8 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
           <Piece
             at={PIECE_AT.program.lemon}
             style={pieceStyle(
-              { right: '-2%', bottom: '2%', width: '26%', transformOrigin: '70% 100%' },
-              { from: 'scale(0.2) rotate(40deg)', to: 'rotate(8deg)' },
+              { right: '0%', bottom: '6%', width: '24%', transformOrigin: '70% 100%' },
+              { from: 'scale(0.2) rotate(40deg)', to: 'rotate(12deg)' },
             )}
           >
             <LemonBranch />
