@@ -1,6 +1,7 @@
 'use server';
 
 import { cookies, headers } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import {
   DEFAULT_LOCALE,
   LOCALE_COOKIE,
@@ -32,4 +33,17 @@ export async function setUserLocale(locale: Locale): Promise<void> {
     sameSite: 'lax',
     httpOnly: false,
   });
+}
+
+/**
+ * Server action used by the language switcher form.
+ * Reads `locale` from the submitted form data, stores it in the cookie and
+ * re-renders the current page.
+ */
+export async function switchLocaleAction(formData: FormData): Promise<void> {
+  const requested = formData.get('locale');
+  if (isLocale(requested)) {
+    await setUserLocale(requested);
+  }
+  revalidatePath('/', 'layout');
 }

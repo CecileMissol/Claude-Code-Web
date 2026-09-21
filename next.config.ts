@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Do not write AGENTS.md / CLAUDE.md into the repository.
+  agentRules: false,
   // Photos are resized client-side before upload and served straight from R2,
   // so the built-in optimizer (unavailable on Workers) is not needed.
   images: { unoptimized: true },

@@ -1,0 +1,48 @@
+{
+  "intro": {
+    "kicker": "Une lettre pour vous",
+    "openLabel": "Ouvrir l'enveloppe",
+    "hint": "Touchez l'enveloppe pour l'ouvrir",
+    "scrollCue": "Faites défiler",
+    "saveTheDate": "Save the date",
+    "weAreGettingMarried": "on se marie !"
+  },
+  "chapters": {
+    "story": "Notre histoire",
+    "date": "La date",
+    "program": "Le programme",
+    "place": "Le lieu"
+  },
+  "countdown": {
+    "days": "jours",
+    "hours": "heures",
+    "minutes": "minutes",
+    "seconds": "secondes"
+  },
+  "place": {
+    "directions": "Ouvrir l'itinéraire"
+  },
+  "info": {
+    "title": "Bon à savoir"
+  },
+  "rsvp": {
+    "title": "Vous venez ?",
+    "name": "Nom et prénom",
+    "email": "E-mail",
+    "attendingLegend": "Serez-vous des nôtres ?",
+    "yes": "Avec joie",
+    "no": "À regret",
+    "guests": "Nombre de personnes",
+    "diet": "Allergies ou régime particulier",
+    "message": "Un mot pour les mariés",
+    "submit": "Envoyer ma réponse",
+    "thanks": "Merci, votre réponse est bien arrivée.",
+    "closed": "Les réponses sont closes.",
+    "dataNotice": "Votre réponse est transmise uniquement aux mariés et supprimée six mois après l'événement.",
+    "addToCalendar": "Ajouter à mon agenda"
+  },
+  "signature": {
+    "farewell": "À très vite"
+  },
+  "demoBanner": "Démonstration"
+}

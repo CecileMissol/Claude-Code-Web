@@ -1,12 +1,9 @@
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { FlatCompat } from '@eslint/eslintrc';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const compat = new FlatCompat({ baseDirectory: __dirname });
-
-export default [
+/** Flat ESLint configuration. `eslint-config-next` ships native flat configs. */
+const config = [
   {
     ignores: [
       '.next/**',
@@ -20,7 +17,8 @@ export default [
       'tests/e2e/screenshots/**',
     ],
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     rules: {
       '@typescript-eslint/no-unused-vars': [
@@ -35,3 +33,5 @@ export default [
   },
   prettier,
 ];
+
+export default config;

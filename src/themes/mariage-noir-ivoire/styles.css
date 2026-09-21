@@ -1,0 +1,540 @@
+/*
+ * "Noir & ivoire" theme stylesheet.
+ *
+ * Everything is scoped under `.invitation` so the theme never leaks into the
+ * Tailwind-styled application shell, and so the application shell never leaks
+ * into the invitation.
+ *
+ * Dark mode is deliberately NOT supported here: the couple picks a palette and
+ * every guest must see exactly that palette (decision of phase 1, §1.3.8).
+ *
+ * The six palette variables (--env, --env-2, --seal, --accent, --stem,
+ * --liner) and --script are injected inline by `Invitation.tsx` from
+ * `manifest.ts`, which is the single source of truth. The values below are
+ * fallbacks only, so the stylesheet still renders on its own.
+ */
+
+.invitation {
+  /* Palette fallback: "noir". */
+  --env: #1d1d1b;
+  --env-2: #262624;
+  --seal: #55632f;
+  --accent: #6e8228;
+  --stem: #7c972c;
+  --liner: #dcd7cb;
+
+  /* Base tokens, taken from the validated mock-up. */
+  --serif: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --didone: 'Bodoni Moda', Didot, Georgia, serif;
+  --script: 'Pinyon Script', 'Snell Roundhand', cursive;
+  --bg: #ede8e0;
+  --ink: #1c1c1a;
+  --muted: #6b675f;
+  --card: #faf7f1;
+  --card-ink: #1c1c1a;
+  --kraft: #cfc3ae;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+
+  box-sizing: border-box;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.invitation *,
+.invitation *::before,
+.invitation *::after {
+  box-sizing: inherit;
+}
+
+.invitation :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.invitation .script {
+  font-family: var(--script);
+  font-weight: 400;
+}
+
+.invitation .caps {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.72em;
+}
+
+/* ---------- Layout of the static (non-animated) rendering ---------- */
+
+.invitation__section {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 3rem 7vw;
+}
+
+.invitation__kicker {
+  font-family: var(--script);
+  font-size: clamp(34px, 9vw, 52px);
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.invitation__title {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(40px, 11vw, 68px);
+  line-height: 1;
+  margin: 0 0 1rem;
+}
+
+.invitation__lines {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 28ch;
+}
+
+.invitation__lines li {
+  font-size: clamp(19px, 4.6vw, 24px);
+  line-height: 1.35;
+}
+
+.invitation__hint {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- Envelope (static preview of the animated intro) ---------- */
+
+.invitation__envelope {
+  position: relative;
+  width: min(82vw, 440px);
+  aspect-ratio: 1.45;
+  margin: 0 auto;
+  container-type: inline-size;
+  background: var(--env);
+  border-radius: 3px;
+  box-shadow: 0 22px 40px -14px rgb(0 0 0 / 50%);
+  overflow: hidden;
+}
+
+.invitation__envelope::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.invitation__address {
+  position: absolute;
+  left: 8%;
+  bottom: 17%;
+  color: #f3eee5;
+  z-index: 1;
+}
+
+.invitation__address .script {
+  font-size: 12cqw;
+  line-height: 1;
+  display: block;
+}
+
+.invitation__address .caps {
+  font-family: var(--didone);
+  font-size: 3.2cqw;
+  letter-spacing: 0.45em;
+  margin-top: 3cqw;
+  display: block;
+}
+
+.invitation__postmark {
+  position: absolute;
+  right: 6%;
+  top: 8%;
+  z-index: 2;
+  font-family: var(--didone);
+  font-size: 3.2cqw;
+  letter-spacing: 0.2em;
+  color: rgb(255 255 255 / 55%);
+  border: 1.3px solid currentcolor;
+  border-radius: 999px;
+  padding: 0.6em 1em;
+}
+
+.invitation__seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 19%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--seal) 65%, #fff) 0,
+    var(--seal) 45%,
+    color-mix(in srgb, var(--seal) 60%, #000) 100%
+  );
+  box-shadow:
+    0 3px 8px rgb(0 0 0 / 35%),
+    inset 0 0 0 0.9cqw color-mix(in srgb, var(--seal) 80%, #000);
+  color: rgb(255 255 255 / 85%);
+  font-family: var(--script);
+  font-size: 6.5cqw;
+}
+
+/* ---------- Save the date ticket ---------- */
+
+.invitation__ticket {
+  background: var(--card);
+  color: var(--card-ink);
+  container-type: inline-size;
+  max-width: 440px;
+  margin: 2rem auto 0;
+  padding: 1.4rem 1rem;
+  text-align: center;
+  box-shadow: 0 6px 18px -6px rgb(0 0 0 / 35%);
+}
+
+.invitation__ticket .t1 {
+  font-family: var(--didone);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 3.3cqw;
+}
+
+.invitation__ticket .t2 {
+  font-family: var(--didone);
+  font-size: 11.5cqw;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+}
+
+.invitation__ticket .t3 {
+  font-family: var(--script);
+  font-size: 7cqw;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* ---------- Photo placeholders ---------- */
+
+.invitation__polaroid {
+  background: #fbfaf6;
+  padding: 6% 6% 22%;
+  box-shadow: 0 12px 26px -8px rgb(0 0 0 / 35%);
+  position: relative;
+  container-type: inline-size;
+}
+
+.invitation__photo {
+  aspect-ratio: 1 / 1.05;
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  background: linear-gradient(#dcdcdc, #b3b3b3);
+  box-shadow: inset 0 0 30px rgb(0 0 0 / 35%);
+}
+
+.invitation__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4%;
+  text-align: center;
+  font-family: var(--script);
+  color: #3a3a36;
+  font-size: clamp(12px, 4.6cqw, 30px);
+  line-height: 1;
+}
+
+.invitation__gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* ---------- Date ---------- */
+
+.invitation__scraps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+  container-type: inline-size;
+}
+
+.invitation__scrap {
+  display: grid;
+  place-items: center;
+  font-family: var(--didone);
+  font-size: min(14cqw, 72px);
+  line-height: 1;
+  padding: 8% 0;
+}
+
+.invitation__scrap:nth-child(1) {
+  background: var(--env);
+  color: #f3eee5;
+}
+
+.invitation__scrap:nth-child(2) {
+  background: var(--card);
+  color: var(--card-ink);
+}
+
+.invitation__scrap:nth-child(3) {
+  background: var(--kraft);
+  color: #2b2a26;
+}
+
+.invitation__highlight {
+  font-family: var(--script);
+  font-size: clamp(38px, 12vw, 72px);
+  line-height: 1;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* ---------- Programme ---------- */
+
+.invitation__program {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  container-type: inline-size;
+}
+
+.invitation__program li {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 10px 22px -12px rgb(0 0 0 / 35%);
+}
+
+.invitation__program li:nth-child(even) {
+  background: var(--env);
+  color: #f3eee5;
+}
+
+.invitation__program time {
+  font-family: var(--didone);
+  font-size: clamp(28px, 7vw, 44px);
+  line-height: 1;
+  display: block;
+}
+
+.invitation__program strong {
+  display: block;
+  font-weight: 500;
+  font-size: clamp(18px, 4.6vw, 26px);
+  margin-top: 0.3rem;
+}
+
+.invitation__program em {
+  font-family: var(--script);
+  font-style: normal;
+  color: var(--accent);
+  font-size: clamp(20px, 5vw, 30px);
+  line-height: 1;
+}
+
+.invitation__program li:nth-child(even) em {
+  color: #c9d39a;
+}
+
+/* ---------- Memento & note ---------- */
+
+.invitation__memento {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 1.2rem 1.4rem;
+  font-family: var(--didone);
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 2rem;
+}
+
+.invitation__memento .route {
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+.invitation__memento small {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5c5a54;
+  font-size: 0.7rem;
+}
+
+.invitation__note {
+  background: var(--kraft);
+  color: #2b2a26;
+  padding: 1.6rem;
+  font-family: var(--script);
+  font-size: clamp(26px, 7vw, 36px);
+  line-height: 1.1;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Info tags ---------- */
+
+.invitation__tags {
+  display: grid;
+  gap: 1.6rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.invitation__tags li {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 10px 22px -12px rgb(0 0 0 / 35%);
+}
+
+.invitation__tags h3 {
+  font-family: var(--didone);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 0 0 0.2rem;
+}
+
+.invitation__tags p {
+  margin: 0;
+  color: #4d4a44;
+}
+
+/* ---------- RSVP ---------- */
+
+.invitation__rsvp {
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 2rem 1.6rem;
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 45%);
+  margin-top: 2rem;
+}
+
+.invitation__rsvp form {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.invitation__rsvp label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 1.05rem;
+}
+
+.invitation__rsvp input,
+.invitation__rsvp select,
+.invitation__rsvp textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 30%);
+  background: transparent;
+  padding: 0.45em 0;
+  font: inherit;
+  font-size: 1.1rem;
+  border-radius: 0;
+  color: inherit;
+}
+
+.invitation__rsvp textarea {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.invitation__rsvp fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.invitation__notice {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.invitation__btn {
+  display: inline-block;
+  background: var(--env);
+  color: #f3eee5;
+  text-decoration: none;
+  border: 0;
+  padding: 0.7em 1.6em;
+  border-radius: 40px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.invitation__btn:hover {
+  background: var(--env-2);
+}
+
+/* ---------- Signature ---------- */
+
+.invitation__signature {
+  text-align: center;
+  padding: 4rem 1rem 6rem;
+}
+
+.invitation__signature .script {
+  font-size: clamp(56px, 15vw, 96px);
+  line-height: 1;
+  display: block;
+}
+
+.invitation__signature p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- Demo-mode banner ---------- */
+
+.invitation__demo-banner {
+  background: var(--env);
+  color: #f3eee5;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 820px) {
+  .invitation__section {
+    padding: 4rem 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation *,
+  .invitation *::before,
+  .invitation *::after {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}

@@ -7,10 +7,10 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
   },
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
 
   // --------------------------------------------------------------------------
@@ -26,8 +26,8 @@
       "binding": "DB",
       "database_name": "invitations-db",
       "database_id": "00000000-0000-0000-0000-000000000000",
-      "migrations_dir": "drizzle"
-    }
+      "migrations_dir": "drizzle",
+    },
   ],
 
   // R2 — created with: wrangler r2 bucket create invitations-photos --jurisdiction eu
@@ -35,21 +35,21 @@
     {
       "binding": "PHOTOS",
       "bucket_name": "invitations-photos",
-      "jurisdiction": "eu"
-    }
+      "jurisdiction": "eu",
+    },
   ],
 
   // KV — created with: wrangler kv namespace create NEXT_INC_CACHE_KV
   "kv_namespaces": [
     {
       "binding": "NEXT_INC_CACHE_KV",
-      "id": "00000000000000000000000000000000"
+      "id": "00000000000000000000000000000000",
     },
     // Published-invitation cache, invalidated on publish.
     {
       "binding": "CACHE",
-      "id": "11111111111111111111111111111111"
-    }
+      "id": "11111111111111111111111111111111",
+    },
   ],
 
   // Workers native rate limiting. `namespace_id` is a free integer, unique per
@@ -58,8 +58,8 @@
     {
       "name": "RATE_LIMITER",
       "namespace_id": "1001",
-      "simple": { "limit": 20, "period": 60 }
-    }
+      "simple": { "limit": 20, "period": 60 },
+    },
   ],
 
   "vars": {
@@ -67,7 +67,7 @@
     "MAIL_FROM": "Invitations <no-reply@example.com>",
     "MAIL_DRIVER": "console",
     "R2_PUBLIC_BASE_URL": "http://localhost:3000/api/photos",
-    "ADMIN_EMAILS": ""
+    "ADMIN_EMAILS": "",
   },
 
   // Secrets (never stored here): BETTER_AUTH_SECRET, RESEND_API_KEY.
@@ -81,8 +81,8 @@
         "MAIL_FROM": "Invitations <no-reply@example.com>",
         "MAIL_DRIVER": "console",
         "R2_PUBLIC_BASE_URL": "https://invitations-web-preview.workers.dev/api/photos",
-        "ADMIN_EMAILS": ""
-      }
-    }
-  }
+        "ADMIN_EMAILS": "",
+      },
+    },
+  },
 }

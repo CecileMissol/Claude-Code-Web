@@ -1,0 +1,48 @@
+{
+  "intro": {
+    "kicker": "A letter for you",
+    "openLabel": "Open the envelope",
+    "hint": "Tap the envelope to open it",
+    "scrollCue": "Scroll",
+    "saveTheDate": "Save the date",
+    "weAreGettingMarried": "we're getting married!"
+  },
+  "chapters": {
+    "story": "Our story",
+    "date": "The date",
+    "program": "The programme",
+    "place": "The venue"
+  },
+  "countdown": {
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds"
+  },
+  "place": {
+    "directions": "Open directions"
+  },
+  "info": {
+    "title": "Good to know"
+  },
+  "rsvp": {
+    "title": "Will you join us?",
+    "name": "Full name",
+    "email": "Email",
+    "attendingLegend": "Will you be there?",
+    "yes": "With joy",
+    "no": "Sadly no",
+    "guests": "Number of guests",
+    "diet": "Allergies or special diet",
+    "message": "A word for the couple",
+    "submit": "Send my reply",
+    "thanks": "Thank you, your reply has arrived.",
+    "closed": "Replies are closed.",
+    "dataNotice": "Your reply is shared with the couple only and deleted six months after the event.",
+    "addToCalendar": "Add to my calendar"
+  },
+  "signature": {
+    "farewell": "See you very soon"
+  },
+  "demoBanner": "Demo"
+}
