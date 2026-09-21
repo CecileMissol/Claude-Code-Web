@@ -106,7 +106,10 @@ export function getAuth(): Auth {
  * `db` defaults to the request-scoped handle so production call sites need
  * not pass one; tests pass an in-memory database directly.
  */
-export async function isEmailAllowedToSignIn(email: string, db: Database = getDb()): Promise<boolean> {
+export async function isEmailAllowedToSignIn(
+  email: string,
+  db: Database = getDb(),
+): Promise<boolean> {
   const normalized = email.trim().toLowerCase();
   if (!normalized) return false;
   if (isAdminEmail(normalized)) return true;

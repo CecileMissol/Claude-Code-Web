@@ -6,7 +6,11 @@ import type { ThemeModule } from './types';
  * Nothing of a theme (component, CSS, assets) is bundled until it is requested.
  */
 
-export const THEME_SLUGS = ['mariage-noir-ivoire'] as const;
+export const THEME_SLUGS = [
+  'mariage-noir-ivoire',
+  'mariage-terracotta-bloom',
+  'mariage-riviera-postcard',
+] as const;
 
 export type ThemeSlug = (typeof THEME_SLUGS)[number];
 
@@ -16,12 +20,22 @@ export function isThemeSlug(value: unknown): value is ThemeSlug {
 
 const LOADERS: Record<ThemeSlug, () => Promise<ThemeModule>> = {
   'mariage-noir-ivoire': () => import('./mariage-noir-ivoire'),
+  'mariage-terracotta-bloom': () => import('./mariage-terracotta-bloom'),
+  'mariage-riviera-postcard': () => import('./mariage-riviera-postcard'),
 };
 
 const MESSAGE_LOADERS: Record<ThemeSlug, Record<Locale, () => Promise<Record<string, unknown>>>> = {
   'mariage-noir-ivoire': {
     en: async () => (await import('./mariage-noir-ivoire/messages/en.json')).default,
     fr: async () => (await import('./mariage-noir-ivoire/messages/fr.json')).default,
+  },
+  'mariage-terracotta-bloom': {
+    en: async () => (await import('./mariage-terracotta-bloom/messages/en.json')).default,
+    fr: async () => (await import('./mariage-terracotta-bloom/messages/fr.json')).default,
+  },
+  'mariage-riviera-postcard': {
+    en: async () => (await import('./mariage-riviera-postcard/messages/en.json')).default,
+    fr: async () => (await import('./mariage-riviera-postcard/messages/fr.json')).default,
   },
 };
 

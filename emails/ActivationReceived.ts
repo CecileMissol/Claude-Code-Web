@@ -8,7 +8,11 @@ export interface ActivationReceivedProps {
 }
 
 /** Buyer-facing receipt: "we have your activation request". */
-export function activationReceivedEmail({ to, orderId, themeName }: ActivationReceivedProps): MailMessage {
+export function activationReceivedEmail({
+  to,
+  orderId,
+  themeName,
+}: ActivationReceivedProps): MailMessage {
   const order = escapeHtml(orderId);
   const theme = escapeHtml(themeName);
 

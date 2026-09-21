@@ -68,7 +68,10 @@ describe('listInvitationsForAdmin', () => {
 
     const rows = await listInvitationsForAdmin(db);
     expect(rows).toHaveLength(2);
-    expect(rows.map((row) => row.ownerEmail).sort()).toEqual(['alice@example.com', 'bob@example.com']);
+    expect(rows.map((row) => row.ownerEmail).sort()).toEqual([
+      'alice@example.com',
+      'bob@example.com',
+    ]);
     expect(rows.every((row) => row.themeSlug === 'mariage-noir-ivoire')).toBe(true);
   });
 });
@@ -86,8 +89,7 @@ describe('extendInvitationExpiry', () => {
 
     const updated = await extendInvitationExpiry(db, invitation.id, 12);
     expect(updated?.expiresAt).toBeInstanceOf(Date);
-    const monthsAhead =
-      (updated!.expiresAt!.getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30);
+    const monthsAhead = (updated!.expiresAt!.getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30);
     expect(monthsAhead).toBeGreaterThan(11);
     expect(monthsAhead).toBeLessThan(13);
   });
@@ -129,8 +131,16 @@ describe('setInvitationEnabled', () => {
 
 describe('audit log', () => {
   it('records entries and lists the most recent first', async () => {
-    await insertAuditLog(db, { action: 'activation.approved', targetType: 'activation', targetId: 'a-1' });
-    await insertAuditLog(db, { action: 'activation.rejected', targetType: 'activation', targetId: 'a-2' });
+    await insertAuditLog(db, {
+      action: 'activation.approved',
+      targetType: 'activation',
+      targetId: 'a-1',
+    });
+    await insertAuditLog(db, {
+      action: 'activation.rejected',
+      targetType: 'activation',
+      targetId: 'a-2',
+    });
 
     const entries = await listAuditLog(db);
     expect(entries).toHaveLength(2);

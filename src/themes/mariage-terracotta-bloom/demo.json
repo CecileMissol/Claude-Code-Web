@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "locale": "fr",
+  "eventType": "wedding",
+  "couple": {
+    "partner1": { "firstName": "Zoé" },
+    "partner2": { "firstName": "Dylan" }
+  },
+  "event": {
+    "date": "2027-06-12",
+    "time": "14:30",
+    "timezone": "Europe/Paris"
+  },
+  "venue": {
+    "name": "Domaine des Oliviers",
+    "addressLine": "Route de Vaugines",
+    "city": "Lourmarin",
+    "country": "France",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lourmarin",
+    "photoSlot": "venue"
+  },
+  "photos": {},
+  "story": {
+    "lines": [
+      "Un soir de février, dans un train pour Paris.",
+      "Il était assis à ma place. J'ai gardé le billet.",
+      "Sept ans, deux appartements et un chat plus tard…",
+      "… il a posé un genou sur le sable de Porquerolles.",
+      "Maintenant, on aimerait vous avoir près de nous pour la suite."
+    ],
+    "photoSlots": ["story-1", "story-2"]
+  },
+  "dateChapter": {
+    "lines": ["Sortez votre agenda.", "{date}.", "Et le compte à rebours a déjà commencé."],
+    "highlight": "le grand jour"
+  },
+  "program": {
+    "lines": [
+      "Une journée en quatre temps.",
+      "Prévoyez des chaussures pour marcher dans l'herbe.",
+      "Et d'autres pour danser."
+    ],
+    "items": [
+      { "time": "14:30", "title": "Cérémonie", "detail": "sous le vieux chêne" },
+      { "time": "16:30", "title": "Vin d'honneur", "detail": "dans l'oliveraie" },
+      { "time": "20:00", "title": "Dîner", "detail": "dans la cour du mas" },
+      { "time": "23:00", "title": "On danse", "detail": "jusqu'au bout de la nuit" }
+    ]
+  },
+  "place": {
+    "lines": [
+      "Rendez-vous au Domaine des Oliviers.",
+      "Route de Vaugines, à Lourmarin.",
+      "Parking sur place. On vous attend."
+    ]
+  },
+  "info": [
+    {
+      "title": "Hébergement",
+      "body": "Des chambres sont réservées au village. Dites-le dans votre réponse, on s'occupe du reste."
+    },
+    {
+      "title": "Tenue",
+      "body": "Chic champêtre. Évitez les talons fins, la cérémonie a lieu sur l'herbe."
+    },
+    {
+      "title": "Enfants",
+      "body": "Ils sont les bienvenus, un coin jeux les attend pendant le dîner."
+    }
+  ],
+  "rsvp": {
+    "enabled": true,
+    "maxGuestsPerReply": 5,
+    "askEmail": true,
+    "askDiet": true,
+    "askMessage": true,
+    "notifyByEmail": true
+  },
+  "signature": { "text": "À très vite" },
+  "style": { "paletteId": "noir", "scriptId": "pinyon" },
+  "extras": {
+    "memento": {
+      "kind": "ticket",
+      "route": "Marseille → Paris",
+      "date": "14.02.19",
+      "lineA": "Voiture 12",
+      "lineB": "Places 45 · 46"
+    },
+    "note": "elle a dit oui",
+    "envelope": { "kicker": "Une lettre pour vous" }
+  }
+}

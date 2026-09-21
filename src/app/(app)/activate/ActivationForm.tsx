@@ -67,7 +67,9 @@ export function ActivationForm({ themes }: { themes: ActivationThemeOption[] }) 
           placeholder={t('activate.emailPlaceholder')}
           className="w-full rounded-md border border-stone-300 px-3 py-2 dark:border-stone-700 dark:bg-stone-900"
         />
-        {state.fieldErrors?.email && <p className="text-sm text-red-600">{t('activate.errors.email')}</p>}
+        {state.fieldErrors?.email && (
+          <p className="text-sm text-red-600">{t('activate.errors.email')}</p>
+        )}
       </label>
 
       <label className="block space-y-1">
@@ -99,7 +101,9 @@ export function ActivationForm({ themes }: { themes: ActivationThemeOption[] }) 
           {t('activate.privacyLink')}
         </Link>
       </p>
-      {state.fieldErrors?.consent && <p className="text-sm text-red-600">{t('activate.errors.consent')}</p>}
+      {state.fieldErrors?.consent && (
+        <p className="text-sm text-red-600">{t('activate.errors.consent')}</p>
+      )}
 
       <button
         type="submit"

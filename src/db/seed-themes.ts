@@ -44,6 +44,10 @@ export async function ensureThemesSeeded(db: Database): Promise<void> {
 /** Theme id for a given slug, seeding the table first if it is empty. */
 export async function getThemeIdBySlug(db: Database, slug: string): Promise<string | null> {
   await ensureThemesSeeded(db);
-  const rows = await db.select({ id: themes.id }).from(themes).where(eq(themes.slug, slug)).limit(1);
+  const rows = await db
+    .select({ id: themes.id })
+    .from(themes)
+    .where(eq(themes.slug, slug))
+    .limit(1);
   return rows[0]?.id ?? null;
 }

@@ -167,7 +167,10 @@ export interface RejectActivationInput {
 }
 
 /** Refuses a pending activation and emails the buyer with the optional reason. */
-export async function rejectActivationRequest(db: Database, input: RejectActivationInput): Promise<boolean> {
+export async function rejectActivationRequest(
+  db: Database,
+  input: RejectActivationInput,
+): Promise<boolean> {
   const activation = await getActivationById(db, input.activationId);
   if (!activation || activation.status !== 'pending') return false;
 
@@ -182,7 +185,11 @@ export async function rejectActivationRequest(db: Database, input: RejectActivat
   });
 
   await sendMail(
-    activationRejectedEmail({ to: activation.email, orderId: activation.etsyOrderId, reason: input.reason }),
+    activationRejectedEmail({
+      to: activation.email,
+      orderId: activation.etsyOrderId,
+      reason: input.reason,
+    }),
   );
 
   return true;

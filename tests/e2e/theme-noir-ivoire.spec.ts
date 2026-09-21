@@ -118,9 +118,9 @@ test.describe('Noir & ivoire', () => {
 
     await scrollChapter(page, 'place', 0.9);
     await expect(page.getByRole('heading', { name: 'Le lieu' })).toBeVisible();
-    await expect(
-      page.locator('[data-chapter="place"] .postcard .img span'),
-    ).toHaveText('Lourmarin');
+    await expect(page.locator('[data-chapter="place"] .postcard .img span')).toHaveText(
+      'Lourmarin',
+    );
     const directions = page.getByRole('link', { name: "Ouvrir l'itinéraire" });
     await expect(directions).toHaveAttribute('href', /google\.com\/maps/);
     expect(await countOn(page, 'place')).toBe(await countPieces(page, 'place'));
@@ -194,10 +194,11 @@ test.describe('Noir & ivoire', () => {
     // Every sentence is readable at once, no piece is hidden.
     await page.getByRole('heading', { name: 'Notre histoire' }).scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
-    const hidden = await page.evaluate(() =>
-      [...document.querySelectorAll('[data-chapter="story"] .line')].filter(
-        (line) => getComputedStyle(line).opacity === '0',
-      ).length,
+    const hidden = await page.evaluate(
+      () =>
+        [...document.querySelectorAll('[data-chapter="story"] .line')].filter(
+          (line) => getComputedStyle(line).opacity === '0',
+        ).length,
     );
     expect(hidden).toBe(0);
 

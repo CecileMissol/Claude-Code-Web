@@ -136,7 +136,11 @@ describe('approveActivationRequest', () => {
     await submitActivationRequest(db, VALID);
     const row = await pendingRow();
 
-    await approveActivationRequest(db, { activationId: row!.id, adminEmail: 'a@example.com', locale: 'en' });
+    await approveActivationRequest(db, {
+      activationId: row!.id,
+      adminEmail: 'a@example.com',
+      locale: 'en',
+    });
     const second = await approveActivationRequest(db, {
       activationId: row!.id,
       adminEmail: 'a@example.com',

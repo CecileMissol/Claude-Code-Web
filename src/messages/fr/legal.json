@@ -113,7 +113,9 @@
       },
       {
         "heading": "Contact",
-        "paragraphs": ["Pour toute question relative à vos données personnelles : [[CONTACT_EMAIL]] ou [[DPO_EMAIL]]."]
+        "paragraphs": [
+          "Pour toute question relative à vos données personnelles : [[CONTACT_EMAIL]] ou [[DPO_EMAIL]]."
+        ]
       }
     ]
   },

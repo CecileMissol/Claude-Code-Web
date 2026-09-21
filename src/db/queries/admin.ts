@@ -62,7 +62,10 @@ export interface AdminInvitationRow {
 }
 
 /** Every invitation, most recently updated first — for the admin back office. */
-export async function listInvitationsForAdmin(db: Database, limit = 200): Promise<AdminInvitationRow[]> {
+export async function listInvitationsForAdmin(
+  db: Database,
+  limit = 200,
+): Promise<AdminInvitationRow[]> {
   return db
     .select({ invitation: invitations, ownerEmail: user.email, themeSlug: themes.slug })
     .from(invitations)
@@ -86,7 +89,8 @@ export async function extendInvitationExpiry(
   if (!current) return null;
 
   const now = Date.now();
-  const base = current.expiresAt && current.expiresAt.getTime() > now ? current.expiresAt : new Date(now);
+  const base =
+    current.expiresAt && current.expiresAt.getTime() > now ? current.expiresAt : new Date(now);
   const next = new Date(base);
   next.setUTCMonth(next.getUTCMonth() + months);
 
@@ -112,7 +116,11 @@ export async function setInvitationEnabled(
   const current = rows[0];
   if (!current) return null;
 
-  const status: InvitationStatus = enabled ? (current.publishedAt ? 'published' : 'draft') : 'disabled';
+  const status: InvitationStatus = enabled
+    ? current.publishedAt
+      ? 'published'
+      : 'draft'
+    : 'disabled';
   const updated = await db
     .update(invitations)
     .set({ status, updatedAt: new Date() })

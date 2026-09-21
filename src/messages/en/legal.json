@@ -113,7 +113,9 @@
       },
       {
         "heading": "Contact",
-        "paragraphs": ["For any question about your personal data: [[CONTACT_EMAIL]] or [[DPO_EMAIL]]."]
+        "paragraphs": [
+          "For any question about your personal data: [[CONTACT_EMAIL]] or [[DPO_EMAIL]]."
+        ]
       }
     ]
   },

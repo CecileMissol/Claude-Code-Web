@@ -17,7 +17,11 @@ export async function approveActivationAction(formData: FormData): Promise<void>
   const locale: Locale = isLocale(rawLocale) ? rawLocale : 'en';
 
   const db = getDb();
-  const result = await approveActivationRequest(db, { activationId: id, adminEmail: admin.email, locale });
+  const result = await approveActivationRequest(db, {
+    activationId: id,
+    adminEmail: admin.email,
+    locale,
+  });
 
   if (result) {
     // Goes through Better Auth's own endpoint so the mailed link is a real,

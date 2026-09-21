@@ -33,7 +33,10 @@ export async function findActivationByOrderAndTheme(
 }
 
 /** Inserts a brand-new pending activation request. Emails are the caller's job. */
-export async function createActivation(db: Database, input: CreateActivationInput): Promise<Activation> {
+export async function createActivation(
+  db: Database,
+  input: CreateActivationInput,
+): Promise<Activation> {
   const row = {
     id: input.id ?? crypto.randomUUID(),
     etsyOrderId: input.etsyOrderId,
@@ -56,7 +59,11 @@ export async function createActivation(db: Database, input: CreateActivationInpu
  * row back to `pending` instead of inserting a second one, which the unique
  * index would refuse anyway.
  */
-export async function reopenActivation(db: Database, id: string, email: string): Promise<Activation | null> {
+export async function reopenActivation(
+  db: Database,
+  id: string,
+  email: string,
+): Promise<Activation | null> {
   const updated = await db
     .update(activations)
     .set({ status: 'pending', email: email.trim().toLowerCase(), userId: null, reviewedAt: null })
@@ -114,12 +121,17 @@ export async function markActivationRejected(db: Database, id: string): Promise<
  * approved purchase? Comparison is case-insensitive because the buyer may not
  * type their email the same way twice.
  */
-export async function getApprovedActivationByEmail(db: Database, email: string): Promise<Activation | null> {
+export async function getApprovedActivationByEmail(
+  db: Database,
+  email: string,
+): Promise<Activation | null> {
   const normalized = email.trim().toLowerCase();
   const rows = await db
     .select()
     .from(activations)
-    .where(and(eq(activations.status, 'approved'), sql`lower(${activations.email}) = ${normalized}`))
+    .where(
+      and(eq(activations.status, 'approved'), sql`lower(${activations.email}) = ${normalized}`),
+    )
     .limit(1);
   return rows[0] ?? null;
 }

@@ -9,7 +9,11 @@ export interface ActivationRejectedProps {
   reason?: string;
 }
 
-export function activationRejectedEmail({ to, orderId, reason }: ActivationRejectedProps): MailMessage {
+export function activationRejectedEmail({
+  to,
+  orderId,
+  reason,
+}: ActivationRejectedProps): MailMessage {
   const activateUrl = `${getEnv().APP_URL.replace(/\/+$/, '')}/activate`;
   const order = escapeHtml(orderId);
   const note = reason ? escapeHtml(reason) : null;

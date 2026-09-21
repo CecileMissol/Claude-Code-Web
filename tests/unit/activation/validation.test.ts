@@ -46,15 +46,21 @@ describe('ActivationInputSchema', () => {
 
   it('rejects an order id that is not 8 to 12 digits', () => {
     expect(ActivationInputSchema.safeParse({ ...VALID, etsyOrderId: '123' }).success).toBe(false);
-    expect(ActivationInputSchema.safeParse({ ...VALID, etsyOrderId: 'not-a-number' }).success).toBe(false);
+    expect(ActivationInputSchema.safeParse({ ...VALID, etsyOrderId: 'not-a-number' }).success).toBe(
+      false,
+    );
   });
 
   it('rejects an invalid email', () => {
-    expect(ActivationInputSchema.safeParse({ ...VALID, email: 'not-an-email' }).success).toBe(false);
+    expect(ActivationInputSchema.safeParse({ ...VALID, email: 'not-an-email' }).success).toBe(
+      false,
+    );
   });
 
   it('rejects an unknown theme', () => {
-    expect(ActivationInputSchema.safeParse({ ...VALID, themeSlug: 'unknown-theme' }).success).toBe(false);
+    expect(ActivationInputSchema.safeParse({ ...VALID, themeSlug: 'unknown-theme' }).success).toBe(
+      false,
+    );
   });
 
   it('rejects a missing or false consent', () => {

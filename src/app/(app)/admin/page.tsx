@@ -152,12 +152,18 @@ export default async function AdminPage({
               </form>
               <form action={toggleInvitationAction}>
                 <input type="hidden" name="id" value={invitation.id} />
-                <input type="hidden" name="enabled" value={String(invitation.status === 'disabled')} />
+                <input
+                  type="hidden"
+                  name="enabled"
+                  value={String(invitation.status === 'disabled')}
+                />
                 <button
                   type="submit"
                   className="rounded-full border border-stone-300 px-3 py-1 text-xs dark:border-stone-700"
                 >
-                  {invitation.status === 'disabled' ? t('invitationsTab.enable') : t('invitationsTab.disable')}
+                  {invitation.status === 'disabled'
+                    ? t('invitationsTab.enable')
+                    : t('invitationsTab.disable')}
                 </button>
               </form>
               {invitation.slug && invitation.status === 'published' && (
