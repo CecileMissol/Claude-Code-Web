@@ -80,7 +80,7 @@ test.describe('Riviera Postcard', () => {
     // The save-the-date postcard is out, and its date is readable through the
     // pocket — the defect of theme 1 that this envelope is shaped to avoid.
     await expect(page.locator('.card .c1')).toHaveText('Save the date');
-    await expect(page.locator('.card .c2')).toHaveText('19.06.27');
+    await expect(page.locator('.card .c2')).toHaveText('06.19.27');
     await expect(page.locator('.cue')).toContainText('Scroll');
     await page.waitForTimeout(400);
     await shot(page, 'intro-open', project);
