@@ -101,7 +101,7 @@ export interface ThemeManifest {
  * How the invitation is being rendered.
  * - `public`  : the published page an invited guest opens.
  * - `preview` : the live preview inside the editor.
- * - `demo`    : the public showcase at `/demo/[theme]`.
+ * - `demo`    : the public showcase at `/demo/<slug>`.
  */
 export type InvitationMode = 'public' | 'preview' | 'demo';
 

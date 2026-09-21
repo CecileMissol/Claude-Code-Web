@@ -182,7 +182,7 @@ sept espaces de messages (`common`, `auth`, `editor`, `dashboard`, `admin`,
 ### 5.2 Groupes de routes
 
 `src/app/(app)/` porte l'en-tête, le conteneur Tailwind et le sélecteur de
-langue. `/[slug]` et `/demo/[theme]` vivent **en dehors** de ce groupe : l'invité
+langue. `/[slug]` et `/demo/<slug>` vivent **en dehors** de ce groupe : l'invité
 ne voit que l'invitation, sans rien de l'application.
 
 ### 5.3 Isolation des données

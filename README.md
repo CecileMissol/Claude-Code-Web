@@ -5,11 +5,60 @@ Application Next.js (App Router) déployée sur **Cloudflare Workers** via
 invitation de mariage animée, de la publier sur un lien unique et de suivre les
 réponses de ses invités.
 
-Documentation du projet : [`BRIEF.md`](BRIEF.md),
-[`docs/phase-1-cadrage.md`](docs/phase-1-cadrage.md) (spécification),
-[`docs/phase-2-socle.md`](docs/phase-2-socle.md) (ce qui est réellement en
-place), [`docs/phase-8-reconciliation.md`](docs/phase-8-reconciliation.md)
-(doublons refermés, points encore ouverts).
+**Pour déployer : [`docs/MISE-EN-PRODUCTION.md`](docs/MISE-EN-PRODUCTION.md)** —
+guide pas à pas, de la création des ressources Cloudflare à la checklist
+d'ouverture de la boutique.
+
+Documentation du projet : [`BRIEF.md`](BRIEF.md) (cahier des charges),
+[`docs/README.md`](docs/README.md) (index des documents de phase, une ligne par
+document), [`docs/phase-1-cadrage.md`](docs/phase-1-cadrage.md)
+(spécification), [`docs/phase-2-socle.md`](docs/phase-2-socle.md) (ce qui est
+réellement en place),
+[`docs/phase-8-reconciliation.md`](docs/phase-8-reconciliation.md) §9 (points
+encore ouverts).
+
+## Sommaire
+
+| §   | Section                                                                           |
+| --- | --------------------------------------------------------------------------------- |
+| 0   | [État du projet](#0-état-du-projet)                                               |
+| 1   | [Installation](#1-installation)                                                   |
+| 2   | [Scripts](#2-scripts)                                                             |
+| 3   | [Variables d'environnement](#3-variables-denvironnement)                          |
+| 4   | [Développement local avec les bindings](#4-développement-local-avec-les-bindings) |
+| 5   | [Migrations D1](#5-migrations-d1)                                                 |
+| 6   | [Déploiement Cloudflare](#6-déploiement-cloudflare)                               |
+| 7   | [Prévisualisations (Workers Builds)](#7-prévisualisations-workers-builds)         |
+| 8   | [Thèmes](#8-thèmes)                                                               |
+| 9   | [Structure](#9-structure)                                                         |
+| 10  | [Tâche planifiée (rétention RGPD)](#10-tâche-planifiée-rétention-rgpd)            |
+| 11  | [Tests de bout en bout](#11-tests-de-bout-en-bout)                                |
+| 12  | [Référencement (robots, sitemap)](#12-référencement-robots-sitemap)               |
+
+---
+
+## 0. État du projet
+
+Le logiciel est **complet et vérifié en intégration continue** ; ce qui manque
+pour vendre n'est pas du code (voir §12 du guide de mise en production : nom de
+marque, logo, illustrations définitives, visuels Etsy, photos de démonstration).
+
+| Domaine                   | État                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------- |
+| Vitrine `/`               | livrée, bilingue FR/EN, marque configurable par `BRAND_ID` (3 identités)                    |
+| Thèmes d'invitation       | 3 thèmes animés livrés : noir & ivoire, terracotta bloom, riviera postcard                  |
+| Éditeur `/app`            | livré : contenu par chapitre, aperçu en iframe, photos vers R2                              |
+| Publication et partage    | livrés : slug public, QR code, `.ics`, fenêtre d'hébergement de 18 mois                     |
+| RSVP                      | livré : formulaire, anti-spam, export CSV, rétention RGPD automatique                       |
+| Activation et back-office | livrés en V0 (validation manuelle des commandes Etsy) ; la V1 par API Etsy reste à faire    |
+| Budget JS (BRIEF §6)      | tenu : 150 kB gzip sur `/`, 161 à 164 kB sur les démos, GSAP chargé dynamiquement           |
+| Référencement             | `robots.txt` et `sitemap.xml` en place ; **image Open Graph à produire**                    |
+| Déploiement               | jamais exécuté de bout en bout (aucune ressource Cloudflare créée) — c'est l'objet du guide |
+
+Vérifications qui tournent en intégration continue (`.github/workflows/ci.yml`) :
+`pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test` (566 tests
+unitaires), `pnpm test:e2e` (63 tests Playwright sur 3 viewports), `pnpm build`
+et `pnpm build:cf`.
 
 ---
 
@@ -45,7 +94,8 @@ pnpm dev               # http://localhost:3000
 | `pnpm cf-typegen`                   | régénère `cloudflare-env.d.ts`                                                        |
 | `pnpm db:generate`                  | génère une migration SQL dans `drizzle/`                                              |
 | `pnpm db:migrate:local` / `:remote` | applique les migrations à D1                                                          |
-| `pnpm db:seed:local`                | insère les thèmes du registre dans la base locale (idempotent)                        |
+| `pnpm db:seed:local` / `:remote`    | insère les thèmes du registre dans la base locale ou distante (idempotent)            |
+| `pnpm etsy:pdf`                     | régénère les PDF de livraison Etsy dans `marketing/etsy/delivery/`                    |
 
 ## 3. Variables d'environnement
 
@@ -53,19 +103,22 @@ Toutes les variables sont lues **au même endroit**, `src/lib/env.ts`, qui les
 valide avec Zod au premier accès (`getEnv()`). Aucun autre module ne lit
 `process.env`. Voir [`.env.example`](.env.example) pour la liste commentée.
 
-| Variable             | Rôle                                                                                                                                                                                            | Où la mettre                       |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| `APP_URL`            | URL publique, utilisée par Better Auth et les liens magiques                                                                                                                                    | `vars` de `wrangler.jsonc`         |
-| `BETTER_AUTH_SECRET` | signature des sessions et des tickets d'upload R2                                                                                                                                               | **secret** (`wrangler secret put`) |
-| `MAIL_DRIVER`        | `console` (dev) ou `resend` (prod)                                                                                                                                                              | `vars`                             |
-| `MAIL_FROM`          | expéditeur des e-mails                                                                                                                                                                          | `vars`                             |
-| `RESEND_API_KEY`     | clé Resend                                                                                                                                                                                      | **secret**                         |
-| `R2_PUBLIC_BASE_URL` | domaine ou route servant les photos                                                                                                                                                             | `vars`                             |
-| `ADMIN_EMAILS`       | e-mails autorisés sur `/admin`, séparés par des virgules                                                                                                                                        | `vars`                             |
-| `RSVP_IP_SALT`       | sel de hachage des IP des invités ; à défaut, `BETTER_AUTH_SECRET`                                                                                                                              | **secret**, facultatif             |
-| `CRON_SECRET`        | protège `POST /api/cron/retention` ; moins de 16 caractères = non configuré, la route refuse tout                                                                                               | **secret**                         |
-| `ALLOW_FREE_DRAFTS`  | `true` autorise tout compte connecté à créer un brouillon depuis `/app` (dev). Faux par défaut : un acheteur reçoit son brouillon par l'activation, un administrateur peut toujours en créer un | `vars`, facultatif                 |
-| `LEGAL_*`            | identité de l'éditeur affichée sur `/legal/*` (8 variables) ; une variable absente laisse son placeholder `[[…]]` visible                                                                       | `vars`, facultatif                 |
+| Variable              | Rôle                                                                                                                                                                                            | Où la mettre                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `APP_URL`             | URL publique, utilisée par Better Auth et les liens magiques                                                                                                                                    | `vars` de `wrangler.jsonc`         |
+| `BETTER_AUTH_SECRET`  | signature des sessions et des tickets d'upload R2                                                                                                                                               | **secret** (`wrangler secret put`) |
+| `MAIL_DRIVER`         | `console` (dev) ou `resend` (prod)                                                                                                                                                              | `vars`                             |
+| `MAIL_FROM`           | expéditeur des e-mails                                                                                                                                                                          | `vars`                             |
+| `RESEND_API_KEY`      | clé Resend                                                                                                                                                                                      | **secret**                         |
+| `R2_PUBLIC_BASE_URL`  | domaine ou route servant les photos                                                                                                                                                             | `vars`                             |
+| `ADMIN_EMAILS`        | e-mails autorisés sur `/admin`, séparés par des virgules                                                                                                                                        | `vars`                             |
+| `RSVP_IP_SALT`        | sel de hachage des IP des invités ; à défaut, `BETTER_AUTH_SECRET`                                                                                                                              | **secret**, facultatif             |
+| `CRON_SECRET`         | protège `POST /api/cron/retention` ; moins de 16 caractères = non configuré, la route refuse tout                                                                                               | **secret**                         |
+| `ALLOW_FREE_DRAFTS`   | `true` autorise tout compte connecté à créer un brouillon depuis `/app` (dev). Faux par défaut : un acheteur reçoit son brouillon par l'activation, un administrateur peut toujours en créer un | `vars`, facultatif                 |
+| `LEGAL_*`             | identité de l'éditeur affichée sur `/legal/*` (8 variables) ; une variable absente laisse son placeholder `[[…]]` visible                                                                       | `vars`, facultatif                 |
+| `BRAND_ID`            | identité de marque active : `kraft-and-bloom` (défaut), `unfurl`, `petal-post`                                                                                                                  | `vars`, facultatif                 |
+| `BRAND_ETSY_SHOP_URL` | URL de la boutique Etsy affichée sur la vitrine                                                                                                                                                 | `vars`, facultatif                 |
+| `BRAND_SUPPORT_EMAIL` | adresse de contact affichée sur le site ; à défaut, `LEGAL_CONTACT_EMAIL`                                                                                                                       | `vars`, facultatif                 |
 
 Les _bindings_ (D1 `DB`, R2 `PHOTOS`, KV `CACHE` et `NEXT_INC_CACHE_KV`, rate
 limiter `RATE_LIMITER`) ne sont pas des variables d'environnement : ils sont
@@ -114,28 +167,36 @@ dans l'éditeur — donc une base fraîche n'est jamais vide.
 
 ## 6. Déploiement Cloudflare
 
+Le mode d'emploi complet, pas à pas, est
+**[`docs/MISE-EN-PRODUCTION.md`](docs/MISE-EN-PRODUCTION.md)** : ressources,
+jeton API et ses permissions minimales, secrets, Resend, migrations et seed
+distants, premier déploiement, domaine personnalisé, cron, checklist avant
+ouverture, coûts. Résumé :
+
 1. Créer les ressources (une seule fois) :
 
    ```bash
-   wrangler d1 create invitations-db --location-hint weur
-   wrangler r2 bucket create invitations-photos --jurisdiction eu
-   wrangler kv namespace create NEXT_INC_CACHE_KV
-   wrangler kv namespace create CACHE
+   pnpm exec wrangler d1 create invitations-db --location weur
+   pnpm exec wrangler r2 bucket create invitations-photos --jurisdiction eu
+   pnpm exec wrangler kv namespace create NEXT_INC_CACHE_KV
+   pnpm exec wrangler kv namespace create CACHE
    ```
 
 2. Reporter les identifiants renvoyés dans `wrangler.jsonc` (ils y sont
-   actuellement des placeholders `0000…`).
+   actuellement des placeholders `0000…`), puis `pnpm cf-typegen`.
 3. Pousser les secrets :
 
    ```bash
-   wrangler secret put BETTER_AUTH_SECRET
-   wrangler secret put RESEND_API_KEY
+   pnpm exec wrangler secret put BETTER_AUTH_SECRET
+   pnpm exec wrangler secret put RESEND_API_KEY
+   pnpm exec wrangler secret put CRON_SECRET
    ```
 
-4. Appliquer les migrations : `pnpm db:migrate:remote`.
+4. Appliquer les migrations et le seed : `pnpm db:migrate:remote` puis
+   `pnpm db:seed:remote`.
 5. Déployer : `pnpm deploy`.
 
-Détail des permissions du jeton API et des points de vigilance :
+Points de vigilance techniques :
 [`docs/phase-2-socle.md`](docs/phase-2-socle.md).
 
 ## 7. Prévisualisations (Workers Builds)
@@ -186,19 +247,33 @@ src/
   app/            routes (App Router, sans préfixe de langue)
     (app)/        vitrine, /login, /activate, /app, /admin, /legal
     [slug]/       invitation publiée
-    demo/[theme]/ démo publique d'un thème
-    api/auth/     Better Auth
+    demo/<slug>/  une route par thème (voir demo/demoPage.tsx)
+    api/          Better Auth, RSVP, photos, QR, .ics, export CSV, cron
+    robots.ts     /robots.txt
+    sitemap.ts    /sitemap.xml
+  brand/          identités de marque (presets sélectionnés par BRAND_ID)
   content/        schéma Zod commun, valeurs par défaut, migrations, dérivés
-  db/             schéma Drizzle, accès D1, requêtes filtrées par owner_id
+  db/             schéma Drizzle, accès D1, requêtes filtrées par owner_id, seed
   i18n/           locales, cookie, chargement des messages
-  lib/            auth, mail, r2, rate-limit, slugs, env
+  lib/            auth, mail, r2, rate-limit, slugs, env, publication, rétention
   messages/       i18n de l'application (un fichier par espace)
-  themes/         contrat, registre, thèmes
+  themes/         contrat, manifests.ts (sans composant client), registre, thèmes
 drizzle/          migrations SQL générées
+docs/             documents de phase (index : docs/README.md)
+marketing/        kit Etsy (fiches, messages, PDF de livraison)
+scripts/          build-delivery-pdf.mjs (pnpm etsy:pdf)
 tests/unit/       Vitest
 tests/e2e/        Playwright (captures 390 / 768 / 1440 px)
 worker/           point d'entrée Worker (fetch généré + scheduled)
 ```
+
+Deux imports à ne pas confondre : `src/themes/manifests.ts` ne porte **aucun
+composant client** (slugs et manifestes seulement) et c'est lui qu'importent la
+vitrine, `/app`, `/activate`, `/admin` et le seed ; `src/themes/registry.ts`
+peut atteindre les trois thèmes et n'est importé que par les routes qui
+**rendent** une invitation. Confondre les deux fait descendre les trois
+invitations animées sur une page qui n'en affiche aucune
+(`docs/phase-9-theme-riviera-postcard.md` §7).
 
 ## 10. Tâche planifiée (rétention RGPD)
 
@@ -238,3 +313,24 @@ Auth compare l'origine à `APP_URL`), `workers: 1` (la base D1 locale casse en
 Le navigateur est celui de l'image (`/opt/pw-browsers/chromium`) ; à défaut,
 celui que Playwright gère lui-même — c'est ce que fait la CI, seul endroit où
 `playwright install` est lancé.
+
+## 12. Référencement (robots, sitemap)
+
+`src/app/robots.ts` et `src/app/sitemap.ts` sont dérivés d'`APP_URL`
+(`appOrigin()`) et du registre des thèmes : un quatrième thème est crawlé et
+listé le jour où il est enregistré, sans toucher à ces fichiers.
+
+- `/robots.txt` autorise `/`, `/demo/<slug>` et `/legal/*` ; il interdit
+  `/app`, `/admin`, `/api`, `/activate` et `/login`, et publie l'adresse du
+  sitemap.
+- `/sitemap.xml` liste sept URL : l'accueil, les trois démos, les trois pages
+  légales. Les invitations publiées n'y sont **pas** : elles appartiennent aux
+  couples et expirent avec leur fenêtre d'hébergement.
+- Les démos portent en plus `robots: { index: false }` dans leurs métadonnées :
+  les explorer est bienvenu, indexer un faux mariage ne l'est pas.
+
+`tests/unit/seo/robots-sitemap.test.ts` verrouille les deux listes.
+
+**Reste à produire : l'image Open Graph** — la vitrine déclare `openGraph` et
+`twitter:card` sans `images`, donc un partage sur les réseaux sociaux n'affiche
+aucune vignette.

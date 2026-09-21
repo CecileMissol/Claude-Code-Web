@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 
 /**
  * Layout of the application shell (marketing site, editor, dashboard, admin).
- * The published invitation (`/[slug]`) and the theme demos (`/demo/[theme]`)
+ * The published invitation (`/[slug]`) and the theme demos (`/demo/<slug>`)
  * live outside this group, so they render on a bare page.
  *
  * The `--brand-*` custom properties (see `src/brand.ts`) are set here, on

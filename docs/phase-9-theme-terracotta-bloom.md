@@ -127,10 +127,12 @@ BRIEF §6 (~158 kB en comptant le chunk du thème 1 que la route précharge, ~11
 sans lui). Aucune dépendance ajoutée : seulement cinq paquets `@fontsource/*`
 (polices, aucun JS).
 
-> À surveiller : la route `/demo/[theme]` fait descendre le chunk client des
-> **deux** thèmes, alors que le registre les importe dynamiquement. Ce n'est pas
-> propre au thème 2 (le thème 1 en fait autant) ; à regarder quand le catalogue
-> comptera dix thèmes.
+> ~~À surveiller : la route `/demo/[theme]` fait descendre le chunk client des
+> **deux** thèmes, alors que le registre les importe dynamiquement.~~ **Réglé**
+> depuis : une route par thème (`src/app/demo/<slug>/page.tsx`) et un module de
+> manifestes sans composant client (`src/themes/manifests.ts`). Chaque démo ne
+> référence plus que son propre chunk — mesures dans
+> `docs/phase-9-theme-riviera-postcard.md` §7.2.
 
 ---
 

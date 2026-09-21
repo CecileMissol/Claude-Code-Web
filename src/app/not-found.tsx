@@ -4,7 +4,7 @@ import { brand, brandStyleVars } from '@/brand';
 
 /**
  * Shared 404 page. It renders directly under the root layout (it can be
- * reached from `/demo/[theme]` or `/[slug]` too, which have no layout of
+ * reached from `/demo/<slug>` or `/[slug]` too, which have no layout of
  * their own), so it carries its own `.brand-shell` wrapper instead of
  * relying on `src/app/(app)/layout.tsx`.
  */

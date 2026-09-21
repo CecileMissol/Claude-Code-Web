@@ -4,15 +4,18 @@
  * Every rule is scoped under `.invitation[data-theme='mariage-riviera-postcard']`,
  * the two attributes the theme root carries: three wedding themes now ship in the
  * same application, their class names (`.card`, `.stamp`, `.board`…) are
- * deliberately the same vocabulary, and `/demo/[theme]` pre-renders all three, so
- * all three stylesheets end up in one bundle.
+ * deliberately the same vocabulary, and two of their stylesheets can reach the
+ * same document (the dashboard, the editor's theme picker — and, until the
+ * demos were split into one route per slug, `/demo/[theme]`, which pre-rendered
+ * all three).
  *
- * The `.invitation` in front of the attribute is not decoration: theme 1 scopes
- * its own rules under `.invitation` alone, so `.invitation .postcard .img`
- * (which sets `grayscale(1)`) ties on specificity with an attribute-only scope
- * and wins on source order — the venue postcard came out black and white. The
- * extra class puts every rule of this theme one notch above, whatever the order
- * the bundler chooses.
+ * The `.invitation` in front of the attribute is not decoration: theme 1 used to
+ * scope its own rules under `.invitation` alone, so `.invitation .postcard .img`
+ * (which sets `grayscale(1)`) tied on specificity with an attribute-only scope
+ * and won on source order — the venue postcard came out black and white. All
+ * three sheets now carry the class **and** their own `data-theme`, which
+ * `tests/unit/themes/css-isolation.test.ts` checks rule by rule; no two themes
+ * can address the same element, whatever order the bundler chooses.
  *
  * Three rules govern this file:
  *

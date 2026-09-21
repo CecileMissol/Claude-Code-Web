@@ -30,7 +30,7 @@ BRAND_ID="kraft-and-bloom"   # ou "unfurl" | "petal-post"
 Changer `BRAND_ID` et redéployer suffit : nom, tagline, palette, polices,
 logo et favicon changent partout où la marque est affichée (en-tête, pied de
 page, page vitrine, 404). **Aucune page d'invitation n'est concernée** :
-`/[slug]` et `/demo/[theme]` ont leur propre système de thème
+`/[slug]` et `/demo/<slug>` ont leur propre système de thème
 (`src/themes/`, voir `README.md` §8) et ne lisent jamais `src/brand.ts`.
 
 ## 2. Où sont les presets
@@ -70,7 +70,7 @@ ce qui donne des classes utilitaires (`bg-brand-accent`, `text-brand-fg`,
 marque. Le projet n'a pas de `tailwind.config.*` (Tailwind v4, configuration
 CSS-first) : rien à modifier de ce côté pour ajouter une marque.
 
-Comme `/[slug]` et `/demo/[theme]` ne passent jamais par ce layout, ils
+Comme `/[slug]` et `/demo/<slug>` ne passent jamais par ce layout, ils
 n'héritent jamais de `.brand-shell` ni des variables `--brand-*` — c'est ce
 qui garantit l'isolation demandée par le brief.
 

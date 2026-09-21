@@ -170,14 +170,27 @@ pnpm exec wrangler deploy --dry-run   # le Worker personnalisé se bundle
 
 ## 9. Ce qui reste ouvert
 
+Mis à jour après la **passe de finitions** (budget JS, isolation CSS, date par
+locale, SEO minimal, guide de mise en production). Ce qui a été refermé depuis
+la phase 8 est barré, avec l'endroit où c'est documenté.
+
 1. **`pnpm preview` / `pnpm deploy` ne sont toujours pas validés** depuis cet
    environnement (processus longs interrompus, aucune ressource Cloudflare
-   créée). Le `--dry-run` prouve que le bundle se construit, pas que le Worker
-   démarre. À essayer en premier sur une vraie machine, y compris
-   `wrangler dev --test-scheduled` pour déclencher `scheduled()` à la main.
-2. **Cache KV non branché** (`docs/phase-5-6-publication-rsvp.md` §2) : à faire
-   avec l'invalidation dans le chemin de sauvegarde.
-3. **Pas d'image Open Graph**, pas de `robots.txt`, pas de `sitemap.xml`.
+   créée). `pnpm exec wrangler deploy --dry-run` prouve que le bundle se
+   construit, pas que le Worker démarre. À essayer en premier sur une vraie
+   machine, y compris `wrangler dev --test-scheduled` pour déclencher
+   `scheduled()` à la main : c'est l'étape 9 de
+   [`MISE-EN-PRODUCTION.md`](MISE-EN-PRODUCTION.md).
+2. **Cache KV non branché** (`docs/phase-5-6-publication-rsvp.md` §2) : le
+   binding `CACHE` est déclaré dans `wrangler.jsonc` et n'est lu nulle part
+   (`grep -rn "CACHE" src` ne renvoie que `NEXT_INC_CACHE_KV`). À faire avec
+   l'invalidation dans le chemin de sauvegarde.
+3. ~~Pas de `robots.txt`, pas de `sitemap.xml`~~ → `src/app/robots.ts` et
+   `src/app/sitemap.ts`, dérivés d'`APP_URL` et du registre des thèmes, couverts
+   par `tests/unit/seo/robots-sitemap.test.ts`. **Toujours ouvert : l'image Open
+   Graph** — `/` déclare `openGraph` et `twitter:card` sans `images`, donc un
+   partage sur les réseaux sociaux n'affiche aucune vignette. C'est un visuel à
+   produire (voir §12 du guide de mise en production), pas du code.
 4. **Une seule taille de photo stockée** (1600 px) et **les photos supprimées
    restent dans R2** : `deleteInvitationPhotos()` existe mais la tâche de
    rétention ne l'appelle pas encore — c'est le prolongement naturel de
@@ -186,9 +199,28 @@ pnpm exec wrangler deploy --dry-run   # le Worker personnalisé se bundle
    implémentée : plan dans `docs/phase-7-activation-admin.md` §3.
 6. **Les identifiants de `wrangler.jsonc` sont des placeholders** et
    `CRON_SECRET` doit être poussé en production, sans quoi la route de secours
-   refusera tout (la tâche planifiée, elle, fonctionne sans secret).
+   refusera tout (la tâche planifiée, elle, fonctionne sans secret). La marche à
+   suivre complète est maintenant écrite :
+   [`MISE-EN-PRODUCTION.md`](MISE-EN-PRODUCTION.md), étapes 1 et 3.
 7. **Aucun test ne couvre `scheduled()` de bout en bout** : la purge est testée
    unitairement, l'enveloppe du Worker ne l'est pas (il faudrait `wrangler dev`,
    impossible à maintenir en vie ici).
 8. **`node:sqlite` reste expérimental** et les tests affichent son
    avertissement.
+9. **L'environnement `preview` de `wrangler.jsonc` partage les bindings de
+   production** (même base D1, même bucket). Tant qu'il n'a pas ses propres
+   ressources, une préproduction écrirait dans les données réelles — noté dans
+   l'étape 7 du guide de mise en production.
+10. **Aucune photo réelle dans les `demo.json`** des trois thèmes : les démos
+    publiques, celles que les fiches Etsy montrent, affichent les placeholders
+    SVG. Voir §12 du guide de mise en production.
+
+### Refermé par la passe de finitions
+
+| Point                                                | Où c'est documenté                                  |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| Budget JS dépassé (225,7 kB gzip sur toutes les routes) | `docs/phase-9-theme-riviera-postcard.md` §7.2 — 150,2 kB sur `/`, 161 à 164 kB sur les démos, GSAP hors document |
+| Les trois chunks de thème descendus par chaque démo  | une route par thème, `src/app/demo/<slug>/page.tsx`   |
+| Feuilles de style des thèmes qui se croisent         | trois feuilles scopées sous `.invitation[data-theme='<slug>']`, vérifié règle par règle par `tests/unit/themes/css-isolation.test.ts` |
+| Date écrite en jour/mois/année même en anglais        | `shortDateParts()` (`src/content/derived.ts`), appliqué aux chapitres Date des trois thèmes, vérifié par `tests/unit/content/derived-date.test.ts` |
+| Pas de guide de déploiement                          | [`MISE-EN-PRODUCTION.md`](MISE-EN-PRODUCTION.md), 12 étapes |

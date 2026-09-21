@@ -62,15 +62,29 @@ sont eux aussi identiques d'un thème à l'autre.
 
 **C'est le point le plus important de cette phase pour les thèmes suivants.**
 
-`/demo/[theme]` pré-rend les trois thèmes (`generateStaticParams`), donc les
-trois feuilles de style arrivent dans le même document. Or les thèmes partagent
-volontairement le même vocabulaire de classes (`.card`, `.stamp`, `.board`,
-`.postcard`, `.photo`…) : ce sont les mêmes pièces de papeterie.
+À l'époque de cette phase, `/demo/[theme]` pré-rendait les trois thèmes
+(`generateStaticParams`), donc les trois feuilles de style arrivaient dans le
+même document. La route a depuis été découpée en trois (`/demo/<slug>`, voir
+§7), mais deux feuilles peuvent toujours se croiser — le sélecteur de thème de
+l'éditeur, le tableau de bord — et les thèmes partagent volontairement le même
+vocabulaire de classes (`.card`, `.stamp`, `.board`, `.postcard`, `.photo`…) :
+ce sont les mêmes pièces de papeterie.
+
+**État final (passe de finitions).** Les **trois** feuilles sont désormais
+scopées sous `.invitation[data-theme='<slug>']`, y compris celle du thème 1 qui
+tenait encore sous `.invitation` seul.
+`tests/unit/themes/css-isolation.test.ts` le vérifie règle par règle, pour les
+trois thèmes à la fois : chaque sélecteur commence par le scope de son propre
+thème (seule exception admise, le verrou de défilement `html.invitation-locked`,
+écrit à l'identique partout), aucune feuille ne nomme un autre thème, et aucun
+scope n'est réduit au seul attribut. Les neutralisations du tableau ci-dessous
+restent en place : elles ne coûtent rien et documentent ce qui avait fui.
 
 Deux règles en découlent.
 
 **3.1 — Scoper sous `.invitation[data-theme='…']`, pas sous l'attribut seul.**
-Le thème 1 scope ses règles sous `.invitation` (0,2,0 pour `.invitation .photo`).
+Le thème 1 scopait alors ses règles sous `.invitation` seul (0,2,0 pour
+`.invitation .photo`).
 Un scope par attribut seul (`[data-theme='…'] .photo`) pèse exactement pareil :
 à égalité de spécificité, c'est l'ordre dans le bundle qui tranche, et il n'est
 pas de notre côté. La classe **plus** l'attribut met chaque règle de ce thème un
@@ -92,9 +106,9 @@ aucun adversaire ici. Même histoire pour :
 | `font-style: italic`             | `.hint`, `.cue`, `.closed`, `.error`, `.thanks`, `.sign p`, `.count small` | `font-style: normal` |
 
 La règle du verrou de défilement (`html.invitation-locked`) reste **hors** de ce
-scope, comme dans le thème 1 : l'élément qui défile est le document, et la
-déclaration est identique dans les deux thèmes, donc ils ne peuvent pas être en
-désaccord.
+scope, dans les trois thèmes : l'élément qui défile est le document, et la
+déclaration est écrite à l'identique partout, donc ils ne peuvent pas être en
+désaccord. C'est la seule exception que le test d'isolation accepte.
 
 ---
 
@@ -200,22 +214,61 @@ réutilise. Rien d'autre n'a été ajouté à `package.json`.
 
 ## 7. Poids JS mesuré
 
-Mesuré sur un **build de production dans une copie isolée du dépôt** (`next build`
-puis `next start`) : un autre agent faisait tourner `next dev` sur le dépôt de
-travail, ce qui écrase `.next` et fausse toute mesure.
+Mesuré sur un **build de production** (`next build` puis `next start` sur un
+port libre), en additionnant les scripts référencés par le document et en les
+compressant en gzip niveau 9. Aucun `next dev` ne tournait en parallèle : deux
+serveurs sur le même `.next` faussent toute mesure.
 
-| Mesure                                             | Gzip (niveau 9) |
-| -------------------------------------------------- | --------------- |
+### 7.1 Avant le découpage des chunks (état de la phase 9)
+
+| Mesure                                                | Gzip (niveau 9) |
+| ----------------------------------------------------- | --------------- |
 | `/demo/mariage-riviera-postcard`, scripts du document | **225,7 kB**    |
-| `/demo/mariage-noir-ivoire`, même mesure             | 225,7 kB (à l'octet près) |
-| `/` (vitrine), même mesure                           | 226,3 kB        |
-| **Propre à la route `/demo/[theme]`**                | **3,6 kB**      |
+| `/demo/mariage-noir-ivoire`, même mesure              | 225,7 kB (à l'octet près) |
+| `/` (vitrine), même mesure                            | 226,3 kB        |
+| **Propre à la route `/demo/[theme]`**                 | **3,6 kB**      |
 
-Lecture : **le thème n'ajoute que 3,6 kB gzip** au-dessus du socle commun. Les
-225 kB sont le socle de l'application, identique sur la page d'accueil, qui
-embarque désormais jusqu'au chunk de 43,7 kB correspondant à GSAP. Le budget de
-200 kB (BRIEF §6), tenu en phase 3 à 157,3 kB, est donc dépassé **au niveau de
-l'application**, pas par ce thème : voir §9.
+Deux fuites, toutes deux dues au **graphe de modules**, pas au thème :
+
+1. la route unique `/demo/[theme]` passait par le registre, qui peut atteindre
+   les trois thèmes : Next listait les **trois** chunks clients dans le document
+   de chaque démo, dont deux qu'elle n'exécutait jamais ;
+2. la vitrine `/` importait elle aussi le registre pour *décrire* les thèmes, ce
+   qui lui faisait descendre les trois invitations animées **et** le chunk GSAP
+   de 43,7 kB, pour une page qui n'anime rien.
+
+### 7.2 Après (passe de finitions)
+
+Trois corrections, aucune ligne de thème réécrite :
+
+- `src/themes/manifests.ts` — la moitié du registre qui ne porte **aucun
+  composant client** (slugs et manifestes). La vitrine, `/app`, `/activate`,
+  `/admin` et le seed importent celui-là ; seules les routes qui *rendent* une
+  invitation importent `registry.ts` ;
+- une route par thème (`src/app/demo/<slug>/page.tsx`, corps commun dans
+  `demoPage.tsx`) : chaque page importe exactement son thème ;
+- GSAP reste chargé par `import()` dans l'effet du composant client (inchangé
+  depuis la phase 3), donc hors du document.
+
+| Page                               | Scripts du document | dont polyfills `noModule` | **First Load JS** (navigateur moderne) |
+| ---------------------------------- | ------------------- | ------------------------- | -------------------------------------- |
+| `/` (vitrine)                      | 189,7 kB            | 39,5 kB                   | **150,2 kB**                           |
+| `/demo/mariage-noir-ivoire`        | 201,1 kB            | 39,5 kB                   | **161,6 kB**                           |
+| `/demo/mariage-terracotta-bloom`   | 201,6 kB            | 39,5 kB                   | **162,1 kB**                           |
+| `/demo/mariage-riviera-postcard`   | 203,0 kB            | 39,5 kB                   | **163,5 kB**                           |
+
+Le chunk de polyfills est servi avec l'attribut `noModule` : aucun navigateur
+qui sait lire un module ES ne le télécharge, et Next l'exclut lui-même de son
+« First Load JS ». C'est la colonne de droite qui se compare au budget.
+
+**Budget de 200 kB (BRIEF §6) : tenu sur les quatre pages**, même en comptant
+les polyfills sur `/`, `/demo/mariage-noir-ivoire` et
+`/demo/mariage-terracotta-bloom`.
+
+Le chunk du thème vaut 11,1 kB (noir-ivoire), 11,6 kB (terracotta) et 13,1 kB
+(riviera) gzip, et **seul celui de la démo ouverte est référencé**. GSAP +
+ScrollTrigger (27,2 + 17,5 = 44,7 kB gzip) arrivent après le montage, par
+`import()` : une fois l'animation prête, une démo pèse ~208 kB gzip.
 
 ---
 
@@ -238,13 +291,12 @@ Mêmes garanties que le thème 1, vérifiées par l'e2e :
 
 ## 9. Limites connues et points à surveiller
 
-1. **Socle JS de l'application à 225,7 kB gzip sur toutes les routes**, page
-   d'accueil comprise, alors que la phase 3 mesurait 157,3 kB sur la démo. Le
-   chunk de 43,7 kB (la taille exacte de GSAP + ScrollTrigger) est désormais
-   référencé par un `<script>` du document, y compris sur `/`. Ce n'est pas
-   imputable à ce thème (chiffre identique à l'octet près pour
-   `mariage-noir-ivoire`) mais **le budget de BRIEF §6 est dépassé** : à
-   instruire au niveau du découpage des chunks, pas du thème.
+1. ~~**Socle JS de l'application à 225,7 kB gzip sur toutes les routes**~~ —
+   **réglé** par la passe de finitions : manifestes sans dépendance client, une
+   route de démo par thème, GSAP toujours dynamique. 150,2 kB sur `/` et 161 à
+   164 kB sur les démos, budget tenu (§7.2). Reste à surveiller : toute page
+   qui importerait `src/themes/registry.ts` sans avoir besoin de *rendre* une
+   invitation ferait immédiatement revenir les trois chunks.
 2. **`animations/time.ts` n'a pas été touché** (un agent de réconciliation y
    travaillait). Le fichier ne fait plus que réexporter `eventInstant()` et
    `zoneOffsetMs()` de `src/content/derived.ts` ; rien à y changer pour ce thème.

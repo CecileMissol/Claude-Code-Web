@@ -27,6 +27,7 @@
     "db:migrate:local": "wrangler d1 migrations apply invitations-db --local",
     "db:seed:local": "node --disable-warning=ExperimentalWarning src/db/seed-cli.mjs",
     "db:migrate:remote": "wrangler d1 migrations apply invitations-db --remote",
+    "db:seed:remote": "node --disable-warning=ExperimentalWarning src/db/seed-cli.mjs --remote",
     "etsy:pdf": "node scripts/build-delivery-pdf.mjs"
   },
   "dependencies": {
