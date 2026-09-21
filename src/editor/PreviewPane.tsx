@@ -18,13 +18,7 @@ import { PREVIEW_DEVICES, PREVIEW_MESSAGE, type PreviewDeviceId } from './consta
  *
  * @param refreshKey Bumped by the editor after every successful save.
  */
-export function PreviewPane({
-  src,
-  refreshKey,
-}: {
-  src: string;
-  refreshKey: number;
-}) {
+export function PreviewPane({ src, refreshKey }: { src: string; refreshKey: number }) {
   const t = useTranslations('editor');
   const frameRef = useRef<HTMLIFrameElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -100,11 +94,7 @@ export function PreviewPane({
         </a>
       </div>
 
-      <div
-        role="group"
-        aria-label={t('previewPane.deviceLabel')}
-        className="flex flex-wrap gap-2"
-      >
+      <div role="group" aria-label={t('previewPane.deviceLabel')} className="flex flex-wrap gap-2">
         {PREVIEW_DEVICES.map((item) => (
           <button
             key={item.id}
@@ -126,18 +116,21 @@ export function PreviewPane({
         ref={boxRef}
         className="h-[60vh] min-h-96 w-full overflow-hidden rounded-xl border border-stone-300 bg-stone-100 dark:border-stone-700 dark:bg-stone-900"
       >
-        <iframe
-          ref={frameRef}
-          src={src}
-          title={t('previewPane.frameTitle')}
-          className="border-0 bg-white"
-          style={{
-            width: deviceSpec.width,
-            height: frameHeight,
-            transform: `scale(${scale})`,
-            transformOrigin: 'top left',
-          }}
-        />
+        {/* The inner box carries the *scaled* width, so the frame stays centred. */}
+        <div className="mx-auto h-full" style={{ width: Math.round(deviceSpec.width * scale) }}>
+          <iframe
+            ref={frameRef}
+            src={src}
+            title={t('previewPane.frameTitle')}
+            className="border-0 bg-white"
+            style={{
+              width: deviceSpec.width,
+              height: frameHeight,
+              transform: `scale(${scale})`,
+              transformOrigin: 'top left',
+            }}
+          />
+        </div>
       </div>
 
       <p className="text-xs text-stone-500 dark:text-stone-400">{t('previewPane.hint')}</p>

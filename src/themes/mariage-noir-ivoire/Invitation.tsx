@@ -4,6 +4,7 @@ import { directionsUrl, initials, longDate, postmarkDate, shortDate } from '@/co
 import type { InvitationContent } from '@/content/schema';
 import { publicPhotoUrl } from '@/lib/r2';
 import { manifest } from './manifest';
+import { parseExtras } from './schema';
 import InvitationClient from './InvitationClient';
 import type { ResolvedPhotos } from './sections/pieces';
 import './fonts';
@@ -19,7 +20,8 @@ import './styles.css';
  *  2. resolves the palette and the script face declared by the manifest into
  *     the seven CSS custom properties the stylesheet consumes,
  *  3. derives the dates and the initials once, so the server markup and the
- *     first client render are byte-identical.
+ *     first client render are byte-identical, and validates `content.extras`
+ *     with Zod — which is precisely why Zod stays out of the browser bundle.
  *
  * The animated tree itself lives in `InvitationClient.tsx`.
  */
@@ -33,6 +35,7 @@ export default function Invitation({ content, mode, slug }: InvitationProps) {
       mode={mode}
       slug={slug}
       photos={resolvePhotos(content)}
+      extras={parseExtras(content.extras)}
       paletteVars={paletteStyle(palette, script)}
       paletteId={palette.id}
       derived={{

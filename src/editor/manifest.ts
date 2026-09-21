@@ -360,7 +360,12 @@ export function buildEditorSteps(
       id: 'rsvp',
       labelKey: 'steps.rsvp',
       fields: [
-        { id: 'rsvpEnabled', path: 'rsvp.enabled', labelKey: 'fields.rsvpEnabled', kind: 'boolean' },
+        {
+          id: 'rsvpEnabled',
+          path: 'rsvp.enabled',
+          labelKey: 'fields.rsvpEnabled',
+          kind: 'boolean',
+        },
         {
           id: 'rsvpDeadline',
           path: 'rsvp.deadline',
@@ -377,8 +382,18 @@ export function buildEditorSteps(
           min: 1,
           max: CONTENT_LIMITS.maxGuestsPerReply,
         },
-        { id: 'rsvpAskEmail', path: 'rsvp.askEmail', labelKey: 'fields.rsvpAskEmail', kind: 'boolean' },
-        { id: 'rsvpAskDiet', path: 'rsvp.askDiet', labelKey: 'fields.rsvpAskDiet', kind: 'boolean' },
+        {
+          id: 'rsvpAskEmail',
+          path: 'rsvp.askEmail',
+          labelKey: 'fields.rsvpAskEmail',
+          kind: 'boolean',
+        },
+        {
+          id: 'rsvpAskDiet',
+          path: 'rsvp.askDiet',
+          labelKey: 'fields.rsvpAskDiet',
+          kind: 'boolean',
+        },
         {
           id: 'rsvpAskMessage',
           path: 'rsvp.askMessage',

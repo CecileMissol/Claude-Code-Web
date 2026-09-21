@@ -18,14 +18,19 @@ export const metadata: Metadata = {
 /**
  * Hides the application chrome inside the preview iframe.
  *
- * The route lives under the `(app)` group, so it inherits the site header and
- * the reading-width container. Rather than duplicating a layout outside that
- * group (a file another agent owns), the frame neutralises them — the rule only
- * ever applies inside the iframe.
+ * The route lives under the `(app)` group, so it inherits the site header, the
+ * footer, the information banner and the reading-width container. Rather than
+ * moving the route out of that group, the frame neutralises them; the rules
+ * only ever apply inside the iframe. They are the one coupling with the shell:
+ * if `src/app/(app)/layout.tsx` changes shape, check the preview.
+ *
+ * Deliberately *not* an overlay (`position: fixed`): the invitation must keep
+ * scrolling the document itself, which is what its scroll animations listen to.
  */
 const FRAME_CSS = `
-  body > header { display: none !important; }
-  body > main { max-width: none !important; margin: 0 !important; padding: 0 !important; }
+  body header, body footer { display: none !important; }
+  body > div > [role='region'] { display: none !important; }
+  main { max-width: none !important; margin: 0 !important; padding: 0 !important; }
 `;
 
 /**

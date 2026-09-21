@@ -12,7 +12,7 @@ import { expect, test, type Page } from '@playwright/test';
  *
  *   pnpm db:migrate:local && pnpm db:seed:local
  *   PORT=3102 pnpm dev &
- *   PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102 pnpm exec playwright test tests/e2e/editor.spec.ts
+ *   PLAYWRIGHT_BASE_URL=http://localhost:3102 pnpm exec playwright test tests/e2e/editor.spec.ts
  *
  * The magic link is not read from an inbox: in development the mailer only
  * prints it, so the token is read straight from the local D1 database, exactly
@@ -20,6 +20,10 @@ import { expect, test, type Page } from '@playwright/test';
  */
 
 const PROJECT_DIR = process.env.E2E_PROJECT_DIR ?? process.cwd();
+
+/** Smallest valid PNG, enough to exercise the crop/encode/upload chain. */
+const ONE_PIXEL_PNG =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
 
 /** Runs a read-only query against the local D1 database. */
 function queryLocalD1(sql: string): Record<string, unknown>[] {
@@ -36,7 +40,8 @@ function queryLocalD1(sql: string): Record<string, unknown>[] {
 /** The magic-link token Better Auth stored for this address. */
 function magicLinkToken(email: string): string {
   const rows = queryLocalD1(
-    `select identifier, value from verification where value like '%${email}%' order by rowid desc limit 1`,
+    `select identifier, value from verification where value like '%${email}%' ` +
+      `and expires_at > unixepoch() order by expires_at desc, rowid desc limit 1`,
   );
   const token = rows[0]?.identifier;
   expect(typeof token, `no magic link stored for ${email}`).toBe('string');
@@ -48,7 +53,8 @@ async function signIn(page: Page, email: string): Promise<void> {
   await page.goto('/login');
   await page.getByLabel('Email address').fill(email);
   await page.getByRole('button', { name: 'Send me a link' }).click();
-  await expect(page.getByText('Check your inbox')).toBeVisible();
+  // A cold development server compiles the auth route on the first call.
+  await expect(page.getByText('Check your inbox')).toBeVisible({ timeout: 30_000 });
 
   await page.goto(
     `/api/auth/magic-link/verify?token=${encodeURIComponent(magicLinkToken(email))}&callbackURL=/app`,
@@ -58,12 +64,17 @@ async function signIn(page: Page, email: string): Promise<void> {
 
 test.beforeEach(async ({ context, baseURL }) => {
   // The interface locale comes from a cookie; pin it so the labels are stable.
-  await context.addCookies([{ name: 'locale', value: 'en', url: baseURL ?? 'http://127.0.0.1:3102' }]);
+  await context.addCookies([
+    { name: 'locale', value: 'en', url: baseURL ?? 'http://localhost:3102' },
+  ]);
 });
 
 test('a couple signs in, creates a draft, edits it and sees the preview', async ({
   page,
 }, testInfo) => {
+  // A full round trip: sign-in, draft creation, autosave, photo upload.
+  test.setTimeout(120_000);
+
   const email = `editor-${testInfo.project.name}@example.test`;
   const firstName = `Zoé${testInfo.project.name.replace(/[^a-z]/gi, '')}`;
 
@@ -87,6 +98,27 @@ test('a couple signs in, creates a draft, edits it and sees the preview', async 
   const preview = page.frameLocator('iframe[title="Invitation preview"]');
   await expect(preview.getByText(firstName).first()).toBeVisible({ timeout: 15_000 });
 
+  // Photos: prepared in the browser, sent through a signed ticket, read back
+  // from R2 by /api/photos/<key>.
+  await page.getByRole('button', { name: /Photos/ }).click();
+  await page.getByLabel('Envelope, left polaroid').setInputFiles({
+    name: 'photo.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(ONE_PIXEL_PNG, 'base64'),
+  });
+  await page.getByRole('button', { name: 'Choose a photo' }).click();
+
+  const stored = page.locator('img[src^="/api/photos/invitations/"]').first();
+  await expect(stored).toBeVisible({ timeout: 20_000 });
+
+  const photoUrl = await stored.getAttribute('src');
+  const photoResponse = await page.request.get(photoUrl!);
+  expect(photoResponse.status()).toBe(200);
+  expect(photoResponse.headers()['content-type']).toContain('image/webp');
+
+  await expect(page.getByLabel('Saving status')).toHaveText('Saved', { timeout: 15_000 });
+  await page.getByRole('button', { name: /The two of you/ }).click();
+
   // Nothing is kept in the browser: the value comes back from the database.
   const url = page.url();
   await page.reload();
@@ -94,12 +126,15 @@ test('a couple signs in, creates a draft, edits it and sees the preview', async 
 
   // A second couple cannot read that invitation.
   const otherEmail = `intruder-${testInfo.project.name}@example.test`;
-  const otherContext = await page.context().browser()!.newContext({
-    baseURL: testInfo.project.use.baseURL,
-    viewport: page.viewportSize() ?? undefined,
-  });
+  const otherContext = await page
+    .context()
+    .browser()!
+    .newContext({
+      baseURL: testInfo.project.use.baseURL,
+      viewport: page.viewportSize() ?? undefined,
+    });
   await otherContext.addCookies([
-    { name: 'locale', value: 'en', url: testInfo.project.use.baseURL ?? 'http://127.0.0.1:3102' },
+    { name: 'locale', value: 'en', url: testInfo.project.use.baseURL ?? 'http://localhost:3102' },
   ]);
 
   const otherPage = await otherContext.newPage();
@@ -110,4 +145,9 @@ test('a couple signs in, creates a draft, edits it and sees the preview', async 
   await expect(otherPage.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 
   await otherContext.close();
+
+  await page.screenshot({
+    path: `tests/e2e/screenshots/editor-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
 });

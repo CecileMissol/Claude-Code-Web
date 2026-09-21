@@ -124,6 +124,7 @@ export async function ensureThemeSeeded(
 
   const seeded = await seedThemes(db);
   const row = seeded.find((candidate) => candidate.slug === slug);
-  if (!row) throw new Error(`Unknown theme "${slug}": it is not registered in src/themes/registry.ts.`);
+  if (!row)
+    throw new Error(`Unknown theme "${slug}": it is not registered in src/themes/registry.ts.`);
   return { id: row.id, slug: row.slug };
 }

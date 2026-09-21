@@ -34,7 +34,10 @@ function unwrap(schema: ZodLike): { inner: ZodLike; optional: boolean } {
   let inner = schema;
   let optional = false;
 
-  while (inner.def?.innerType && ['optional', 'nullable', 'default'].includes(inner.def.type ?? '')) {
+  while (
+    inner.def?.innerType &&
+    ['optional', 'nullable', 'default'].includes(inner.def.type ?? '')
+  ) {
     optional = optional || inner.def.type !== 'nullable';
     inner = inner.def.innerType;
   }

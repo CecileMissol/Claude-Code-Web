@@ -14,8 +14,13 @@ import { expect, test, type APIRequestContext, type BrowserContext } from '@play
  *
  * ```bash
  * PORT=3103 pnpm dev                                    # terminal 1
- * PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 pnpm test:e2e tests/e2e/rsvp.spec.ts
+ * PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 pnpm test:e2e tests/e2e/rsvp.spec.ts --workers=1
  * ```
+ *
+ * `--workers=1` matters: the fixtures are written by `wrangler d1 execute
+ * --local`, a second process on the same SQLite file, and Miniflare's local D1
+ * returns internal errors when several workers write to it at once. It is a
+ * limitation of the local emulator, not of the application.
  *
  * The fixtures are written straight into the local D1 database with
  * `wrangler d1 execute --local`, the same tool that applies the migrations.
@@ -26,6 +31,11 @@ import { expect, test, type APIRequestContext, type BrowserContext } from '@play
  * The static theme of phase 2 has no working RSVP form (its `<form>` posts
  * nowhere), so the reply is sent with Playwright's `request.post`, which is
  * exactly what the animated theme will do through `submitRsvp`.
+ *
+ * Everything here goes through plain forms and server actions, so the journey
+ * is also a check that the share page works **without JavaScript** — which is
+ * how it behaves in a sandbox where Turbopack's HMR socket cannot connect and
+ * the client never bootstraps.
  */
 
 const SECRET = process.env.BETTER_AUTH_SECRET ?? 'dev-only-insecure-secret-change-me';
@@ -326,22 +336,28 @@ test.describe('RSVP journey', () => {
     context,
     baseURL,
   }) => {
+    // Three server actions in a row, against a dev server shared with the two
+    // other viewports: this one needs room to breathe.
+    test.slow();
     await signIn(context, fixture, baseURL ?? 'http://127.0.0.1:3100');
 
     // The chosen link is free until it is published.
     expect((await page.request.get(`/${fixture.draftSlug}`)).status()).toBe(404);
 
     await page.goto(`/app/${fixture.draftId}/share`);
+
+    // The link is saved first: publishing is deliberately a separate, explicit
+    // step, so nothing goes online by a stray keystroke.
     await page
       .getByLabel(/Adresse de l'invitation|Address of the invitation/)
       .fill(fixture.draftSlug);
-
-    // The link has to be saved before the invitation can go online.
     await page.getByRole('button', { name: /Enregistrer le lien|Save the link/ }).click();
-    await expect(page.getByText(/Lien enregistré|Link saved/)).toBeVisible();
+    await expect(page.getByText(/Lien enregistré|Link saved/)).toBeVisible({ timeout: 20_000 });
 
     await page.getByRole('button', { name: /^(Publier|Publish)$/ }).click();
-    await expect(page.getByText(/est en ligne|is online/)).toBeVisible();
+    await expect(
+      page.getByText(/^(Cette invitation est en ligne\.|This invitation is online\.)$/),
+    ).toBeVisible({ timeout: 20_000 });
 
     // The invitation is now served on that link, and so are its extras.
     const live = await page.request.get(`/${fixture.draftSlug}`);
@@ -352,7 +368,11 @@ test.describe('RSVP journey', () => {
     // Taking it offline leaves a sober page in the invitation's own language.
     page.once('dialog', (dialog) => dialog.accept());
     await page.getByRole('button', { name: /hors ligne|Take offline/ }).click();
-    await expect(page.getByText(/pas encore publiée|not published yet/)).toBeVisible();
+    await expect(
+      page.getByText(
+        /^(Cette invitation n'est pas encore publiée\.|This invitation is not published yet\.)$/,
+      ),
+    ).toBeVisible({ timeout: 20_000 });
 
     const offline = await page.request.get(`/${fixture.draftSlug}`);
     expect(offline.status()).toBe(200);

@@ -694,6 +694,15 @@ html.invitation-locked body {
 
   .invitation .board {
     height: 84svh;
+    /*
+     * The mock-up gives the board the whole 1.25fr column. On a 1440 px screen
+     * that column is wider than it is tall, and since every piece is sized as a
+     * percentage of the board's *width*, the collage grows until the polaroids
+     * swallow the train ticket. Capping the width keeps the board's proportions
+     * close to the portrait ones the composition was drawn for, and leaves the
+     * pieces exactly where the mock-up puts them.
+     */
+    width: min(100%, 68svh);
     margin: 0 0 0 4vw;
   }
 
@@ -1243,20 +1252,25 @@ html.invitation-locked body {
 
 /* ---- Demo banner ---- */
 
+/*
+ * Demo badge. A discreet pill pinned to a corner rather than a full-width bar:
+ * every heading of the invitation is centred, so a bar across the top would sit
+ * on top of them.
+ */
 .invitation .demo-banner {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: calc(0.6rem + env(safe-area-inset-top, 0));
+  left: 0.6rem;
   z-index: 90;
   background: var(--env);
   color: #f3eee5;
-  text-align: center;
-  padding: 0.35rem 1rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
+  border-radius: 40px;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   margin: 0;
+  opacity: 0.85;
   pointer-events: none;
 }
 

@@ -21,10 +21,7 @@ import type { EditorStep } from './types';
  * matching control. Adding a field kind means adding one case here and one
  * control in `src/editor/fields.tsx`.
  */
-export function StepPanel({
-  step,
-  ...props
-}: Omit<FieldProps, 'field'> & { step: EditorStep }) {
+export function StepPanel({ step, ...props }: Omit<FieldProps, 'field'> & { step: EditorStep }) {
   const t = useTranslations('editor');
 
   return (
@@ -32,30 +29,31 @@ export function StepPanel({
       <h2 className="text-lg font-semibold">{t(step.labelKey)}</h2>
 
       {step.fields.map((field) => {
-        const shared = { ...props, field, key: field.id };
+        const shared = { ...props, field };
+        const key = field.id;
 
         switch (field.kind) {
           case 'text':
           case 'textarea':
           case 'url':
-            return <TextControl {...shared} />;
+            return <TextControl key={key} {...shared} />;
           case 'date':
           case 'time':
-            return <DateControl {...shared} />;
+            return <DateControl key={key} {...shared} />;
           case 'number':
-            return <NumberControl {...shared} />;
+            return <NumberControl key={key} {...shared} />;
           case 'boolean':
-            return <BooleanControl {...shared} />;
+            return <BooleanControl key={key} {...shared} />;
           case 'choice':
-            return <ChoiceControl {...shared} />;
+            return <ChoiceControl key={key} {...shared} />;
           case 'lines':
-            return <LinesControl {...shared} />;
+            return <LinesControl key={key} {...shared} />;
           case 'items':
-            return <ItemsControl {...shared} />;
+            return <ItemsControl key={key} {...shared} />;
           case 'photos':
-            return <PhotosField {...shared} />;
+            return <PhotosField key={key} {...shared} />;
           case 'extras':
-            return <ExtrasField {...shared} />;
+            return <ExtrasField key={key} {...shared} />;
           case 'link':
             return (
               <div key={field.id} className="space-y-2">

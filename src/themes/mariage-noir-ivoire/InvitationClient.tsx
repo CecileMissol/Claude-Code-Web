@@ -7,7 +7,7 @@ import type { InvitationMode } from '../types';
 import { IllustrationDefs } from './assets/illustrations';
 import { useInvitationMotion } from './animations/useInvitationMotion';
 import { messagesFor } from './messages';
-import { parseExtras } from './schema';
+import type { Extras } from './schema';
 import type { ResolvedPhotos } from './sections/pieces';
 import { Intro } from './sections/Intro';
 import { Story } from './sections/Story';
@@ -34,6 +34,14 @@ export interface InvitationClientProps {
   slug?: string;
   /** Photo slots with their public URL already resolved (server side). */
   photos: ResolvedPhotos;
+  /**
+   * `content.extras`, already validated on the server.
+   *
+   * Parsing them here instead would drag Zod — about 100 kB gzipped — into the
+   * client bundle for a single `safeParse`. The type is imported type-only, so
+   * nothing of Zod reaches the browser.
+   */
+  extras: Extras;
   /** Palette + script, as CSS custom properties. */
   paletteVars: CSSProperties;
   paletteId: string;
@@ -53,13 +61,13 @@ export function InvitationClient({
   mode,
   slug,
   photos,
+  extras,
   paletteVars,
   paletteId,
   derived,
 }: InvitationClientProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const t = messagesFor(content.locale);
-  const extras = parseExtras(content.extras);
   const { opened, ready, reduced, open } = useInvitationMotion(rootRef, mode);
 
   return (

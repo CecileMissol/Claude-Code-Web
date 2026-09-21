@@ -106,9 +106,10 @@ function TextControl({ field, content, onChange, issues }: FieldProps) {
   const id = `field-${field.id}`;
   const issue = issues.get(field.path);
   const error = issue ? describeIssue(issue, t) : undefined;
-  const value = typeof getAtPath(content, field.path) === 'string'
-    ? (getAtPath(content, field.path) as string)
-    : '';
+  const value =
+    typeof getAtPath(content, field.path) === 'string'
+      ? (getAtPath(content, field.path) as string)
+      : '';
   const help = field.helpKey ? t(field.helpKey) : undefined;
 
   const shared = {
@@ -119,11 +120,20 @@ function TextControl({ field, content, onChange, issues }: FieldProps) {
     'aria-describedby': describedBy(id, Boolean(help), Boolean(error)),
     className: INPUT_CLASS,
     onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      onChange(field.path, event.target.value === '' && !field.required ? emptyValue(field) : event.target.value),
+      onChange(
+        field.path,
+        event.target.value === '' && !field.required ? emptyValue(field) : event.target.value,
+      ),
   };
 
   return (
-    <FieldFrame id={id} label={t(field.labelKey)} help={help} error={error} optional={!field.required}>
+    <FieldFrame
+      id={id}
+      label={t(field.labelKey)}
+      help={help}
+      error={error}
+      optional={!field.required}
+    >
       {field.kind === 'textarea' ? (
         <textarea {...shared} rows={3} />
       ) : (
@@ -153,7 +163,13 @@ function DateControl({ field, content, onChange, issues }: FieldProps) {
   const help = field.helpKey ? t(field.helpKey) : undefined;
 
   return (
-    <FieldFrame id={id} label={t(field.labelKey)} help={help} error={error} optional={!field.required}>
+    <FieldFrame
+      id={id}
+      label={t(field.labelKey)}
+      help={help}
+      error={error}
+      optional={!field.required}
+    >
       <input
         id={id}
         type={field.kind}
@@ -162,7 +178,10 @@ function DateControl({ field, content, onChange, issues }: FieldProps) {
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(id, Boolean(help), Boolean(error))}
         onChange={(event) =>
-          onChange(field.path, event.target.value === '' && !field.required ? undefined : event.target.value)
+          onChange(
+            field.path,
+            event.target.value === '' && !field.required ? undefined : event.target.value,
+          )
         }
       />
     </FieldFrame>
@@ -296,7 +315,13 @@ function ChoiceControl({ field, content, onChange, issues, locale }: FieldProps)
                   style={{ backgroundColor: option.swatch }}
                 />
               )}
-              <span style={option.fontFamily ? { fontFamily: option.fontFamily, fontSize: '1.1rem' } : undefined}>
+              <span
+                style={
+                  option.fontFamily
+                    ? { fontFamily: option.fontFamily, fontSize: '1.1rem' }
+                    : undefined
+                }
+              >
                 {optionLabel(option, locale)}
               </span>
             </label>
@@ -352,7 +377,10 @@ function LinesControl({ field, content, onChange, issues }: FieldProps) {
                 }}
               />
               {error && (
-                <p id={`${id}-error`} className="text-xs font-medium text-red-700 dark:text-red-400">
+                <p
+                  id={`${id}-error`}
+                  className="text-xs font-medium text-red-700 dark:text-red-400"
+                >
                   {error}
                 </p>
               )}
@@ -457,18 +485,26 @@ function ItemsControl({ field, content, onChange, issues }: FieldProps) {
                     className={INPUT_CLASS}
                     aria-invalid={error ? true : undefined}
                     aria-describedby={error ? `${id}-error` : undefined}
-                    onChange={(event) => replace(setItem(items, index, itemField.path, event.target.value))}
+                    onChange={(event) =>
+                      replace(setItem(items, index, itemField.path, event.target.value))
+                    }
                   />
                 ) : (
                   <input
                     id={id}
-                    type={itemField.kind === 'time' || itemField.kind === 'date' ? itemField.kind : 'text'}
+                    type={
+                      itemField.kind === 'time' || itemField.kind === 'date'
+                        ? itemField.kind
+                        : 'text'
+                    }
                     value={value}
                     maxLength={isText ? itemField.maxLength : undefined}
                     className={INPUT_CLASS}
                     aria-invalid={error ? true : undefined}
                     aria-describedby={error ? `${id}-error` : undefined}
-                    onChange={(event) => replace(setItem(items, index, itemField.path, event.target.value))}
+                    onChange={(event) =>
+                      replace(setItem(items, index, itemField.path, event.target.value))
+                    }
                   />
                 )}
               </FieldFrame>

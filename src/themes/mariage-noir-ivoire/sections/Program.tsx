@@ -8,6 +8,7 @@ import {
   PIECE_AT,
   programLayout,
 } from '../animations/thresholds';
+import { formatTime } from '../animations/format';
 import type { Messages } from '../messages';
 import { ChapterLines, Piece, pieceStyle } from './pieces';
 
@@ -60,7 +61,9 @@ export function Program({ t, content }: { t: Messages; content: InvitationConten
                 )}
               >
                 <div className={`prog torn${tone ? ` ${tone}` : ''}`}>
-                  <time dateTime={item.time}>{item.time}</time>
+                  {/* `dateTime` keeps the machine-readable value; the text is
+                      written the way the invitation's language writes it. */}
+                  <time dateTime={item.time}>{formatTime(item.time, content.locale)}</time>
                   <strong>{item.title}</strong>
                   {item.detail && <em>{item.detail}</em>}
                 </div>

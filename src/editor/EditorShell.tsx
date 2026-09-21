@@ -117,7 +117,10 @@ export function EditorShell({
       </div>
 
       {serverIssues.length > 0 && (
-        <p role="alert" className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
+        <p
+          role="alert"
+          className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-950 dark:text-red-200"
+        >
           {t('errors.invalid')}
         </p>
       )}
@@ -126,7 +129,7 @@ export function EditorShell({
         {/* Form — second on mobile, first on desktop. */}
         <div className="order-2 lg:order-1">
           <nav aria-label={t('stepsLabel')} className="mb-4 -mx-1 overflow-x-auto">
-            <ul className="flex gap-1 px-1 pb-1">
+            <ul className="flex gap-1 px-1 pb-1 lg:flex-wrap">
               {steps.map((step, index) => {
                 const current = step.id === activeStepId;
                 const flagged = flaggedSteps.has(step.id);

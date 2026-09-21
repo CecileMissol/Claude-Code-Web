@@ -68,6 +68,72 @@ const PETAL_OFFSETS = [
 ] as const;
 
 /* -------------------------------------------------------------------------- */
+/* Amaranth — drooping tassels                                                */
+/* -------------------------------------------------------------------------- */
+
+interface Tassel {
+  spine: string;
+  opacity: number;
+  florets: { cx: number; cy: number; r: number }[];
+}
+
+/**
+ * A tassel is a cubic curve plus a bottlebrush of florets sampled along it,
+ * fattest in the middle and tapering to a point — which is what tells an
+ * amaranth from a bamboo cane. Sampled once, at module load, from fixed
+ * control points: the shape is identical on the server and in the browser.
+ */
+function buildTassel(
+  p0: [number, number],
+  p1: [number, number],
+  p2: [number, number],
+  p3: [number, number],
+  width: number,
+  steps: number,
+  opacity: number,
+): Tassel {
+  const at = (t: number, i: 0 | 1) => {
+    const u = 1 - t;
+    return (
+      u * u * u * p0[i] + 3 * u * u * t * p1[i] + 3 * u * t * t * p2[i] + t * t * t * p3[i]
+    );
+  };
+
+  const florets: Tassel['florets'] = [];
+  for (let step = 0; step <= steps; step += 1) {
+    const t = step / steps;
+    // Fat in the middle, pointed at both ends.
+    const taper = Math.sin(Math.PI * Math.min(1, t * 1.15)) ** 0.7;
+    const radius = width * taper;
+    if (radius < 0.35) continue;
+    // Two florets per step, offset either side of the spine.
+    const offset = radius * 0.5;
+    florets.push({
+      cx: Number((at(t, 0) - offset).toFixed(1)),
+      cy: Number(at(t, 1).toFixed(1)),
+      r: Number(radius.toFixed(2)),
+    });
+    florets.push({
+      cx: Number((at(t, 0) + offset).toFixed(1)),
+      cy: Number((at(t, 1) + radius * 0.45).toFixed(1)),
+      r: Number((radius * 0.85).toFixed(2)),
+    });
+  }
+
+  return {
+    spine: `M${p0[0]} ${p0[1]} C${p1[0]} ${p1[1]} ${p2[0]} ${p2[1]} ${p3[0]} ${p3[1]}`,
+    opacity,
+    florets,
+  };
+}
+
+const AMARANTH_TASSELS: Tassel[] = [
+  buildTassel([35, 92], [31, 120], [27, 150], [22, 190], 4.6, 26, 0.9),
+  buildTassel([38, 96], [44, 126], [47, 158], [45, 208], 5.6, 30, 1),
+  buildTassel([42, 88], [54, 114], [60, 142], [62, 178], 3.9, 22, 0.78),
+];
+
+/* -------------------------------------------------------------------------- */
 /* Shared <defs> block                                                        */
 /* -------------------------------------------------------------------------- */
 
@@ -168,6 +234,7 @@ export function IllustrationDefs() {
       </symbol>
 
       <symbol id={AMARANTH_ID} viewBox="0 0 80 220">
+        {/* Main stem and two leaves. */}
         <path
           d="M40 4 C38 40 36 70 34 96"
           fill="none"
@@ -181,46 +248,31 @@ export function IllustrationDefs() {
           opacity=".8"
         />
         <path
-          d="M40 48 C52 46 60 52 66 60 C56 62 46 58 40 48Z"
+          d="M40 52 C52 50 60 56 66 64 C56 66 46 62 40 52Z"
           style={{ fill: 'var(--stem)' }}
           opacity=".7"
         />
-        {/* Three drooping tassels. */}
-        <path
-          d="M35 92 C31 120 27 150 22 186"
-          fill="none"
-          style={{ stroke: 'var(--stem)' }}
-          strokeWidth="7"
-          strokeLinecap="round"
-          opacity=".92"
-        />
-        <path
-          d="M40 96 C44 126 47 156 45 200"
-          fill="none"
-          style={{ stroke: 'var(--stem)' }}
-          strokeWidth="8.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M46 90 C54 116 60 144 62 174"
-          fill="none"
-          style={{ stroke: 'var(--stem)' }}
-          strokeWidth="6"
-          strokeLinecap="round"
-          opacity=".8"
-        />
-        {/* Grain highlights along the tassels. */}
-        <g fill="#F2F4E3" opacity=".45">
-          <circle cx="33" cy="106" r="2.1" />
-          <circle cx="30" cy="126" r="1.9" />
-          <circle cx="26" cy="152" r="1.7" />
-          <circle cx="42" cy="118" r="2.3" />
-          <circle cx="45" cy="146" r="2.1" />
-          <circle cx="45" cy="176" r="1.8" />
-          <circle cx="53" cy="108" r="1.9" />
-          <circle cx="58" cy="136" r="1.7" />
-          <circle cx="61" cy="160" r="1.5" />
-        </g>
+        {/* Three drooping tassels, each a bottlebrush of small florets. */}
+        {AMARANTH_TASSELS.map((tassel, index) => (
+          <g key={index} opacity={tassel.opacity}>
+            <path
+              d={tassel.spine}
+              fill="none"
+              style={{ stroke: 'var(--stem)' }}
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+            {tassel.florets.map((floret, i) => (
+              <circle
+                key={i}
+                cx={floret.cx}
+                cy={floret.cy}
+                r={floret.r}
+                style={{ fill: 'var(--stem)' }}
+              />
+            ))}
+          </g>
+        ))}
       </symbol>
     </svg>
   );

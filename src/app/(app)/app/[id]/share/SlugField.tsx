@@ -133,7 +133,7 @@ export function SlugField({
         <div className="flex flex-wrap gap-2 pt-1">
           <button
             type="submit"
-            disabled={saving || value.length === 0}
+            disabled={saving}
             className="rounded-md bg-stone-900 px-3 py-1.5 text-sm text-white disabled:opacity-60 dark:bg-stone-100 dark:text-stone-900"
           >
             {labels.save}

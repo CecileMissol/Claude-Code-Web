@@ -338,8 +338,19 @@ se met en `skip` plutôt que d'échouer pour la mauvaise raison.
 
 ```bash
 PORT=3103 pnpm dev                                    # terminal 1
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 pnpm test:e2e tests/e2e/rsvp.spec.ts
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3103 pnpm test:e2e tests/e2e/rsvp.spec.ts --workers=1
 ```
+
+`--workers=1` est nécessaire : les données de test sont écrites par
+`wrangler d1 execute --local`, un second processus sur le même fichier SQLite,
+et le D1 local de Miniflare renvoie des erreurs internes quand plusieurs workers
+y écrivent en même temps. C'est une limite de l'émulateur local, pas de
+l'application.
+
+Le parcours passe **entièrement par des formulaires et des actions serveur**,
+donc il vérifie aussi que la page de partage fonctionne **sans JavaScript** — ce
+qui est exactement son comportement dans un bac à sable où la socket HMR de
+Turbopack ne peut pas s'ouvrir et où le client React ne démarre jamais.
 
 Les données de test sont écrites dans la base D1 locale avec
 `wrangler d1 execute --local`, préfixées par le projet et l'indice du worker

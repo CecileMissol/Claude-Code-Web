@@ -115,7 +115,9 @@ describe('client bounds mirror the content schema', () => {
   ];
 
   it.each(cases)('%s accepts %i characters and refuses one more', (path, max) => {
-    expect(InvitationContent.safeParse(setAtPath(base(), path, 'a'.repeat(max))).success).toBe(true);
+    expect(InvitationContent.safeParse(setAtPath(base(), path, 'a'.repeat(max))).success).toBe(
+      true,
+    );
     expect(InvitationContent.safeParse(setAtPath(base(), path, 'a'.repeat(max + 1))).success).toBe(
       false,
     );

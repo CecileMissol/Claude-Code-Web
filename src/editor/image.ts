@@ -68,11 +68,7 @@ function clamp(value: number, min: number, max: number): number {
  *
  * @param aspect width / height of the slot, as declared by the theme manifest.
  */
-export function cropRect(
-  source: Size,
-  aspect: number,
-  crop: CropSettings = DEFAULT_CROP,
-): Rect {
+export function cropRect(source: Size, aspect: number, crop: CropSettings = DEFAULT_CROP): Rect {
   const safeAspect = aspect > 0 ? aspect : source.width / source.height;
   const zoom = clamp(crop.zoom, 1, 5);
 
@@ -130,7 +126,7 @@ export class PhotoTooLargeError extends Error {
  */
 export async function preparePhoto(
   file: Blob,
-  options: { aspect: number; crop?: CropSettings; maxEdge?: number; maxBytes?: number } ,
+  options: { aspect: number; crop?: CropSettings; maxEdge?: number; maxBytes?: number },
 ): Promise<PreparedPhoto> {
   const bitmap = await createImageBitmap(file);
   try {
@@ -179,7 +175,8 @@ function toBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
     canvas.toBlob(
       (blob) => {
         if (!blob) reject(new Error('This browser cannot encode WebP images.'));
-        else if (blob.type !== PHOTO_MIME) reject(new Error('This browser cannot encode WebP images.'));
+        else if (blob.type !== PHOTO_MIME)
+          reject(new Error('This browser cannot encode WebP images.'));
         else resolve(blob);
       },
       PHOTO_MIME,

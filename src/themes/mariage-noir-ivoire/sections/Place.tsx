@@ -89,8 +89,8 @@ export function Place({
           <Piece
             at={at.amaranth}
             style={pieceStyle(
-              { left: '-3%', top: '-4%', width: '15%', height: '54%', transformOrigin: '50% 0%' },
-              { from: 'translateY(-50vh) rotate(-30deg)', to: 'rotate(-7deg)' },
+              { left: '-1%', top: '-8%', width: '13%', height: '50%', transformOrigin: '50% 0%' },
+              { from: 'translateY(-50vh) rotate(-34deg)', to: 'rotate(-13deg)' },
             )}
           >
             <Amaranth />

@@ -135,7 +135,9 @@ function PhotoSlot({
   return (
     <div className="space-y-3 rounded-lg border border-stone-200 p-3 dark:border-stone-800">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <p className="text-sm font-medium">{label}</p>
+        <label htmlFor={`photo-input-${slot.id}`} className="text-sm font-medium">
+          {label}
+        </label>
         <p className="text-xs text-stone-500">{t('photo.sizeHint', { edge: PHOTO_MAX_EDGE })}</p>
       </div>
 

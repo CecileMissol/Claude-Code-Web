@@ -41,7 +41,11 @@ describe('cropRect', () => {
   });
 
   it('shrinks around the focus point when zooming, without leaving the image', () => {
-    const zoomed = cropRect({ width: 1000, height: 1000 }, 1, { focusX: 0.5, focusY: 0.5, zoom: 2 });
+    const zoomed = cropRect({ width: 1000, height: 1000 }, 1, {
+      focusX: 0.5,
+      focusY: 0.5,
+      zoom: 2,
+    });
     expect(zoomed).toEqual({ x: 250, y: 250, width: 500, height: 500 });
 
     const corner = cropRect({ width: 1000, height: 1000 }, 1, { focusX: 0, focusY: 1, zoom: 2 });
