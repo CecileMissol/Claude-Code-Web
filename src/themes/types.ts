@@ -108,6 +108,10 @@ export type InvitationMode = 'public' | 'preview' | 'demo';
 export interface InvitationProps {
   content: InvitationContent;
   mode: InvitationMode;
+  /** Public slug of the published invitation (undefined in preview/demo). */
+  slug?: string;
+  /** Database id of the invitation (undefined in demo). */
+  invitationId?: string;
 }
 
 /**

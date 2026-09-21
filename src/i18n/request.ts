@@ -15,6 +15,8 @@ const NAMESPACES = [
   'admin',
   'legal',
   'marketing',
+  'share',
+  'responses',
 ] as const;
 
 type Messages = Record<string, unknown>;

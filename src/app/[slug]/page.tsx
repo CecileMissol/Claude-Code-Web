@@ -53,5 +53,7 @@ export default async function PublicInvitationPage({
   const content = migrateContent(JSON.parse(found.invitation.content));
   const { Invitation } = found.theme;
 
-  return <Invitation content={content} mode="public" />;
+  return (
+    <Invitation content={content} mode="public" slug={slug} invitationId={found.invitation.id} />
+  );
 }
