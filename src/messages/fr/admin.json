@@ -1,0 +1,36 @@
+{
+  "title": "Administration",
+  "intro": "Activations, invitations et erreurs.",
+  "forbidden": "Cet espace est réservé.",
+  "sections": {
+    "activations": "Activations",
+    "invitations": "Invitations",
+    "audit": "Journal d'audit"
+  },
+  "activations": {
+    "empty": "Aucune demande d'activation en attente.",
+    "localeLabel": "Langue de l'invitation",
+    "approve": "Valider",
+    "reject": "Refuser",
+    "reasonPlaceholder": "Motif (facultatif)"
+  },
+  "invitationsTab": {
+    "empty": "Aucune invitation pour l'instant.",
+    "status": {
+      "draft": "Brouillon",
+      "published": "Publiée",
+      "expired": "Expirée",
+      "disabled": "Désactivée"
+    },
+    "publishedAt": "Publiée le {date}",
+    "notPublished": "Non publiée",
+    "expiresAt": "Expire le {date}",
+    "extend": "Prolonger de 12 mois",
+    "enable": "Réactiver",
+    "disable": "Désactiver",
+    "open": "Ouvrir"
+  },
+  "auditTab": {
+    "empty": "Le journal d'audit est vide."
+  }
+}

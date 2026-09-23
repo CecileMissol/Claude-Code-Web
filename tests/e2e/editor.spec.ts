@@ -1,0 +1,184 @@
+import { execFileSync } from 'node:child_process';
+import { expect, test, type Page } from '@playwright/test';
+
+/**
+ * End-to-end run of the editor: magic-link sign-in, draft creation, an edit,
+ * the automatic save, and the live preview showing the result. It also checks
+ * that a second couple cannot open the first one's invitation.
+ *
+ * It needs the Cloudflare bindings (D1 for the invitations, R2 for the photos),
+ * which only `next dev` provides — `next start` runs without them. Since
+ * phase 8 that is what `pnpm test:e2e` starts, so this file needs no special
+ * command any more.
+ *
+ * The magic link is not read from an inbox: in development the mailer only
+ * prints it, so the token is read straight from the local D1 database, exactly
+ * where Better Auth stored it.
+ *
+ * Two rules of the application shape the setup:
+ *
+ * - since phase 7, a magic link is only sent to an address that is an
+ *   administrator, already has an account, or has an approved activation. The
+ *   accounts used here are therefore created in the database first, which is
+ *   what an approved activation would have done;
+ * - the "Create an invitation" button only exists for an administrator or when
+ *   `ALLOW_FREE_DRAFTS=true`, which `playwright.config.ts` sets for the
+ *   development server it starts.
+ */
+
+const PROJECT_DIR = process.env.E2E_PROJECT_DIR ?? process.cwd();
+
+/** Smallest valid PNG, enough to exercise the crop/encode/upload chain. */
+const ONE_PIXEL_PNG =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+
+/** Runs a read-only query against the local D1 database. */
+function queryLocalD1(sql: string): Record<string, unknown>[] {
+  const output = execFileSync(
+    'pnpm',
+    ['exec', 'wrangler', 'd1', 'execute', 'invitations-db', '--local', '--json', '--command', sql],
+    { encoding: 'utf8', cwd: PROJECT_DIR, stdio: ['ignore', 'pipe', 'ignore'] },
+  );
+
+  const parsed = JSON.parse(output) as { results?: Record<string, unknown>[] }[];
+  return parsed[0]?.results ?? [];
+}
+
+/** Runs a write against the local D1 database. */
+function execLocalD1(sql: string): void {
+  execFileSync(
+    'pnpm',
+    ['exec', 'wrangler', 'd1', 'execute', 'invitations-db', '--local', '--command', sql],
+    { encoding: 'utf8', cwd: PROJECT_DIR, stdio: ['ignore', 'ignore', 'pipe'] },
+  );
+}
+
+/**
+ * Gives an address an account, so the phase-7 sign-in lock lets it through.
+ * Idempotent: `email` is unique, and a second run is a no-op.
+ */
+function ensureAccount(email: string): void {
+  const now = Math.floor(Date.now() / 1000);
+  const id = `e2e-${email.replace(/[^a-z0-9]/gi, '-')}`;
+  execLocalD1(
+    `insert or ignore into user (id, name, email, email_verified, created_at, updated_at) ` +
+      `values ('${id}', 'E2E', '${email}', 1, ${now}, ${now});`,
+  );
+}
+
+/** The magic-link token Better Auth stored for this address. */
+function magicLinkToken(email: string): string {
+  const rows = queryLocalD1(
+    `select identifier, value from verification where value like '%${email}%' ` +
+      `and expires_at > unixepoch() order by expires_at desc, rowid desc limit 1`,
+  );
+  const token = rows[0]?.identifier;
+  expect(typeof token, `no magic link stored for ${email}`).toBe('string');
+  return token as string;
+}
+
+/** Signs in through the real magic-link flow and lands on the dashboard. */
+async function signIn(page: Page, email: string): Promise<void> {
+  ensureAccount(email);
+
+  await page.goto('/login');
+  await page.getByLabel('Email address').fill(email);
+  await page.getByRole('button', { name: 'Send me a link' }).click();
+  // A cold development server compiles the auth route on the first call.
+  await expect(page.getByText('Check your inbox')).toBeVisible({ timeout: 30_000 });
+
+  await page.goto(
+    `/api/auth/magic-link/verify?token=${encodeURIComponent(magicLinkToken(email))}&callbackURL=/app`,
+  );
+  await expect(page.getByRole('heading', { name: 'My invitations' })).toBeVisible();
+}
+
+test.beforeEach(async ({ context, baseURL }) => {
+  // The interface locale comes from a cookie; pin it so the labels are stable.
+  await context.addCookies([
+    { name: 'locale', value: 'en', url: baseURL ?? 'http://localhost:3102' },
+  ]);
+});
+
+test('a couple signs in, creates a draft, edits it and sees the preview', async ({
+  page,
+}, testInfo) => {
+  // A full round trip: sign-in, draft creation, autosave, photo upload.
+  test.setTimeout(120_000);
+
+  const email = `editor-${testInfo.project.name}@example.test`;
+  const firstName = `Zoé${testInfo.project.name.replace(/[^a-z]/gi, '')}`;
+
+  await signIn(page, email);
+
+  await page.getByRole('button', { name: 'Create an invitation' }).click();
+  await page.waitForURL(/\/app\/[^/]+\/edit$/);
+  await expect(page.getByRole('heading', { name: 'Edit your invitation' })).toBeVisible();
+
+  // The steps are generated from the theme manifest.
+  await expect(page.getByRole('button', { name: /The two of you/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Photos/ })).toBeVisible();
+
+  const nameField = page.getByLabel('First name', { exact: true });
+  await nameField.fill(firstName);
+
+  // Debounced automatic save: 800 ms after the last keystroke.
+  await expect(page.getByLabel('Saving status')).toHaveText('Saved', { timeout: 15_000 });
+
+  // The preview is the theme itself, rendered by /app/[id]/preview in an iframe.
+  const preview = page.frameLocator('iframe[title="Invitation preview"]');
+  await expect(preview.getByText(firstName).first()).toBeVisible({ timeout: 15_000 });
+
+  // Photos: prepared in the browser, sent through a signed ticket, read back
+  // from R2 by /api/photos/<key>.
+  await page.getByRole('button', { name: /Photos/ }).click();
+  await page.getByLabel('Envelope, left polaroid').setInputFiles({
+    name: 'photo.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(ONE_PIXEL_PNG, 'base64'),
+  });
+  await page.getByRole('button', { name: 'Choose a photo' }).click();
+
+  const stored = page.locator('img[src^="/api/photos/invitations/"]').first();
+  await expect(stored).toBeVisible({ timeout: 20_000 });
+
+  const photoUrl = await stored.getAttribute('src');
+  const photoResponse = await page.request.get(photoUrl!);
+  expect(photoResponse.status()).toBe(200);
+  expect(photoResponse.headers()['content-type']).toContain('image/webp');
+
+  await expect(page.getByLabel('Saving status')).toHaveText('Saved', { timeout: 15_000 });
+  await page.getByRole('button', { name: /The two of you/ }).click();
+
+  // Nothing is kept in the browser: the value comes back from the database.
+  const url = page.url();
+  await page.reload();
+  await expect(page.getByLabel('First name', { exact: true })).toHaveValue(firstName);
+
+  // A second couple cannot read that invitation.
+  const otherEmail = `intruder-${testInfo.project.name}@example.test`;
+  const otherContext = await page
+    .context()
+    .browser()!
+    .newContext({
+      baseURL: testInfo.project.use.baseURL,
+      viewport: page.viewportSize() ?? undefined,
+    });
+  await otherContext.addCookies([
+    { name: 'locale', value: 'en', url: testInfo.project.use.baseURL ?? 'http://localhost:3102' },
+  ]);
+
+  const otherPage = await otherContext.newPage();
+  await signIn(otherPage, otherEmail);
+  await otherPage.goto(new URL(url).pathname);
+  await expect(otherPage.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+  await otherPage.goto(`${new URL(url).pathname.replace(/\/edit$/, '')}/preview`);
+  await expect(otherPage.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+
+  await otherContext.close();
+
+  await page.screenshot({
+    path: `tests/e2e/screenshots/editor-${testInfo.project.name}.png`,
+    fullPage: true,
+  });
+});

@@ -1,0 +1,57 @@
+{
+  "title": "Responses",
+  "intro": "Who is coming, and who sends their regrets.",
+  "counters": {
+    "yes": "Coming",
+    "no": "Cannot come",
+    "people": "People expected",
+    "replies": "Replies"
+  },
+  "empty": "No reply yet. Share your link, and they will show up here.",
+  "emptySearch": "No reply matches this search.",
+  "notPublished": "This invitation is not online yet, so no one can reply.",
+  "rsvpDisabled": "The reply form is turned off in the editor.",
+  "deadline": "Replies close on {date}.",
+  "deadlinePassed": "Replies closed on {date}.",
+  "table": {
+    "name": "Name",
+    "attending": "Reply",
+    "guests": "People",
+    "diet": "Dietary requirements",
+    "message": "Message",
+    "date": "Received on",
+    "actions": "Actions"
+  },
+  "attending": { "yes": "Coming", "no": "Not coming" },
+  "search": {
+    "label": "Search",
+    "placeholder": "A name, an email, a word…",
+    "submit": "Search",
+    "clear": "Clear",
+    "results": "{count} of {total} replies"
+  },
+  "sort": {
+    "label": "Sort by",
+    "recent": "Most recent first",
+    "oldest": "Oldest first",
+    "name": "Name (A–Z)",
+    "attending": "Coming first"
+  },
+  "export": {
+    "csv": "Export as CSV",
+    "help": "Opens in Excel, Numbers or Google Sheets."
+  },
+  "delete": {
+    "action": "Delete",
+    "confirm": "Delete this reply? This cannot be undone.",
+    "done": "Reply deleted."
+  },
+  "notify": {
+    "title": "Email notification",
+    "on": "You receive an email at every new reply.",
+    "off": "You do not receive any email when a guest replies.",
+    "enable": "Turn on",
+    "disable": "Turn off"
+  },
+  "privacy": "Replies are deleted automatically {months} months after the event date."
+}

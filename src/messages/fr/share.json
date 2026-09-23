@@ -1,0 +1,87 @@
+{
+  "title": "Lien et partage",
+  "intro": "Choisissez votre lien, publiez l'invitation, puis envoyez-la à vos invités.",
+  "status": {
+    "label": "Statut",
+    "draft": "Brouillon",
+    "published": "En ligne",
+    "expired": "Expirée",
+    "disabled": "Hors ligne"
+  },
+  "hosting": {
+    "publishedOn": "Publiée le {date}",
+    "expiresOn": "En ligne jusqu'au {date}",
+    "notice": "L'hébergement est inclus pendant {months} mois à partir de la publication. Il est prolongeable ensuite.",
+    "expiredNotice": "La période d'hébergement est terminée. Vos invités voient désormais un court message à la place de l'invitation."
+  },
+  "link": {
+    "title": "Votre lien",
+    "help": "Lettres minuscules, chiffres et tirets. Entre {min} et {max} caractères.",
+    "label": "Adresse de l'invitation",
+    "placeholder": "zoe-et-dylan",
+    "suggest": "Proposer un lien",
+    "save": "Enregistrer le lien",
+    "saved": "Lien enregistré.",
+    "checking": "Vérification…",
+    "available": "Ce lien est libre.",
+    "locked": "Le lien ne peut plus changer tant que l'invitation est en ligne. Mettez-la hors ligne d'abord.",
+    "problems": {
+      "empty": "Saisissez un lien.",
+      "too_short": "Trop court : {min} caractères au minimum.",
+      "too_long": "Trop long : {max} caractères au maximum.",
+      "invalid_characters": "Uniquement des minuscules, des chiffres et des tirets simples.",
+      "reserved": "Ce lien est réservé par l'application.",
+      "taken": "Ce lien est déjà pris.",
+      "missing_slug": "Choisissez un lien avant de publier.",
+      "invalid_slug": "Ce lien n'est pas valide.",
+      "not_found": "Invitation introuvable.",
+      "server": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "publish": {
+    "title": "Publication",
+    "intro": "Une fois publiée, votre invitation est accessible au lien ci-dessus. Toutes vos modifications dans l'éditeur y apparaissent immédiatement.",
+    "cta": "Publier",
+    "republish": "Remettre en ligne",
+    "unpublish": "Mettre hors ligne",
+    "unpublishHelp": "Vos invités verront un court message. Votre contenu et vos réponses sont conservés.",
+    "openInvitation": "Ouvrir l'invitation",
+    "draftNotice": "Cette invitation n'est pas encore publiée.",
+    "liveNotice": "Cette invitation est en ligne.",
+    "confirm": "Mettre cette invitation hors ligne ? Vos invités ne la verront plus."
+  },
+  "qr": {
+    "title": "QR code",
+    "intro": "Pour un save the date imprimé, un panneau d'accueil ou un carton de table.",
+    "alt": "QR code menant à l'invitation",
+    "downloadSvg": "Télécharger le SVG",
+    "downloadPng": "Télécharger le PNG",
+    "pngSize": "PNG, {size} px"
+  },
+  "messages": {
+    "title": "Messages prêts à envoyer",
+    "intro": "Copiez le texte, ou ouvrez directement votre application avec le message déjà écrit.",
+    "language": "Langue du message",
+    "channels": {
+      "sms": "SMS",
+      "email": "E-mail",
+      "whatsapp": "WhatsApp"
+    },
+    "subject": "Objet",
+    "copy": "Copier",
+    "copied": "Copié",
+    "open": {
+      "sms": "Ouvrir Messages",
+      "email": "Ouvrir votre messagerie",
+      "whatsapp": "Ouvrir WhatsApp"
+    }
+  },
+  "calendar": {
+    "title": "Fichier calendrier",
+    "intro": "Vos invités peuvent ajouter la date à leur agenda depuis l'invitation. Voici le même fichier, si vous souhaitez l'envoyer vous-même.",
+    "download": "Télécharger le fichier .ics"
+  },
+  "copyLink": "Copier le lien",
+  "copied": "Copié",
+  "publishFirst": "Publiez l'invitation pour obtenir votre QR code, vos messages et le fichier calendrier."
+}

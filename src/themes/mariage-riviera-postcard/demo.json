@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "locale": "en",
+  "eventType": "wedding",
+  "couple": {
+    "partner1": { "firstName": "Nora" },
+    "partner2": { "firstName": "Luca" }
+  },
+  "event": {
+    "date": "2027-06-19",
+    "time": "16:00",
+    "timezone": "Europe/Rome"
+  },
+  "venue": {
+    "name": "Villa Limonaia",
+    "addressLine": "Via Cristoforo Colombo 30",
+    "city": "Positano",
+    "country": "Italy",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Positano",
+    "photoSlot": "venue"
+  },
+  "photos": {},
+  "story": {
+    "lines": [
+      "One June evening, on the last ferry back from Capri.",
+      "He was sitting in my seat. I kept the ticket.",
+      "Six summers, two passports and one very old scooter later…",
+      "… he asked me on the steps above the harbour.",
+      "Now we would love to have you with us for what comes next."
+    ],
+    "photoSlots": ["story-1", "story-2"]
+  },
+  "dateChapter": {
+    "lines": ["Get your calendar out.", "{date}.", "The countdown has already started."],
+    "highlight": "the big day"
+  },
+  "program": {
+    "lines": [
+      "One long day, in four acts.",
+      "Bring shoes for the stairs.",
+      "And another pair for dancing."
+    ],
+    "items": [
+      { "time": "16:00", "title": "Ceremony", "detail": "in the lemon garden" },
+      { "time": "17:30", "title": "Aperitivo", "detail": "on the terrace, facing the sea" },
+      { "time": "20:00", "title": "Dinner", "detail": "under the striped awning" },
+      { "time": "23:00", "title": "Dancing", "detail": "until the boats come back" }
+    ]
+  },
+  "place": {
+    "lines": [
+      "Meet us at Villa Limonaia.",
+      "Via Cristoforo Colombo, Positano.",
+      "Come by ferry if you can — it is the prettiest way in."
+    ]
+  },
+  "info": [
+    {
+      "title": "Where to stay",
+      "body": "We have held a block of rooms in the village, a ten-minute walk from the villa. Mention it in your reply and we will send you the booking code."
+    },
+    {
+      "title": "What to wear",
+      "body": "Summer formal, bright colours very welcome. The garden is on several levels, so leave the thin heels at home."
+    },
+    {
+      "title": "Getting there",
+      "body": "Naples airport, then the ferry from Sorrento. A shuttle leaves the port for the villa at 3 pm and takes everyone back at midnight."
+    },
+    {
+      "title": "Children",
+      "body": "Bring them. There is a shaded corner with games and a very patient dog during dinner."
+    }
+  ],
+  "rsvp": {
+    "enabled": true,
+    "maxGuestsPerReply": 5,
+    "askEmail": true,
+    "askDiet": true,
+    "askMessage": true,
+    "notifyByEmail": true
+  },
+  "signature": { "text": "See you by the sea" },
+  "style": { "paletteId": "azur", "scriptId": "playball" },
+  "extras": {
+    "memento": {
+      "kind": "ticket",
+      "route": "Capri → Positano",
+      "date": "06.19.21",
+      "lineA": "Ferry 12",
+      "lineB": "Seats 7 · 8"
+    },
+    "note": "we missed the last ferry",
+    "envelope": { "kicker": "A postcard for you" }
+  }
+}

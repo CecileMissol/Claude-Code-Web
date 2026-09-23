@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "locale": "en",
+  "eventType": "wedding",
+  "couple": {
+    "partner1": { "firstName": "Willa" },
+    "partner2": { "firstName": "Beau" }
+  },
+  "event": {
+    "date": "2027-10-09",
+    "time": "16:30",
+    "timezone": "America/Los_Angeles"
+  },
+  "venue": {
+    "name": "Rancho Alma",
+    "addressLine": "6120 Border Avenue",
+    "city": "Joshua Tree",
+    "country": "United States",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Joshua+Tree+California",
+    "photoSlot": "venue"
+  },
+  "photos": {},
+  "story": {
+    "lines": [
+      "A wrong turn on Highway 62, an hour before sunset.",
+      "Yours was the only other car at the lookout.",
+      "We shared a thermos of coffee and stayed for the stars.",
+      "Six years, one old truck and a very small dog later…",
+      "… he asked again, on the same patch of warm sand.",
+      "Now we would love you there for all the rest of it."
+    ],
+    "photoSlots": ["story-1", "story-2"]
+  },
+  "dateChapter": {
+    "lines": ["Circle it on the calendar.", "{date}.", "The countdown has already started."],
+    "highlight": "the big day"
+  },
+  "program": {
+    "lines": [
+      "One long golden day.",
+      "Bring shoes you can walk on sand in.",
+      "And something warm for the night."
+    ],
+    "items": [
+      { "time": "16:30", "title": "Ceremony", "detail": "under the stone arch" },
+      { "time": "17:30", "title": "Golden hour", "detail": "drinks in the cactus garden" },
+      { "time": "19:30", "title": "Dinner", "detail": "long tables, string lights" },
+      { "time": "22:00", "title": "Dancing", "detail": "until the desert cools down" }
+    ]
+  },
+  "place": {
+    "lines": [
+      "Rancho Alma, just off Border Avenue.",
+      "Twenty minutes from the west gate of the park.",
+      "Parking on site — we'll wave you in."
+    ]
+  },
+  "info": [
+    {
+      "title": "Getting there",
+      "body": "Palm Springs is the closest airport, two hours by car. A shuttle leaves town at 3 pm and brings everyone back at midnight."
+    },
+    {
+      "title": "What to wear",
+      "body": "Desert formal. Flat soles for the sand, and a layer for the moment the sun drops behind the rocks."
+    },
+    {
+      "title": "Staying over",
+      "body": "We are holding a block of rooms in town. Say so in your reply and we will send you the booking link."
+    }
+  ],
+  "rsvp": {
+    "enabled": true,
+    "maxGuestsPerReply": 4,
+    "askEmail": true,
+    "askDiet": true,
+    "askMessage": true,
+    "notifyByEmail": true
+  },
+  "signature": { "text": "See you in the sun" },
+  "style": { "paletteId": "sienna", "scriptId": "beau-rivage" },
+  "extras": {
+    "memento": {
+      "kind": "ticket",
+      "route": "The Cactus Bar",
+      "date": "05.18.21",
+      "lineA": "Table 4",
+      "lineB": "Two lemonades"
+    },
+    "note": "she said yes",
+    "envelope": { "kicker": "Sealed by hand, for you" }
+  }
+}

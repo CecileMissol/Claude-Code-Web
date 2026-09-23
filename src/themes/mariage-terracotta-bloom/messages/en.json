@@ -1,0 +1,61 @@
+{
+  "intro": {
+    "kicker": "Sealed by hand, for you",
+    "openLabel": "Open the envelope",
+    "openButton": "Open",
+    "hint": "Tap the envelope to break the seal",
+    "scrollCue": "keep scrolling",
+    "saveTheDate": "Save the date",
+    "weAreGettingMarried": "we're saying yes!"
+  },
+  "chapters": {
+    "story": "How we began",
+    "date": "The day",
+    "program": "The plan",
+    "place": "The place"
+  },
+  "story": {
+    "mementoDate": "Date"
+  },
+  "countdown": {
+    "label": "Countdown to the wedding",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds"
+  },
+  "place": {
+    "directions": "Get directions"
+  },
+  "info": {
+    "title": "Good to know"
+  },
+  "rsvp": {
+    "title": "Will you come?",
+    "name": "Full name",
+    "email": "Email",
+    "attendingLegend": "Will you be there?",
+    "yes": "Count us in",
+    "no": "Sadly no",
+    "guests": "Number of guests",
+    "diet": "Allergies or special diet",
+    "message": "A word for the couple",
+    "submit": "Send my reply",
+    "sending": "Sending…",
+    "thanks": "Thank you — your reply has landed.",
+    "closed": "Replies are closed.",
+    "honeypot": "Leave this field empty",
+    "errors": {
+      "invalid": "Please check the form: something is missing.",
+      "rateLimited": "Too many attempts. Please try again in a few minutes.",
+      "server": "Sending failed. Please try again in a moment."
+    },
+    "dataNotice": "Your reply (name, email, attendance, number of guests, diet and message) is shared with the couple only, to plan the day. It is hosted in the European Union and deleted six months after the event. To access, correct or erase it, write to the couple.",
+    "addToCalendar": "Add to my calendar"
+  },
+  "signature": {
+    "label": "Signature",
+    "farewell": "See you in the sun"
+  },
+  "demoBanner": "Demo"
+}

@@ -1,0 +1,14 @@
+.next
+.open-next
+.wrangler
+node_modules
+pnpm-lock.yaml
+drizzle/meta
+cloudflare-env.d.ts
+next-env.d.ts
+reference
+tests/e2e/screenshots
+prospection-site40.zip
+BRIEF.md
+Site-4.0-Offre-Complete.md
+docs
