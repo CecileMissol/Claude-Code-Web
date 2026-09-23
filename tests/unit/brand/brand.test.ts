@@ -103,10 +103,10 @@ describe('brandStyleVars', () => {
 });
 
 describe('resolving BRAND_ID', () => {
-  it('defaults to kraft-and-bloom when BRAND_ID is unset', async () => {
+  it('defaults to unfurl when BRAND_ID is unset', async () => {
     delete process.env.BRAND_ID;
     const { brand } = await freshBrand();
-    expect(brand.id).toBe('kraft-and-bloom');
+    expect(brand.id).toBe('unfurl');
   });
 
   it('honours a valid BRAND_ID', async () => {
@@ -119,7 +119,7 @@ describe('resolving BRAND_ID', () => {
   it('falls back to the default on an unknown BRAND_ID', async () => {
     process.env.BRAND_ID = 'not-a-real-brand';
     const { brand } = await freshBrand();
-    expect(brand.id).toBe('kraft-and-bloom');
+    expect(brand.id).toBe('unfurl');
   });
 
   it('resolves petal-post too', async () => {

@@ -173,13 +173,13 @@ et sont déployées avec le Worker. Liste complète (source unique :
 
 | Variable                       | Valeur de production                                        | Obligatoire |
 | ------------------------------ | ----------------------------------------------------------- | ----------- |
-| `APP_URL`                      | `https://<domaine>` (sans barre oblique finale)             | **oui**     |
+| `APP_URL`                      | `https://unfurlme.love` (sans barre oblique finale)          | **oui**     |
 | `MAIL_DRIVER`                  | `resend`                                                     | **oui**     |
-| `MAIL_FROM`                    | `<Marque> <no-reply@<domaine>>`                              | **oui**     |
-| `R2_PUBLIC_BASE_URL`           | `https://<domaine>/api/photos`                               | **oui**     |
+| `MAIL_FROM`                    | `Unfurl <hello@unfurlme.love>`                                | **oui**     |
+| `R2_PUBLIC_BASE_URL`           | `https://unfurlme.love/api/photos`                            | **oui**     |
 | `ADMIN_EMAILS`                 | vos adresses, séparées par des virgules                      | **oui**     |
 | `ALLOW_FREE_DRAFTS`            | **absente** ou `false` en production                         | non         |
-| `BRAND_ID`                     | `kraft-and-bloom` \| `unfurl` \| `petal-post`                | non         |
+| `BRAND_ID`                     | `unfurl` (défaut) \| `kraft-and-bloom` \| `petal-post`        | non         |
 | `BRAND_ETSY_SHOP_URL`          | URL de la boutique Etsy                                      | non         |
 | `BRAND_SUPPORT_EMAIL`          | adresse de contact affichée sur le site                      | non         |
 | `LEGAL_COMPANY_NAME`           | raison sociale                                               | avant ouverture |
@@ -206,18 +206,18 @@ d'activation, notification aux administrateurs, refus, lien magique de
 connexion, « votre invitation est prête ».
 
 1. Créer un compte sur [resend.com](https://resend.com).
-2. **Domains → Add Domain** : saisir `<domaine>` (ou un sous-domaine dédié,
-   `mail.<domaine>` — recommandé : une éventuelle réputation dégradée n'affecte
-   pas le domaine principal).
+2. **Domains → Add Domain** : saisir `unfurlme.love` (ou un sous-domaine dédié,
+   `mail.unfurlme.love` — recommandé : une éventuelle réputation dégradée
+   n'affecte pas le domaine principal).
 3. **Region : `eu-west-1` (Ireland)** — à choisir *à la création du domaine*, ce
    n'est pas modifiable ensuite. C'est ce qui garde les e-mails et leurs
    métadonnées dans l'UE, cohérent avec D1 `weur` et R2 `jurisdiction eu`, et
    avec ce que promet la politique de confidentialité `/legal/privacy`.
 4. Resend affiche 3 à 4 enregistrements DNS à créer chez le registrar (ou chez
    Cloudflare si le domaine y est déjà) : un `MX` et un `TXT` (SPF) sur
-   `send.<domaine>`, un `TXT` (DKIM) sur `resend._domainkey.<domaine>`, et un
-   `TXT` DMARC recommandé sur `_dmarc.<domaine>` (`v=DMARC1; p=none;
-   rua=mailto:<votre e-mail>`).
+   `send.unfurlme.love`, un `TXT` (DKIM) sur
+   `resend._domainkey.unfurlme.love`, et un `TXT` DMARC recommandé sur
+   `_dmarc.unfurlme.love` (`v=DMARC1; p=none; rua=mailto:<votre e-mail>`).
    Chez Cloudflare DNS, mettre ces enregistrements en **DNS only** (nuage gris).
 5. Attendre la vérification (quelques minutes à quelques heures), le statut
    passe à **Verified**.
@@ -230,7 +230,7 @@ connexion, « votre invitation est prête ».
    ```
 
 7. Dans `wrangler.jsonc` : `"MAIL_DRIVER": "resend"` et
-   `"MAIL_FROM": "<Marque> <no-reply@<domaine>>"`. L'adresse **doit** être sur
+   `"MAIL_FROM": "Unfurl <hello@unfurlme.love>"`. L'adresse **doit** être sur
    le domaine vérifié, sinon Resend refuse l'envoi (erreur 403).
 
 > Tant que `MAIL_DRIVER` vaut `console`, rien n'est envoyé : les messages sont
@@ -355,14 +355,15 @@ remplace pas.
    procédure de changement de serveurs de noms chez le registrar. Attendre que
    la zone soit *Active*.
 2. Worker `invitations-web` → **Settings** → **Domains & Routes** → *Add* →
-   **Custom domain** → `<domaine>` (et éventuellement `www.<domaine>` avec une
-   redirection). Cloudflare crée l'enregistrement DNS et le certificat.
+   **Custom domain** → `unfurlme.love` (et `www.unfurlme.love`, avec une
+   redirection `www` → apex). Cloudflare crée l'enregistrement DNS et le
+   certificat.
 3. Mettre à jour `wrangler.jsonc` :
 
    ```jsonc
    "vars": {
-     "APP_URL": "https://<domaine>",
-     "R2_PUBLIC_BASE_URL": "https://<domaine>/api/photos",
+     "APP_URL": "https://unfurlme.love",
+     "R2_PUBLIC_BASE_URL": "https://unfurlme.love/api/photos",
      // …
    }
    ```
@@ -410,7 +411,7 @@ Déclenchement manuel en production, en secours (planificateur externe, reprise
 après incident) :
 
 ```bash
-curl -X POST https://<domaine>/api/cron/retention \
+curl -X POST https://unfurlme.love/api/cron/retention \
   -H "Authorization: Bearer $CRON_SECRET"
 ```
 
@@ -453,7 +454,7 @@ fonctionne ; compter 20 minutes, avec deux adresses e-mail : une
 - [ ] 5. Éditer : prénoms, date, lieu, une photo (l'upload passe par R2),
       enregistrer → l'aperçu reflète les modifications.
 - [ ] 6. Publier : choisir un slug, l'invitation est visible sur
-      `https://<domaine>/<slug>` en navigation privée.
+      `https://unfurlme.love/<slug>` en navigation privée.
 - [ ] 7. Répondre au RSVP depuis un autre appareil ou en navigation privée →
       la réponse apparaît dans `/app/<id>/responses`.
 - [ ] 8. Exporter le CSV des réponses → le fichier s'ouvre dans un tableur,
@@ -518,14 +519,17 @@ Remarques :
 Le logiciel est complet ; ces éléments-là ne peuvent pas être écrits par le
 dépôt et conditionnent l'ouverture de la boutique.
 
-1. **Nom de marque et domaine.** Trois identités sont prêtes dans le code
-   (`BRAND_ID` : `kraft-and-bloom`, `unfurl`, `petal-post`) avec palette,
-   typographies et logo provisoire. Il faut trancher, vérifier la disponibilité
-   du nom de boutique Etsy et du domaine, puis les réserver. Analyse et
-   recommandation : `docs/marque-et-domaines.md`.
-2. **Logo définitif.** Le logo actuel est un tracé SVG de remplacement
-   (`src/brand/presets/*`). Prévoir : version horizontale, version carrée
-   (avatar Etsy), favicon, version monochrome.
+1. **Nom de boutique Etsy.** La marque et le domaine sont tranchés (Unfurl /
+   `unfurlme.love`, voir la décision en tête de
+   `docs/marque-et-domaines.md`) ; les deux autres identités du code
+   (`BRAND_ID` : `kraft-and-bloom`, `petal-post`) restent disponibles mais ne
+   sont plus recommandées. Il reste à vérifier la disponibilité du nom de
+   boutique Etsy (`Unfurl`, sinon `UnfurlMe`) et à le réserver.
+2. **Identité visuelle définitive.** Le logo et la palette actuels
+   (`src/brand/presets/*`) sont provisoires. L'identité visuelle définitive de
+   la marque Unfurl est en cours de conception séparément et sera documentée
+   dans un futur `docs/identite-unfurl.md` ; prévoir ensuite version
+   horizontale, version carrée (avatar Etsy), favicon, version monochrome.
 3. **Illustrations des trois thèmes.** Tout est aujourd'hui en SVG inline
    généré. Chaque thème a un cahier des charges précis, fichier par fichier,
    avec les `viewBox` à ne pas changer :

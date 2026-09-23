@@ -1,18 +1,18 @@
 # Variables de marque — kit Etsy
 
 Ce kit marketing (dossier `marketing/`) est écrit avec des **placeholders** au
-lieu du nom de marque définitif, pour rester facile à rebrander tant que le
-nom et le nom de domaine ne sont pas verrouillés (voir
-`docs/marque-et-domaines.md`, section 3 : aucun domaine ni marque n'y est
-confirmé comme disponible).
+lieu du nom de marque en dur dans chaque fiche, pour rester facile à
+rebrander. La marque et le domaine sont désormais verrouillés (voir la
+décision en tête de `docs/marque-et-domaines.md`) : **Unfurl** /
+`unfurlme.love`. Seul le nom exact de la boutique Etsy reste à réserver.
 
 ## 1. Les trois placeholders
 
-| Placeholder      | Rôle                                                                    | Valeur par défaut utilisée dans ce kit | Où elle vient                                                                                                                       |
-| ---------------- | ----------------------------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `{{BRAND_NAME}}` | Nom de la marque, tel qu'affiché dans les textes (logo, signature, PDF) | `Kraft & Bloom`                        | `docs/marque-et-domaines.md` §5, proposition B (recommandée)                                                                        |
-| `{{BRAND_URL}}`  | Domaine racine de l'application, sans `https://` ni slash final         | `kraftandbloom.com`                    | Déduit de la proposition B — **non vérifié** : disponibilité domaine/marque à confirmer avant tout achat (voir §3 du même document) |
-| `{{SHOP_NAME}}`  | Nom exact de la boutique Etsy (identifiant `etsy.com/shop/...`)         | `KraftAndBloomCo`                      | Première des 3 idées de boutique proposées en `docs/marque-et-domaines.md` §5, à vérifier une à une sur Etsy avant choix définitif  |
+| Placeholder      | Rôle                                                                    | Valeur par défaut utilisée dans ce kit   | Où elle vient                                                                                                                                                              |
+| ---------------- | ----------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{{BRAND_NAME}}` | Nom de la marque, tel qu'affiché dans les textes (logo, signature, PDF) | `Unfurl`                                 | Décision de marque, `docs/marque-et-domaines.md`, section « Décision (septembre 2026) »                                                                                    |
+| `{{BRAND_URL}}`  | Domaine racine de l'application, sans `https://` ni slash final         | `unfurlme.love`                          | Décision de marque, `docs/marque-et-domaines.md`, section « Décision (septembre 2026) »                                                                                    |
+| `{{SHOP_NAME}}`  | Nom exact de la boutique Etsy (identifiant `etsy.com/shop/...`)         | `Unfurl` si disponible, sinon `UnfurlMe` | Pas encore réservé — vérifier `etsy.com/shop/Unfurl` puis `etsy.com/shop/UnfurlMe` avant choix définitif (voir `docs/marque-et-domaines.md`, section 3, pour la procédure) |
 
 Deux placeholders additionnels apparaissent dans le PDF de livraison (générés
 par le script, pas à remplacer à la main) :
@@ -31,21 +31,21 @@ par le script, pas à remplacer à la main) :
 - `marketing/launch-plan.md`
 - `scripts/build-delivery-pdf.mjs` (variables en tête de fichier, `BRAND_NAME` / `BRAND_URL`, utilisées pour générer le texte des PDF — **pas** de remplacement dans un fichier `.pdf` déjà généré : il faut relancer `pnpm etsy:pdf` après avoir changé les variables du script)
 
-## 3. Remplacer les placeholders une fois la marque verrouillée
+## 3. Remplacer les placeholders
 
-Une fois le nom, le domaine et le nom de boutique confirmés (procédure de
-vérification : `docs/marque-et-domaines.md` §3 — Cloudflare
-Registrar/Namecheap, USPTO TESS, INPI, recherche boutique Etsy), remplacer
-partout en une commande, depuis la racine du dépôt :
+`{{BRAND_NAME}}` et `{{BRAND_URL}}` sont désormais figés (Unfurl /
+`unfurlme.love`). Il ne reste que `{{SHOP_NAME}}` à verrouiller (procédure de
+vérification de la boutique Etsy : `docs/marque-et-domaines.md` §3), puis à
+remplacer partout en une commande, depuis la racine du dépôt :
 
 ```bash
-# Exemple avec la marque par défaut du kit → une marque réelle,
-# à adapter avec les vraies valeurs choisies.
+# {{SHOP_NAME}} à remplacer par le nom de boutique réellement réservé
+# (Unfurl si disponible, sinon UnfurlMe).
 grep -rl '{{BRAND_NAME}}\|{{BRAND_URL}}\|{{SHOP_NAME}}' marketing scripts/build-delivery-pdf.mjs \
   | xargs sed -i \
-      -e 's/{{BRAND_NAME}}/Kraft \& Bloom/g' \
-      -e 's/{{BRAND_URL}}/kraftandbloom.com/g' \
-      -e 's/{{SHOP_NAME}}/KraftAndBloomCo/g'
+      -e 's/{{BRAND_NAME}}/Unfurl/g' \
+      -e 's/{{BRAND_URL}}/unfurlme.love/g' \
+      -e 's/{{SHOP_NAME}}/Unfurl/g'
 ```
 
 Notes :
@@ -57,13 +57,5 @@ Notes :
   rester lisibles à l'écrit comme à l'oral sur les visuels de fiche.
 - Après un remplacement, régénérer les PDF de livraison :
   `pnpm etsy:pdf` (ils ne se mettent pas à jour tout seuls, et le script lit
-  directement les constantes `BRAND_NAME` / `BRAND_URL` en tête de fichier —
-  penser à les éditer aussi, la commande `sed` ci-dessus les couvre déjà
-  puisqu'elle inclut `scripts/build-delivery-pdf.mjs`).
-- Si un autre nom que la proposition B (Kraft & Bloom) est retenu (par
-  exemple _Unfurl_ ou _Petal Post_, voir `docs/marque-et-domaines.md` §4-5),
-  adapter aussi le ton de voix des textes : ce kit est rédigé sur le
-  registre « chaleureux et artisanal » de la proposition B. Un changement de
-  marque vers _Unfurl_ (chic, épurée) ou _Petal Post_ (moderne, joueuse)
-  justifierait une relecture éditoriale des descriptions, pas seulement un
-  remplacement de nom.
+  directement les constantes `BRAND_NAME` / `BRAND_URL` en tête de fichier,
+  déjà à jour sur Unfurl / unfurlme.love).

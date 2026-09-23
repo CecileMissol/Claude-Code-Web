@@ -12,17 +12,19 @@ voir `marketing/brand-variables.md`. S'appuie sur `marketing/etsy/README.md`
 **Objectif** : avoir la matière visuelle et les fondations de boutique
 prêtes avant d'écrire la moindre fiche.
 
-- [ ] Verrouiller nom de marque, domaine, nom de boutique
-      (`docs/marque-et-domaines.md` §3, procédure de vérification) et
-      appliquer `marketing/brand-variables.md` §3 partout dans le kit.
+- [ ] Réserver le nom de boutique Etsy (`docs/marque-et-domaines.md` §3,
+      procédure de vérification — marque et domaine sont déjà verrouillés :
+      Unfurl / `unfurlme.love`) et appliquer `marketing/brand-variables.md`
+      §3 partout dans le kit.
 - [ ] Produire les 10 visuels de fiche du thème 1 « Black & Ivory » selon
       `marketing/etsy/listings/mariage-noir-ivoire.md` (mockups
       téléphone/ordinateur, flatlay, filmstrip d'ouverture d'enveloppe).
 - [ ] Produire la vidéo de 15 s du thème 1 (script dans la même fiche).
 - [ ] Créer le compte vendeur Etsy, choisir `{{SHOP_NAME}}`, renseigner
       pays/devise (checklist `marketing/etsy/README.md` §3.1).
-- [ ] Bannière + photo de boutique + texte « About » (identité Kraft &
-      Bloom, `docs/marque-et-domaines.md` §5).
+- [ ] Bannière + photo de boutique + texte « About » (identité Unfurl —
+      identité visuelle définitive en cours de conception séparément,
+      futur `docs/identite-unfurl.md`).
 - [ ] Premier rendez-vous comptable : passer en revue
       `marketing/etsy/README.md` §3.4 (TVA/OSS) avant toute vente réelle.
 - [ ] Générer les 3 PDF de livraison (`pnpm etsy:pdf`) et les vérifier

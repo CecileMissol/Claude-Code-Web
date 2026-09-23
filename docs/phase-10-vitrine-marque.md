@@ -15,11 +15,11 @@ le ton du « Comment ça marche » et de la FAQ).
 Toute la marque part d'une seule variable d'environnement :
 
 ```bash
-BRAND_ID="kraft-and-bloom"   # ou "unfurl" | "petal-post"
+BRAND_ID="unfurl"   # ou "kraft-and-bloom" | "petal-post"
 ```
 
-- Absente ou inconnue → repli silencieux sur `kraft-and-bloom` (la
-  recommandation de `docs/marque-et-domaines.md` §5).
+- Absente ou inconnue → repli silencieux sur `unfurl`, la marque validée
+  (voir la décision en tête de `docs/marque-et-domaines.md`).
 - À définir dans `.env.local` en développement, ou dans `vars` de
   `wrangler.jsonc` en production (ce n'est pas un secret).
 - Deux variables optionnelles complètent la marque, lues par `src/brand.ts` :
@@ -41,8 +41,8 @@ src/
   brand/
     types.ts                      # BrandPreset, BrandPalette, BrandFonts, BrandLogoComponent
     presets/
-      unfurl.tsx                  # A — chic & épurée (réserve : montée en gamme / vente directe)
-      kraft-and-bloom.tsx         # B — chaleureuse & artisanale (défaut, recommandée)
+      unfurl.tsx                  # A — chic & épurée (défaut, marque validée)
+      kraft-and-bloom.tsx         # B — chaleureuse & artisanale (réserve)
       petal-post.tsx              # C — moderne & joueuse (réserve : sous-marque plus jeune)
 ```
 
@@ -111,10 +111,11 @@ directement du preset actif et change donc avec `BRAND_ID`.
   `/demo/mariage-noir-ivoire` (choisi plutôt qu'un `<iframe>`, pour ne pas
   recharger toute la démo GSAP dans la page vitrine) — à remplacer par une
   vraie capture ou photo composée une fois disponible.
-- **Choix de marque définitif** : ce document garde les trois presets
-  utilisables en parallèle ; `docs/marque-et-domaines.md` §5 documente le
-  raisonnement de la recommandation (B) et les cas où A ou C prendraient le
-  relais.
+- **Choix de marque** : tranché — Unfurl (voir la décision en tête de
+  `docs/marque-et-domaines.md`). Ce document garde les trois presets
+  utilisables en parallèle (`BRAND_ID`) ; la section 5 de
+  `docs/marque-et-domaines.md` documente, à titre d'historique, le
+  raisonnement qui a mené à ce choix.
 
 ## 5. Point de vigilance technique
 

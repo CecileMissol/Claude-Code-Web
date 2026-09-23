@@ -33,8 +33,8 @@ import QRCode from 'qrcode';
 // script produces binary PDF files that cannot be `sed`-replaced afterwards.
 // See marketing/brand-variables.md.
 // ---------------------------------------------------------------------------
-const BRAND_NAME = 'Kraft & Bloom';
-const BRAND_URL = 'kraftandbloom.com'; // no protocol, no trailing slash
+const BRAND_NAME = 'Unfurl';
+const BRAND_URL = 'unfurlme.love'; // no protocol, no trailing slash
 const ACTIVATION_PATH = '/activate';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -51,9 +51,10 @@ const PAGE_WIDTH = 612;
 const PAGE_HEIGHT = 792;
 const MARGIN = 64; // safe on both Letter (612 wide) and A4 (595 wide)
 
-// Palette: warm, elegant, neutral — close to the "Kraft & Bloom" brand
-// identity (docs/marque-et-domaines.md §5, proposition B), independent of
-// any single theme's own colors so it works for all three themes.
+// Palette: warm, elegant, neutral, independent of any single theme's own
+// colors so it works for all three themes. Not the definitive Unfurl visual
+// identity (in progress separately, see docs/marque-et-domaines.md) — this
+// is only the delivery PDF's own, deliberately neutral palette.
 const COLOR_INK = rgb(0x3b / 255, 0x2e / 255, 0x26 / 255); // warm brown ink
 const COLOR_ACCENT = rgb(0xc1 / 255, 0x63 / 255, 0x3d / 255); // terracotta
 const COLOR_MUTED = rgb(0x6b / 255, 0x5c / 255, 0x4f / 255);

@@ -25,10 +25,11 @@ Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
 
 ## 2. Avant de publier — remplacer les placeholders
 
-1. Verrouiller nom de marque, domaine et nom de boutique
-   (`docs/marque-et-domaines.md` §3 : vérifier disponibilité réelle du
-   domaine, marque USPTO/INPI, et que le nom de boutique Etsy est libre —
-   rien n'est confirmé disponible dans ce document).
+1. Réserver le nom de boutique Etsy : marque et domaine sont verrouillés
+   (Unfurl / `unfurlme.love`, voir la décision en tête de
+   `docs/marque-et-domaines.md`) ; il reste à vérifier que `Unfurl`, sinon
+   `UnfurlMe`, est libre sur `etsy.com/shop/...` (procédure : §3 du même
+   document).
 2. Appliquer la commande `sed` de `marketing/brand-variables.md` §3.
 3. Régénérer les PDF de livraison : `pnpm etsy:pdf`.
 
@@ -42,8 +43,10 @@ Thèmes couverts (noms tirés de `src/themes/*/manifest.ts`) :
       (USD conseillé, marché prioritaire — voir `docs/strategie-produit.md`
       §2 et §6).
 - [ ] Bannière et photo de boutique alignées sur l'identité `{{BRAND_NAME}}`
-      (palette et typographies : `docs/marque-et-domaines.md` §5,
-      proposition B « Kraft & Bloom »).
+      (Unfurl) — identité visuelle définitive en cours de conception
+      séparément (futur `docs/identite-unfurl.md`), à utiliser dès qu'elle
+      est disponible plutôt que les palettes d'exploration de
+      `docs/marque-et-domaines.md` §5.
 - [ ] Description de boutique (« About ») : reprendre le positionnement en
       une phrase et les 3 valeurs de marque (`docs/marque-et-domaines.md`
       §1 et §5).

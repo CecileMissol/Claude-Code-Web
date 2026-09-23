@@ -2,7 +2,69 @@
 
 > Document de travail — marque, nom de domaine et identité visuelle du produit d'invitations de mariage web animées décrit dans `BRIEF.md` (sections 1-3) et `docs/phase-1-cadrage.md` (section 1).
 > Marché prioritaire : États-Unis (Etsy US), puis francophone. Cible : couples 25-40 ans.
-> Statut : proposition, à valider avant tout achat de domaine ou dépôt de marque.
+> Statut : la marque et le domaine sont **validés** (voir la décision ci-dessous) ; le reste du document est conservé comme historique de l'exploration qui a mené à ce choix.
+
+---
+
+## Décision (septembre 2026)
+
+**Marque : Unfurl. Domaine principal : `unfurlme.love`.**
+
+C'est ce nom et ce domaine qu'on utilise désormais partout : site, application,
+liens d'invitation (ex. `https://unfurlme.love/zoe-and-dylan`), e-mails. Le nom
+de boutique Etsy n'est pas encore réservé : candidat principal **Unfurl**, à
+défaut **UnfurlMe**.
+
+**Pourquoi ce choix**
+
+- **Neutre vis-à-vis des types d'événement** : « Unfurl » ne mentionne pas le
+  mariage, ce qui laisse la porte ouverte à d'autres occasions (EVJF,
+  anniversaires, etc. — feuille de route en section 6) sans avoir à changer de
+  marque.
+- **Le lien d'invité se lit comme une invitation** : `unfurlme.love/zoe-and-dylan`
+  s'énonce et se lit comme une phrase adressée à l'invité·e — cohérent avec le
+  positionnement « une lettre qu'on ouvre », pas un simple slug technique.
+- **« unfurl me » = « déplie-moi »** : le jeu de mots fonctionne directement en
+  anglais (marché prioritaire) et reprend le geste central du produit
+  (déplier/dérouler l'histoire au scroll), déjà identifié comme le nom le plus
+  fort conceptuellement en section 4 ci-dessous.
+- **Écho à la mention « à ouvrir » d'une enveloppe** : `.love` comme extension
+  et « unfurl me » comme adresse évoquent ensemble la mention manuscrite qu'on
+  trouve sur une enveloppe physique (« to be opened »/« ouvrez-moi »), qui est
+  un des éléments visuels déjà présents dans la maquette (cachet, rabat).
+
+**Domaines écartés**
+
+- `unfurl.com`, `unfurl.app` et `unfurlme.com` : déjà pris, mais inactifs
+  (pas de site en ligne) — voir les recommandations défensives ci-dessous.
+- `unfurls.app` : écarté (pluriel, moins direct que l'adresse à l'invité).
+- `to-unfurl.com` et `unfurl-me.com` : écartés (présence d'un tiret, moins
+  lisible sur un lien partagé à l'oral ou sur un faire-part imprimé).
+
+**Recommandations défensives**
+
+- Mettre `unfurlme.co` en redirection vers `unfurlme.love`.
+- Passer une demande de backorder sur `unfurlme.com` (actuellement pris mais
+  inactif), au cas où il se libère.
+- Réserver les handles réseaux sociaux (Instagram, TikTok, Pinterest) sur
+  « unfurl » et « unfurlme » avant toute communication publique.
+- Vérifier « Unfurl » et « Unfurl Me » auprès de l'USPTO (TESS), de l'EUIPO
+  (eSearch) et de l'INPI avant tout dépôt de marque — voir la procédure
+  détaillée en section 3 ci-dessous, qui reste valable pour cette
+  vérification.
+
+**Ce qui change dans le reste de ce document**
+
+Les sections qui suivent (candidats de nom, vérification de conflits, Top 5,
+et surtout la section 5 — les 3 identités de marque A/B/C, dont la proposition
+A « Unfurl ») sont conservées **telles quelles, comme historique** de
+l'exploration qui a mené à la décision ci-dessus : c'est cette exploration qui
+a fait émerger « Unfurl » comme candidat n°1. Ces 3 identités (palette,
+typographies, logo) ne sont **plus** la référence à jour : l'identité visuelle
+définitive de la marque Unfurl est en cours de conception séparément et sera
+documentée dans un futur `docs/identite-unfurl.md`. Ne pas se baser sur la
+palette/les polices de la section 5-A pour tout nouveau travail visuel tant
+que ce document n'existe pas.
 
 ---
 

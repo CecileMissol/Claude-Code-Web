@@ -39,16 +39,16 @@
 /*
  * Fallback brand tokens, in case a brand-* utility ever renders outside
  * `.brand-shell` (belt and braces — the shell itself always sets these
- * from the resolved `brand` object). Matches the "Kraft & Bloom" default.
+ * from the resolved `brand` object). Matches the "Unfurl" default.
  */
 :root {
-  --brand-bg: #f7efe1;
-  --brand-bg-alt: #f0e4cf;
-  --brand-fg: #3b2e26;
-  --brand-muted: #b79e85;
-  --brand-accent: #c1633d;
-  --brand-accent-2: #d9a441;
-  --brand-on-accent: #f7efe1;
+  --brand-bg: #faf9f6;
+  --brand-bg-alt: #f1eee7;
+  --brand-fg: #2b2a28;
+  --brand-muted: #b9afa0;
+  --brand-accent: #a98b4e;
+  --brand-accent-2: #8a7140;
+  --brand-on-accent: #faf9f6;
   --brand-font-heading: Georgia, 'Times New Roman', serif;
   --brand-font-body: var(--font-sans);
   --brand-font-script: var(--brand-font-heading);

@@ -9,7 +9,8 @@ export type { BrandId, BrandFonts, BrandPalette, BrandPreset } from './brand/typ
 
 /**
  * The three brand identities of `docs/marque-et-domaines.md` (section 5).
- * `kraft-and-bloom` is the document's recommendation and the default.
+ * `unfurl` is the validated brand (see the "Décision" section at the top of
+ * that document) and the default.
  */
 export const BRAND_PRESETS: Record<BrandId, BrandPreset> = {
   unfurl,
@@ -20,7 +21,7 @@ export const BRAND_PRESETS: Record<BrandId, BrandPreset> = {
 function resolveBrandId(): BrandId {
   const raw = process.env.BRAND_ID?.trim();
   if (raw && isBrandId(raw)) return raw;
-  return 'kraft-and-bloom';
+  return 'unfurl';
 }
 
 export interface Brand extends BrandPreset {
@@ -33,9 +34,9 @@ export interface Brand extends BrandPreset {
 /**
  * The active brand, selected once per deployment by the `BRAND_ID`
  * environment variable (`unfurl` | `kraft-and-bloom` | `petal-post`,
- * default `kraft-and-bloom`). Everything the marketing site and the
- * application shell render — name, tagline, palette, fonts, logo, favicon —
- * comes from this single object.
+ * default `unfurl`). Everything the marketing site and the application
+ * shell render — name, tagline, palette, fonts, logo, favicon — comes from
+ * this single object.
  */
 export const brand: Brand = {
   ...BRAND_PRESETS[resolveBrandId()],
