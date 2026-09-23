@@ -84,8 +84,14 @@ export function SlugField({
     return () => clearTimeout(timeout);
   }, [value, initialSlug, invitationId, locked]);
 
+  /**
+   * A check only matters while the field differs from the saved link. Saving
+   * refreshes the page with the new link, which cancels the debounced check
+   * before it runs: without this guard the indicator would stay on "checking".
+   */
+  const pendingCheck = checking && !locked && value !== initialSlug;
   const problem = state?.problem ?? check?.problem;
-  const message = checking
+  const message = pendingCheck
     ? labels.checking
     : problem
       ? (labels.problems[problem] ?? labels.problems.server)
